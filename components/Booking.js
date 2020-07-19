@@ -58,6 +58,7 @@ const styles = ({ palette, spacing }) =>
     hours: {},
     nested: {
       paddingLeft: spacing(4),
+      textAlign: "center",
     },
   });
 const useStyles = makeStyles(styles);
@@ -111,7 +112,6 @@ const WorkoutList = () => {
         color="primary"
         size="large"
         onClick={() => {
-          console.log("heres");
           send("RETURN");
         }}
       >
