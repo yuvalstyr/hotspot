@@ -95,11 +95,10 @@ const workoutDetails = [
 ];
 
 const WorkoutList = () => {
-  const classes = useStyles();
   const [, send] = React.useContext(MachineContext);
 
   return (
-    <div className={classes.hours}>
+    <React.Fragment>
       <List>
         {workoutDetails.map((workout) => {
           return (
@@ -108,16 +107,19 @@ const WorkoutList = () => {
           );
         })}
       </List>
-      <Button
-        color="primary"
-        size="large"
-        onClick={() => {
-          send("RETURN");
-        }}
-      >
-        {HebrewConversion.back}
-      </Button>
-    </div>
+      <div style={{ width: "100%", textAlign: "center" }}>
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          onClick={() => {
+            send("RETURN");
+          }}
+        >
+          {HebrewConversion.back}
+        </Button>
+      </div>
+    </React.Fragment>
   );
 };
 
@@ -131,7 +133,7 @@ const Workout = ({ workout }) => {
 
   return (
     <React.Fragment>
-      <ListItem className={classes.listItem} button>
+      <ListItem className={classes.listItem}>
         <ListItemText
           style={{ flex: 0 }}
           primary={workout.time}
@@ -202,7 +204,7 @@ const Booking = () => {
   );
 };
 
-const HebrewConversion = {
+export const HebrewConversion = {
   order: "הזמן",
   left: "מקומות פנויים",
   personal: "אישי",

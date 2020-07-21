@@ -41,7 +41,7 @@ export const useStyles = makeStyles(styles);
 
 const Main = () => {
   const classes = useStyles();
-  const [state, send] = React.useContext(MachineContext);
+  const [, send] = React.useContext(MachineContext);
 
   return (
     <Container maxWidth="xs" className={classes.root}>
@@ -58,14 +58,19 @@ const Main = () => {
             className={classes.button}
             size="large"
             onClick={() => {
-              console.log("heres");
               send("BOOKING");
             }}
           >
             הזמנת אימון
           </Button>
-          <Button className={classes.button} size="large">
-            מתי התאמנתי?
+          <Button
+            className={classes.button}
+            size="large"
+            onClick={() => {
+              send("TRAINING");
+            }}
+          >
+            אימונים
           </Button>
         </div>
         <ImageGridList />

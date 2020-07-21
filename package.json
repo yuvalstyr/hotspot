@@ -15,6 +15,7 @@
     "next": "9.4.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-swipeable-views": "^0.13.9",
     "xstate": "^4.11.0"
   },
   "devDependencies": {

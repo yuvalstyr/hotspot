@@ -1,11 +1,8 @@
 import React from "react";
-import { Machine, assign } from "xstate";
+import { Machine } from "xstate";
+import { Router } from "next/router";
 
 export const MachineContext = React.createContext();
-
-const assignCanReturn = assign({
-  canReturn: (context) => !context.canReturn,
-});
 
 const HotSpotMachine = Machine({
   context: {
@@ -17,8 +14,11 @@ const HotSpotMachine = Machine({
   states: {
     init: {
       on: {
-        BOOKING: "booking",
+        BOOKING: {
+          target: "booking",
+        },
       },
+      TRAINING: "training",
     },
     booking: {
       id: "booking",
@@ -28,9 +28,7 @@ const HotSpotMachine = Machine({
       },
       states: {
         loading: {
-          on: {
-            "": "active",
-          },
+          always: "active",
         },
         active: {
           on: {
@@ -40,33 +38,39 @@ const HotSpotMachine = Machine({
           },
         },
         changing: {
-          onEntry: assignCanReturn,
-          onExit: assignCanReturn,
           on: {
             CHANGED: "active",
+            RETURN: undefined,
           },
         },
         adding: {
-          onEntry: assignCanReturn,
-          onExit: assignCanReturn,
           on: {
             ADDED: "active",
+            RETURN: undefined,
           },
         },
         removing: {
-          onEntry: assignCanReturn,
-          onExit: assignCanReturn,
           on: {
             REMOVED: "active",
+            RETURN: undefined,
           },
         },
+      },
+    },
+    training: {
+      id: "training",
+      initial: "loading",
+      states: {
+        loading: {
+          always: "active",
+        },
+        active: {},
       },
     },
   },
   on: {
     RETURN: {
       target: "init",
-      cond: (context) => context.canReturn,
     },
   },
 });
