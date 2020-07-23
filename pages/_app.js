@@ -6,20 +6,25 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../lib/theme";
 import HotSpotMachine, { MachineContext } from "../states/index";
 import { useMachine } from "@xstate/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 export default function MyApp(props) {
   const [state, send] = useMachine(HotSpotMachine);
-
-  const handleRouteChange = (url) => {
-    console.log("App is changing to: ", url);
-    if (url === "/") send("RETURN");
-  };
-
-  Router.events.on("routeChangeStart", handleRouteChange);
-
+  const router = useRouter();
   const { Component, pageProps } = props;
 
+  React.useEffect(() => {
+    router.beforePopState(({ url, as, options }) => {
+      // I only want to allow these two routes!
+      if (as !== "/" && as !== "/other") {
+        // Have SSR render bad routes as a 404.
+        window.location.href = as;
+        return false;
+      }
+
+      return true;
+    });
+  });
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");

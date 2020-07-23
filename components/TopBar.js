@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  makeStyles,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { createStyles, makeStyles, Toolbar } from "@material-ui/core";
 import React from "react";
 
 const styles = ({ palette }) =>
@@ -27,7 +22,8 @@ const styles = ({ palette }) =>
       height: "100%",
     },
     image: {
-      height: "100px",
+      height: "70px",
+      width: "150px",
       gridRow: "1 / span 2",
       gridColumn: "2",
     },
@@ -40,12 +36,12 @@ function TopBar() {
   return (
     <div className={classes.bar}>
       <Toolbar className={classes.toolbar}>
-        <Typography variant="h4" className={classes.title}>
+        {/* <Typography variant="h4" className={classes.title}>
           היי יובל !!
         </Typography>
         <Typography variant="body1" color="error" component="p">
           נשאר לך עוד 8 שיעורים בכרטיסיה
-        </Typography>
+        </Typography> */}
         <div className={classes.image}>
           <img className={classes.img} alt="complex" src="/logo.jpg" />
         </div>

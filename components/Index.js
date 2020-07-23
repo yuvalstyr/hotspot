@@ -1,17 +1,25 @@
+import { useRouter } from "next/router";
 import React from "react";
 import Main from "../components/Main";
-import { useRouter } from "next/router";
-import Booking from "./Booking";
-import Training from "./Training";
 import { MachineContext } from "../states";
+import Training from "./Training";
+import Booking from "./Booking";
 
 const Index = () => {
   const router = useRouter();
   const [state, send] = React.useContext(MachineContext);
-  if (state.matches("booking.active")) router.push("/booking");
+
+  React.useEffect(() => {
+    router.beforePopState(({ url, as, options }) => {
+      console.log("beforePopState", url, as, options);
+      return true;
+    });
+  });
+
   return (
     <React.Fragment>
-      <Main />
+      {state.matches("init") && <Main />}
+      {state.matches("booking") && <Booking />}
       {state.matches("training.active") && <Training />}
     </React.Fragment>
   );

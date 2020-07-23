@@ -1,6 +1,5 @@
 import React from "react";
 import { Machine } from "xstate";
-import { Router } from "next/router";
 
 export const MachineContext = React.createContext();
 
