@@ -1,38 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Head from "next/head";
-import { ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import theme from "../lib/theme";
-import HotSpotMachine, { MachineContext } from "../states/index";
 import { useMachine } from "@xstate/react";
-import Router, { useRouter } from "next/router";
+import Head from "next/head";
+import Router from "next/router";
+import PropTypes from "prop-types";
+import React from "react";
+import { ThemeProvider, jsx, Image, Flex } from "theme-ui";
+import HotSpotMachine, { MachineContext } from "../states/index";
+import theme from "../theme";
+import { Nav } from "../components/Nav";
+
+/** @jsx jsx */
 
 export default function MyApp(props) {
   const [state, send] = useMachine(HotSpotMachine);
-  const router = useRouter();
+
   const { Component, pageProps } = props;
 
-  React.useEffect(() => {
-    router.beforePopState(({ url, as, options }) => {
-      // I only want to allow these two routes!
-      if (as !== "/" && as !== "/other") {
-        // Have SSR render bad routes as a 404.
-        window.location.href = as;
-        return false;
-      }
+  const handleRouteChange = (url) => {
+    if (url === "/") send("RETURN");
+  };
 
-      return true;
-    });
-  });
-  React.useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector("#jss-server-side");
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
-
+  Router.events.on("routeChangeStart", handleRouteChange);
+  console.log("theme", theme);
   return (
     <React.Fragment>
       <Head>
@@ -44,15 +32,50 @@ export default function MyApp(props) {
       </Head>
       <ThemeProvider theme={theme}>
         <MachineContext.Provider value={[state, send]}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-          <pre style={{ color: "white", direction: "ltr" }}>
-            {JSON.stringify(state.value, null, 2)}
-          </pre>
-          <pre style={{ color: "white", direction: "ltr" }}>
-            {JSON.stringify(state.context, null, 2)}
-          </pre>
+          <div
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+            }}
+          >
+            <header
+              sx={{
+                width: "100%",
+              }}
+            >
+              <Flex
+                sx={{
+                  justifyContent: "space-between",
+                  backgroundColor: "secondary",
+                }}
+              >
+                <Nav />
+                <Image src={"/logo.jpg"} variant="logo" />
+              </Flex>
+            </header>
+            <main
+              sx={{
+                width: "100%",
+                flex: "1 1 auto",
+                paddingTop: "10px",
+              }}
+            >
+              <Component {...pageProps} />
+            </main>
+            <footer
+              sx={{
+                width: "100%",
+              }}
+            >
+              <pre style={{ color: "white", direction: "ltr" }}>
+                {JSON.stringify(state.value, null, 2)}
+              </pre>
+              <pre style={{ color: "white", direction: "ltr" }}>
+                {JSON.stringify(state.context, null, 2)}
+              </pre>
+            </footer>
+          </div>
         </MachineContext.Provider>
       </ThemeProvider>
     </React.Fragment>

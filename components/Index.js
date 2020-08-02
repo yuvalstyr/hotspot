@@ -9,13 +9,6 @@ const Index = () => {
   const router = useRouter();
   const [state, send] = React.useContext(MachineContext);
 
-  React.useEffect(() => {
-    router.beforePopState(({ url, as, options }) => {
-      console.log("beforePopState", url, as, options);
-      return true;
-    });
-  });
-
   return (
     <React.Fragment>
       {state.matches("init") && <Main />}

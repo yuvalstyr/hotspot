@@ -1,12 +1,3 @@
-import {
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  createStyles,
-  makeStyles,
-} from "@material-ui/core";
 import React from "react";
 
 const styles = ({ palette }) =>
@@ -24,8 +15,6 @@ const styles = ({ palette }) =>
       color: palette.getContrastText("#f7b42c"),
     },
   });
-
-const useStyles = makeStyles(styles);
 
 const UserCard = () => {
   const classes = useStyles();

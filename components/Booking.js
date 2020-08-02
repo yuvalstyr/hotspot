@@ -1,130 +1,12 @@
-import {
-  Button,
-  createStyles,
-  List,
-  ListItem,
-  ListItemText,
-  makeStyles,
-  Typography,
-  Container,
-  IconButton,
-  Collapse,
-} from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
-import {
-  ArrowLeftBoldCircleOutline,
-  ArrowRightBoldCircleOutline,
-  ChevronUpCircle,
-  ChevronDownCircle,
-} from "mdi-material-ui";
 import React from "react";
 import { MachineContext } from "../states";
-import TopBar from "./TopBar";
-
-const styles = ({ palette, spacing }) =>
-  createStyles({
-    container: {
-      color: palette.primary.main,
-      gridTemplateRows: "100px auto 4fr",
-      height: "100%",
-      width: "100%",
-      display: "grid",
-      gridGap: "0.5rem",
-    },
-    root: {
-      display: "fl",
-      justifyContent: "center",
-      flexWrap: "wrap",
-      "& > *": {
-        margin: spacing(0.5),
-      },
-    },
-    header: {},
-    slider: {
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "space-around",
-      alignItems: "center",
-    },
-    dayAvatar: {},
-    dayAvatarDisable: {
-      backgroundColor: palette.error.main,
-      color: palette.getContrastText(palette.error.main),
-    },
-    listItem: {
-      textAlign: "right",
-      borderBottom: `1px solid`,
-    },
-    hours: {},
-    nested: {
-      paddingLeft: spacing(4),
-      textAlign: "center",
-    },
-  });
-const useStyles = makeStyles(styles);
-
-const workoutDetails = [
-  {
-    time: "14:00",
-    date: Date(),
-    trainees: ["יובל", "יוסי"],
-    type: "personal",
-    left: 0,
-  },
-  {
-    time: "15:00",
-    date: Date(),
-    trainees: ["לירון"],
-    type: "personal",
-    left: 1,
-  },
-  {
-    time: "16:00",
-    date: Date(),
-    trainees: ["יולי", "נטע"],
-    type: "team",
-    left: 4,
-  },
-  {
-    time: "17:00",
-    date: Date(),
-    trainees: ["לירון", "יולי", "נטע"],
-    type: "team",
-    left: 3,
-  },
-];
-
-const WorkoutList = () => {
-  const [, send] = React.useContext(MachineContext);
-
-  return (
-    <React.Fragment>
-      <List>
-        {workoutDetails.map((workout) => {
-          return (
-            //TODO change key from workout.time
-            <Workout key={workout.time} workout={workout} />
-          );
-        })}
-      </List>
-      <div style={{ width: "100%", textAlign: "center" }}>
-        <Button
-          color="secondary"
-          variant="contained"
-          size="large"
-          onClick={() => {
-            send("RETURN");
-          }}
-        >
-          {HebrewConversion.back}
-        </Button>
-      </div>
-    </React.Fragment>
-  );
-};
+import { Flex, jsx, IconButton } from "theme-ui";
+import { Avatar } from "theme-ui";
+import { mdiArrowRightBoldCircle, mdiArrowLeftBoldCircle } from "@mdi/js";
+import Icon from "@mdi/react";
+/** @jsx jsx */
 
 const Workout = ({ workout }) => {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -159,7 +41,6 @@ const Workout = ({ workout }) => {
 };
 
 const TrainersList = ({ trainees }) => {
-  const classes = useStyles();
   return (
     //TODO change the key
     <List component="div" disablePadding>
@@ -173,35 +54,81 @@ const TrainersList = ({ trainees }) => {
 };
 
 const Slider = () => {
-  const classes = useStyles();
+  return (
+    <Flex sx={{ p: "1rem", justifyContent: "space-between", width: "100%" }}>
+      {/* <ArrowRightBoldCircleOutline /> */}
+      <Icon
+        path={mdiArrowRightBoldCircle}
+        size={2}
+        sx={{ color: "secondary", alignSelf: "end" }}
+      ></Icon>
+
+      {daysArray.map((day) => {
+        const { full, firstLetter } = HebrewConversion[day.day];
+        return (
+          <div
+            key={day.date}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div>{full}</div>
+            <div
+              sx={{
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                fontSize: "1.25rem",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "50%",
+                backgroundColor: "primary",
+              }}
+            >
+              {firstLetter}
+            </div>
+          </div>
+        );
+        // <DayAvatar key={day.date} day={day.day} date={day.date} />
+      })}
+      <Icon
+        path={mdiArrowLeftBoldCircle}
+        size={2}
+        sx={{ color: "secondary", alignSelf: "end" }}
+      ></Icon>
+    </Flex>
+  );
+};
+
+const DayAvatar = ({ day, date }) => {
+  const [{ context }, send] = React.useContext(MachineContext);
+
+  const avatarClassName =
+    context.day.date === date ? "dayAvatarActive" : "dayAvatar";
+
+  const changeDay = () => send({ type: "CHANGE_DAY", date });
 
   return (
-    <div className={classes.slider}>
-      <ArrowRightBoldCircleOutline />
-      <Avatar className={classes.dayAvatarDisable}>א</Avatar>
-      <Avatar>ב</Avatar>
-      <Avatar>ג</Avatar>
-      <Avatar>ד</Avatar>
-      <Avatar>ה</Avatar>
-      <Avatar>ו</Avatar>
-      <ArrowLeftBoldCircleOutline />
-    </div>
+    <Grid container maxWidth="xs" justify="center">
+      <Grid item xs={12}>
+        <Typography align="center">{HebrewConversion[day]}</Typography>
+      </Grid>
+      <Avatar
+        className={classes[avatarClassName]}
+        onClick={() => changeDay("CHANGE_DAY")}
+      >
+        {date}
+      </Avatar>
+    </Grid>
   );
 };
 
 const Booking = () => {
-  const classes = useStyles();
-  return (
-    <Container maxWidth="xs" className={classes.container}>
-      <div className={classes.header}>
-        <TopBar />
-      </div>
-      <Slider />
-      <div className={classes.hours}>
-        <WorkoutList />
-      </div>
-    </Container>
-  );
+  const day = daysArray[0].day;
+  return <Slider />;
 };
 
 export const HebrewConversion = {
@@ -210,6 +137,76 @@ export const HebrewConversion = {
   personal: "אישי",
   team: "קבוצתי",
   back: "חזרה",
+  sunday: { full: "ראשון", firstLetter: "א" },
+  monday: { full: "שני", firstLetter: "ב" },
+  tuesday: { full: "שלישי", firstLetter: "ג" },
+  wednesday: { full: "רביעי", firstLetter: "ד" },
+  thursday: { full: "חמישי", firstLetter: "ה" },
+  friday: { full: "שישי", firstLetter: "ו" },
 };
+
+const daysArray = [
+  {
+    day: "sunday",
+    date: "26.7",
+    active: false,
+  },
+  {
+    day: "monday",
+    date: "27.7",
+    active: false,
+  },
+  {
+    day: "tuesday",
+    date: "28.7",
+    active: false,
+  },
+  {
+    day: "wednesday",
+    date: "29.7",
+    active: false,
+  },
+  {
+    day: "thursday",
+    date: "30.7",
+    active: false,
+  },
+  {
+    day: "friday",
+    date: "31.7",
+    active: false,
+  },
+];
+
+const workoutDetails = [
+  {
+    time: "14:00",
+    date: Date(),
+    trainees: ["יובל", "יוסי"],
+    type: "personal",
+    left: 0,
+  },
+  {
+    time: "15:00",
+    date: Date(),
+    trainees: ["לירון"],
+    type: "personal",
+    left: 1,
+  },
+  {
+    time: "16:00",
+    date: Date(),
+    trainees: ["יולי", "נטע"],
+    type: "team",
+    left: 4,
+  },
+  {
+    time: "17:00",
+    date: Date(),
+    trainees: ["לירון", "יולי", "נטע"],
+    type: "team",
+    left: 3,
+  },
+];
 
 export default Booking;
