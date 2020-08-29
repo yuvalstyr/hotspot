@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  firstName String
+  lastName  String
+  left      Int       @default(8)
+  history   Workout[]
+  createdAt DateTime  @default(now())
+}
+
+model Workout {
+  id       String        @id @default(uuid())
+  when     DateTime
+  type     WorkoutType
+  trainees User[]
+  status   WorkoutStatus
+}
+
+enum WorkoutType {
+  PERSONAL
+  TEAM
+}
+
+enum WorkoutStatus {
+  Active
+  Cancelled
+  Over
+}

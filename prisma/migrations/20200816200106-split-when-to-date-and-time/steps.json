@@ -1,0 +1,74 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Workout",
+      "field": "date",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "date"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "date"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "\"16/08/20\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "Workout",
+      "field": "time",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "time"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "time"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "\"10:00\""
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Workout",
+      "field": "when"
+    }
+  ]
+}

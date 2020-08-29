@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int       @default(autoincrement()) @id
+  email     String    @unique
+  firstName String
+  lastName  String
+  left      Int       @default(8)
+  history   Workout[]
+}
+
+model Workout {
+  id       Int         @default(autoincrement()) @id
+  when     DateTime
+  type     WorkoutType
+  trainees User[]
+}
+
+enum WorkoutType {
+  PERSONAL
+  TEAM
+}

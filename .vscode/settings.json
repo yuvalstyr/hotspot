@@ -1,4 +1,17 @@
 {
+    "peacock.color": "#47ada5",
+    "debug.node.autoAttach": "off",
+    "cSpell.words": [
+        "entrypoint",
+        "postgresql",
+        "testid",
+        "yuval"
+    ],
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.hg/store/**": true
+    },
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#67c0b9",
         "activityBar.activeBorder": "#ac4bb4",
@@ -8,15 +21,11 @@
         "activityBarBadge.background": "#ac4bb4",
         "activityBarBadge.foreground": "#e7e7e7",
         "statusBar.background": "#47ada5",
-        "statusBar.border": "#47ada5",
         "statusBar.foreground": "#15202b",
         "statusBarItem.hoverBackground": "#388982",
         "titleBar.activeBackground": "#47ada5",
         "titleBar.activeForeground": "#15202b",
-        "titleBar.border": "#47ada5",
         "titleBar.inactiveBackground": "#47ada599",
         "titleBar.inactiveForeground": "#15202b99"
-    },
-    "peacock.color": "#47ada5",
-    "debug.node.autoAttach": "on"
+    }
 }

@@ -1,4 +1,4 @@
-import { dark } from "@theme-ui/presets";
+import { dark } from "@theme-ui/presets"
 
 const theme = {
   ...dark,
@@ -7,6 +7,7 @@ const theme = {
     primary: "#f7b42c",
     secondary: "#C1C9C3",
     highlight: "#c0f",
+    error: "#e21616",
   },
   links: {
     ":hover": {
@@ -46,7 +47,8 @@ const theme = {
   },
   styles: {
     ...dark.styles,
+    hr: { border: 0, borderBottom: "1px solid", borderColor: "secondary" },
   },
-};
+}
 
-export default theme;
+export default theme

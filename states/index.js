@@ -63,6 +63,7 @@ const workoutDetails = [
 ];
 
 const fetchWorkouts = async (date) => {
+  console.log("date fetch", date);
   return {
     date: date,
     workouts: workoutDetails.filter((workout) => workout.date === date),
