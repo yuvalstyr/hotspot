@@ -13,11 +13,11 @@ const minDate = (workouts) => {
   return format(minDate, "MM/dd/yy")
 }
 
-const Schedule = ({ workouts }) => {
+const Schedule = () => {
   const scheduleState = React.useContext(ScheduleMachineStateContext)
-  const datesSet = new Set(workouts.map((workout) => workout.date))
-  const [activeDate, setActiveDate] = React.useState(minDate(workouts))
-  console.log("scheduleState", scheduleState)
+  const { weeklyWorkouts } = scheduleState.context
+  const datesSet = new Set(weeklyWorkouts.map((workout) => workout.date))
+  const [activeDate, setActiveDate] = React.useState(minDate(weeklyWorkouts))
   return (
     <React.Fragment>
       <Slider
@@ -26,8 +26,14 @@ const Schedule = ({ workouts }) => {
         setActiveDate={setActiveDate}
       />
       <Workouts
-        workoutDetails={workouts.filter((w) => w.date === activeDate)}
+        workoutDetails={weeklyWorkouts.filter((w) => w.date === activeDate)}
       />
+      <pre style={{ color: "white", direction: "ltr" }}>
+        {JSON.stringify(scheduleState.value, null, 2)}
+      </pre>
+      <pre style={{ color: "white", direction: "ltr" }}>
+        {JSON.stringify(scheduleState.context, null, 2)}
+      </pre>
     </React.Fragment>
   )
 }

@@ -3,13 +3,19 @@ import { Collapse } from "react-collapse"
 import { Box, Button, Divider, Grid, Text, jsx } from "theme-ui"
 import HebrewConversion from "../lib/translate"
 import { TrainersList } from "./TrainersList"
+import {
+  ScheduleMachineStateContext,
+  ScheduleMachineDispatchContext,
+} from "../states/schedule"
 
 /** @jsx jsx */
 
 export const Workout = ({ workout }) => {
   const [isOpened, setIsOpened] = React.useState(false)
+  const scheduleState = React.useContext(ScheduleMachineStateContext)
+  const scheduleDispath = React.useContext(ScheduleMachineDispatchContext)
 
-  const { time, type } = workout
+  const { time, type, id } = workout
   return (
     <React.Fragment>
       <Box p={2} color="white">
@@ -34,7 +40,11 @@ export const Workout = ({ workout }) => {
             <Button onClick={() => setIsOpened(!isOpened)}>מי בא?</Button>
           </Box>
           <Box>
-            <Button onClick={() => send("BOOK")}>הזמן</Button>
+            <Button
+              onClick={() => scheduleDispath({ type: "BOOK", workoutId: id })}
+            >
+              הזמן
+            </Button>
           </Box>
           <Box
             sx={{

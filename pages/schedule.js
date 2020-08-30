@@ -1,12 +1,13 @@
-import { gql, useQuery } from "@apollo/client"
+import { gql, useQuery, ApolloProvider } from "@apollo/client"
 import React from "react"
 import { Spinner } from "theme-ui"
 import DisplayError from "../components/DisplayError"
 import Schedule from "../components/Schedule"
 import { ScheduleMachineProvider } from "../states/schedule"
+import { initializeApollo } from "../apollo/apolloClient"
 
 //TODO add args to the query that filter workout to the current week
-const workouts = gql`
+export const workouts = gql`
   query {
     workoutsPerWeek {
       id
@@ -25,21 +26,12 @@ const workouts = gql`
 
 const schedule = () => {
   const { data, loading, error } = useQuery(workouts)
-
   if (loading) return <Spinner />
   if (error) return <DisplayError error={error} />
   return (
-    // <div>
-    <ScheduleMachineProvider>
-      <Schedule workouts={data.workoutsPerWeek} />
+    <ScheduleMachineProvider data={data.workoutsPerWeek}>
+      <Schedule />
     </ScheduleMachineProvider>
-    //   <pre style={{ color: "white", direction: "ltr" }}>
-    //     {JSON.stringify(current.value, null, 2)}
-    //   </pre>
-    //   <pre style={{ color: "white", direction: "ltr" }}>
-    //     {JSON.stringify(current.context, null, 2)}
-    //   </pre>
-    // </div>
   )
 }
 

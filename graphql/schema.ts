@@ -67,5 +67,6 @@ schema.mutationType({
     t.crud.createOneWorkout()
     t.crud.updateOneWorkout()
     t.crud.updateManyWorkout()
+    t.crud.updateOneWorkout()
   },
 })
