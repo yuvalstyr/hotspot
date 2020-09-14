@@ -1,10 +1,9 @@
-import { gql, useQuery, ApolloProvider } from "@apollo/client"
+import { gql, useQuery } from "@apollo/client"
 import React from "react"
 import { Spinner } from "theme-ui"
 import DisplayError from "../components/DisplayError"
 import Schedule from "../components/Schedule"
-import { ScheduleMachineProvider } from "../states/schedule"
-import { initializeApollo } from "../apollo/apolloClient"
+import { ScheduleMachineProvider } from "../machine/schedule"
 
 //TODO add args to the query that filter workout to the current week
 export const workouts = gql`

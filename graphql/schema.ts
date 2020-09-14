@@ -48,11 +48,16 @@ schema.queryType({
       resolve: async (_, args, ctx) => {
         const workouts = await ctx.db.workout.findMany({
           where: { status: "Active" },
+          orderBy: { date: "asc" },
         })
-        const currentWeekNumber = format(new Date(), "Io", { locale: heLocale })
+        const currentWeekNumber = format(new Date(), "wo", {
+          locale: heLocale,
+          weekStartsOn: 0,
+        })
+        console.log("currentWeekNumber", currentWeekNumber)
         return workouts.filter(
           (w) =>
-            format(new Date(w.date), "Io", { locale: heLocale }) ===
+            format(new Date(w.date), "wo", { locale: heLocale }) ===
             currentWeekNumber
         )
       },

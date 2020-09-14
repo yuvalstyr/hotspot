@@ -1,20 +1,17 @@
-import { useMachine } from "@xstate/react"
+import { ApolloProvider } from "@apollo/client"
 import Head from "next/head"
-import Router, { useRouter } from "next/router"
 import PropTypes from "prop-types"
 import React from "react"
-import { ThemeProvider, jsx, Image, Flex } from "theme-ui"
-import HotSpotMachine, { MachineContext } from "../states/index"
-import theme from "../theme"
-import { ApolloProvider } from "@apollo/client"
+import { ThemeProvider } from "theme-ui"
 import { useApollo } from "../apollo/apolloClient"
 import { Layout } from "../components/Layout"
+import theme from "../theme"
 
 export default function MyApp(props) {
   const { pageProps } = props
   const client = useApollo(pageProps.initializeApolloState)
 
-  console.log("theme", theme)
+  // console.log("theme", theme)
 
   return (
     <React.Fragment>

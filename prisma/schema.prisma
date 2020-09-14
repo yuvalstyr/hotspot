@@ -15,7 +15,7 @@ model User {
   email     String
   firstName String
   lastName  String
-  left      Int       @default(8)
+  left      Int       @default(10)
   history   Workout[]
   createdAt DateTime  @default(now())
 }

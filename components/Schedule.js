@@ -1,6 +1,6 @@
 import { format, min } from "date-fns"
 import React from "react"
-import { ScheduleMachineStateContext } from "../states/schedule"
+import { ScheduleMachineStateContext } from "../machine/schedule"
 import { Slider } from "./Slider"
 import { Workouts } from "./Workouts"
 
@@ -25,9 +25,7 @@ const Schedule = () => {
         activeDate={activeDate}
         setActiveDate={setActiveDate}
       />
-      <Workouts
-        workoutDetails={weeklyWorkouts.filter((w) => w.date === activeDate)}
-      />
+      <Workouts activeDate={activeDate} />
       <pre style={{ color: "white", direction: "ltr" }}>
         {JSON.stringify(scheduleState.value, null, 2)}
       </pre>

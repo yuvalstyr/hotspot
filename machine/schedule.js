@@ -1,9 +1,8 @@
-import React from "react"
-import { Machine, assign } from "xstate"
+import { gql } from "@apollo/client"
 import { useMachine } from "@xstate/react"
-import { useMutation, gql } from "@apollo/client"
+import React from "react"
+import { assign, Machine } from "xstate"
 import { initializeApollo } from "../apollo/apolloClient"
-import { workouts } from "../pages/schedule"
 
 const client = initializeApollo()
 
@@ -19,6 +18,7 @@ const BOOK_WORKOUT = gql`
       type
       trainees {
         __typename
+        id
         firstName
         lastName
         email
@@ -26,18 +26,28 @@ const BOOK_WORKOUT = gql`
     }
   }
 `
-//TODO complete: after booking a workout need to update the UI by apollo chach or xstate context
+
+//TODO complete: after booking a workout need to update the UI by apollo cache or xstate context
 const bookWorkout = (context, event) => {
-  client.mutate({
+  const { workoutId } = event
+  const { user } = context
+  console.log("user", user)
+  return client.mutate({
     mutation: BOOK_WORKOUT,
-    variables: { traineeId: 6, workoutId: context.workoutId },
-    // optimisticResponse: {
-    //   __typename: "Mutation",
-    //   updateOneWorkout: {
-    //     __typename: "User",
-    //     id: context.id,
-    //   },
-    // },
+    variables: { traineeId: user.id, workoutId: workoutId },
+  })
+}
+
+const addTrineeToWorkout = (context, event) => {
+  const { user, weeklyWorkouts, workoutId } = context
+  const workouts = JSON.parse(JSON.stringify(weeklyWorkouts))
+  const returnWorkouts = workouts.map((w) => {
+    if (w.id === workoutId) w.trainees = [...w.trainees, user]
+    return w
+  })
+  console.log("workouts after", returnWorkouts)
+  return assign({
+    weeklyWorkouts: (context) => returnWorkouts,
   })
 }
 
@@ -51,7 +61,13 @@ const createScheduleMachine = (weeklyWorkouts) =>
     initial: "workouts",
     context: {
       weeklyWorkouts,
-      userId: 1,
+      user: {
+        __typename: "User",
+        id: 4,
+        email: "bla@bla.com",
+        firstName: "שרון",
+        lastName: "גל",
+      },
       workoutId: null,
     },
     states: {
@@ -67,9 +83,10 @@ const createScheduleMachine = (weeklyWorkouts) =>
       booking: {
         invoke: {
           id: "book_workout",
-          src: bookWorkout,
+          src: (context, event) => bookWorkout(context, event),
           onDone: {
             target: "booked",
+            actions: addTrineeToWorkout,
           },
           onError: {
             target: "failure",

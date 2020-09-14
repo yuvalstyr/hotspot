@@ -6,7 +6,7 @@ import { TrainersList } from "./TrainersList"
 import {
   ScheduleMachineStateContext,
   ScheduleMachineDispatchContext,
-} from "../states/schedule"
+} from "../machine/schedule"
 
 /** @jsx jsx */
 
