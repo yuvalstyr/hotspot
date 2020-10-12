@@ -3,7 +3,7 @@ import { Grid, Image, jsx } from "theme-ui"
 
 /** @jsx jsx */
 
-const Main = () => {
+const Gallery = () => {
   return (
     <Grid
       gap={2}
@@ -36,4 +36,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default Gallery

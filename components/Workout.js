@@ -3,17 +3,11 @@ import { Collapse } from "react-collapse"
 import { Box, Button, Divider, Grid, Text, jsx } from "theme-ui"
 import HebrewConversion from "../lib/translate"
 import { TrainersList } from "./TrainersList"
-import {
-  ScheduleMachineStateContext,
-  ScheduleMachineDispatchContext,
-} from "../machine/schedule"
 
 /** @jsx jsx */
 
 export const Workout = ({ workout }) => {
   const [isOpened, setIsOpened] = React.useState(false)
-  const scheduleState = React.useContext(ScheduleMachineStateContext)
-  const scheduleDispath = React.useContext(ScheduleMachineDispatchContext)
 
   const { time, type, id } = workout
   return (

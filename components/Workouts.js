@@ -1,15 +1,22 @@
+import { useMachine } from "@xstate/react"
 import React from "react"
+import { scheduleMachine } from "../machine/scheduleMachine"
 import { Workout } from "./Workout"
-import { ScheduleMachineStateContext } from "../machine/schedule"
 
 export const Workouts = ({ activeDate }) => {
-  const scheduleState = React.useContext(ScheduleMachineStateContext)
-  const { weeklyWorkouts } = scheduleState.context
+  const [current] = useMachine(scheduleMachine)
+  const { weeklyWorkouts } = current.context
+  console.log("activeDate", activeDate)
   React.useEffect(() => {
     console.log("changed")
   }, [weeklyWorkouts])
-  const workoutDetails = weeklyWorkouts.filter((w) => w.date === activeDate)
-  return workoutDetails.map((workout) => (
-    <Workout key={workout.id} workout={workout} />
-  ))
+
+  const workoutDetails = weeklyWorkouts?.filter((w) => w.date === activeDate)
+
+  console.log("workoutDetails", workoutDetails)
+  return workoutDetails
+    ? workoutDetails.map((workout) => (
+        <Workout key={workout.id} workout={workout} />
+      ))
+    : null
 }

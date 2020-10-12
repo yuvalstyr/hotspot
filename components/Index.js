@@ -1,10 +1,10 @@
 import React from "react"
-import Main from "../components/Main"
+import Gallery from "./Gallery"
 
 const Index = () => {
   return (
     <React.Fragment>
-      <Main />
+      <Gallery />
     </React.Fragment>
   )
 }
