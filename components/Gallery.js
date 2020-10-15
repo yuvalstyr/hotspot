@@ -1,5 +1,5 @@
-import React from "react"
-import { Grid, Image, jsx } from "theme-ui"
+import React from 'react';
+import { Grid, Image, jsx } from 'theme-ui';
 
 /** @jsx jsx */
 
@@ -7,33 +7,33 @@ const Gallery = () => {
   return (
     <Grid
       gap={2}
-      columns={["1fr 1fr", 2]}
-      sx={{ gridTemplateRows: ["1fr 1fr"], maxWidth: "700px" }}
+      columns={['1fr 1fr', 2]}
+      sx={{ gridTemplateRows: ['1fr 1fr'], maxWidth: '700px' }}
     >
       <Image
-        src={"/1.jpg"}
+        src={'/1.jpg'}
         sx={{
-          objectFit: "cover",
-          gridColumn: ["span 2", "span 2"],
-          variant: "containers.image",
+          objectFit: 'cover',
+          gridColumn: ['span 2', 'span 2'],
+          variant: 'containers.image',
         }}
       />
       <Image
-        src={"/3.jpg"}
+        src={'/3.jpg'}
         sx={{
-          objectFit: "cover",
-          variant: "containers.image",
+          objectFit: 'cover',
+          variant: 'containers.image',
         }}
       />
       <Image
-        src={"/2.jpg"}
+        src={'/2.jpg'}
         sx={{
-          objectFit: "cover",
-          variant: "containers.image",
+          objectFit: 'cover',
+          variant: 'containers.image',
         }}
       />
     </Grid>
-  )
-}
+  );
+};
 
-export default Gallery
+export default Gallery;

@@ -1,69 +1,69 @@
-import React from "react";
-import { Machine, assign, send } from "xstate";
+import React from 'react';
+import { Machine, assign, send } from 'xstate';
 
 export const MachineContext = React.createContext();
 
 const workoutDetails = [
   {
-    time: "14:00",
-    date: "26.7",
-    trainees: ["יובל", "יוסי"],
-    type: "personal",
+    time: '14:00',
+    date: '26.7',
+    trainees: ['יובל', 'יוסי'],
+    type: 'personal',
     left: 0,
   },
   {
-    time: "15:00",
-    date: "26.7",
-    trainees: ["לירון"],
-    type: "personal",
+    time: '15:00',
+    date: '26.7',
+    trainees: ['לירון'],
+    type: 'personal',
     left: 1,
   },
   {
-    time: "16:00",
-    date: "26.7",
-    trainees: ["יולי", "נטע"],
-    type: "team",
+    time: '16:00',
+    date: '26.7',
+    trainees: ['יולי', 'נטע'],
+    type: 'team',
     left: 4,
   },
   {
-    time: "17:00",
-    date: "26.7",
-    trainees: ["לירון", "יולי", "נטע"],
-    type: "team",
+    time: '17:00',
+    date: '26.7',
+    trainees: ['לירון', 'יולי', 'נטע'],
+    type: 'team',
     left: 3,
   },
   {
-    time: "14:00",
-    date: "27.7",
-    trainees: ["יובל", "יוסי", "מוטי"],
-    type: "personal",
+    time: '14:00',
+    date: '27.7',
+    trainees: ['יובל', 'יוסי', 'מוטי'],
+    type: 'personal',
     left: 6,
   },
   {
-    time: "15:00",
-    date: "27.7",
-    trainees: ["לירון", "נעמה"],
-    type: "personal",
+    time: '15:00',
+    date: '27.7',
+    trainees: ['לירון', 'נעמה'],
+    type: 'personal',
     left: 4,
   },
   {
-    time: "16:00",
-    date: "27.7",
-    trainees: ["נטע"],
-    type: "team",
+    time: '16:00',
+    date: '27.7',
+    trainees: ['נטע'],
+    type: 'team',
     left: 2,
   },
   {
-    time: "17:00",
-    date: "27.7",
-    trainees: ["לירון", "יולי", "נטע", "נתי"],
-    type: "team",
+    time: '17:00',
+    date: '27.7',
+    trainees: ['לירון', 'יולי', 'נטע', 'נתי'],
+    type: 'team',
     left: 2,
   },
 ];
 
 const fetchWorkouts = async (date) => {
-  console.log("date fetch", date);
+  console.log('date fetch', date);
   return {
     date: date,
     workouts: workoutDetails.filter((workout) => workout.date === date),
@@ -72,41 +72,41 @@ const fetchWorkouts = async (date) => {
 
 const HotSpotMachine = Machine({
   context: {
-    booking: "",
+    booking: '',
     canReturn: true,
-    day: "",
-    activeDay: "",
+    day: '',
+    activeDay: '',
   },
-  id: "hotspot",
-  initial: "init",
+  id: 'hotspot',
+  initial: 'init',
   states: {
     init: {
       on: {
         SCHEDULE: {
-          target: "schedule",
+          target: 'schedule',
         },
       },
-      TRAINING: "training",
+      TRAINING: 'training',
     },
     schedule: {
-      id: "schedule",
-      initial: "loading",
+      id: 'schedule',
+      initial: 'loading',
       context: {
         canReturn: true,
       },
       states: {
         loading: {
           invoke: {
-            id: "getDayWorkouts",
-            src: (context, event) => fetchWorkouts("26.7"),
+            id: 'getDayWorkouts',
+            src: (context, event) => fetchWorkouts('26.7'),
             onDone: {
-              target: "active",
+              target: 'active',
               actions: assign({
                 day: (context, event) => event.data,
               }),
             },
             onError: {
-              target: "error",
+              target: 'error',
               actions: assign({ error: (context, event) => event.data }),
             },
           },
@@ -114,65 +114,65 @@ const HotSpotMachine = Machine({
         active: {
           on: {
             CHANGE_DAY: {
-              target: "changing",
+              target: 'changing',
             },
           },
         },
         error: {},
         changing: {
           invoke: {
-            id: "getDayWorkouts",
+            id: 'getDayWorkouts',
             src: (context, event) => fetchWorkouts(event.date),
             onDone: {
-              target: "active",
+              target: 'active',
               actions: assign({
                 day: (context, event) => event.data,
               }),
             },
             onError: {
-              target: "error",
+              target: 'error',
               actions: assign({ error: (context, event) => event.data }),
             },
           },
           on: {
-            CHANGED: "active",
+            CHANGED: 'active',
             RETURN: undefined,
           },
         },
         booking: {
           invoke: {
-            id: "getDayWorkouts",
+            id: 'getDayWorkouts',
             src: (context, event) => fetchWorkouts(event.date),
             onDone: {
-              target: "active",
+              target: 'active',
               actions: assign({
                 day: (context, event) => event.data,
               }),
             },
             onError: {
-              target: "error",
+              target: 'error',
               actions: assign({ error: (context, event) => event.data }),
             },
           },
           on: {
-            ADDED: "active",
+            ADDED: 'active',
             RETURN: undefined,
           },
         },
         removing: {
           on: {
-            REMOVED: "active",
+            REMOVED: 'active',
             RETURN: undefined,
           },
         },
       },
     },
     training: {
-      id: "training",
-      initial: "loading",
+      id: 'training',
+      initial: 'loading',
       states: {
         loading: {
-          always: "active",
+          always: 'active',
         },
         active: {},
       },
@@ -180,7 +180,7 @@ const HotSpotMachine = Machine({
   },
   on: {
     RETURN: {
-      target: "init",
+      target: 'init',
     },
   },
 });

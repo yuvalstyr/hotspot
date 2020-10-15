@@ -1,19 +1,19 @@
-import { dark } from "@theme-ui/presets"
+import { dark } from '@theme-ui/presets';
 
 const theme = {
   ...dark,
   colors: {
     ...dark.colors,
-    primary: "#f7b42c",
-    secondary: "#C1C9C3",
-    highlight: "#c0f",
-    error: "#e21616",
+    primary: '#f7b42c',
+    secondary: '#C1C9C3',
+    highlight: '#c0f',
+    error: '#e21616',
   },
   links: {
-    ":hover": {
-      color: "text",
-      backgroundColor: "#a40606",
-      backgroundImage: " linear-gradient(315deg, #a40606 0%, #d98324 74%)",
+    ':hover': {
+      color: 'text',
+      backgroundColor: '#a40606',
+      backgroundImage: ' linear-gradient(315deg, #a40606 0%, #d98324 74%)',
     },
   },
   images: {
@@ -24,31 +24,31 @@ const theme = {
   },
   buttons: {
     icon: {
-      color: "#a40606",
+      color: '#a40606',
     },
   },
   containers: {
     card: {
-      boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
-      border: "1px solid",
-      borderColor: "muted",
-      borderRadius: "4px",
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+      border: '1px solid',
+      borderColor: 'muted',
+      borderRadius: '4px',
       p: 2,
     },
     page: {
-      width: "100%",
-      maxWidth: "960px",
+      width: '100%',
+      maxWidth: '960px',
       m: 0,
-      mx: "auto",
+      mx: 'auto',
     },
     image: {
-      maxHeight: "400px",
+      maxHeight: '400px',
     },
   },
   styles: {
     ...dark.styles,
-    hr: { border: 0, borderBottom: "1px solid", borderColor: "secondary" },
+    hr: { border: 0, borderBottom: '1px solid', borderColor: 'secondary' },
   },
-}
+};
 
-export default theme
+export default theme;

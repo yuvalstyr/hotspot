@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 
 const styles = ({ palette }) =>
   createStyles({
     root: {
       maxWidth: 345,
-      backgroundColor: "black",
+      backgroundColor: 'black',
     },
     media: {
       height: 140,
     },
     button: {
-      backgroundColor: "#f7b42c",
-      backgroundImage: "linear-gradient(315deg, #f7b42c 0%, #fc575e 74%)",
-      color: palette.getContrastText("#f7b42c"),
+      backgroundColor: '#f7b42c',
+      backgroundImage: 'linear-gradient(315deg, #f7b42c 0%, #fc575e 74%)',
+      color: palette.getContrastText('#f7b42c'),
     },
   });
 

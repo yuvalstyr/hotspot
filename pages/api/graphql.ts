@@ -1,9 +1,14 @@
-if (process.env.NODE_ENV === "development") require("nexus").default.reset()
+import { ApolloServer } from 'apollo-server-micro';
+import { createContext } from 'nexus/context';
+import { schema } from 'nexus/schema';
 
-const nexusServer = require("nexus").default
+const server = new ApolloServer({ schema, context: createContext });
+const handler = server.createHandler({ path: '/api/graphql' });
 
-require("../../graphql/schema")
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
-nexusServer.assemble()
-
-export default nexusServer.server.handlers.graphql
+export default handler;

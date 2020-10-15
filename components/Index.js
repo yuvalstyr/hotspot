@@ -1,12 +1,12 @@
-import React from "react"
-import Gallery from "./Gallery"
+import React from 'react';
+import Gallery from './Gallery';
 
 const Index = () => {
   return (
     <React.Fragment>
       <Gallery />
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

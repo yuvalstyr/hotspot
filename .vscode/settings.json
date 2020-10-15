@@ -1,15 +1,10 @@
 {
-    "peacock.color": "#47ada5",
-    "debug.node.autoAttach": "off",
-    "cSpell.words": [
-        "entrypoint",
-        "postgresql",
-        "testid",
-        "yuval"
-    ],
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/.hg/store/**": true
-    }
+  "peacock.color": "#47ada5",
+  "debug.node.autoAttach": "off",
+  "cSpell.words": ["entrypoint", "postgresql", "testid", "yuval"],
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.hg/store/**": true
+  }
 }

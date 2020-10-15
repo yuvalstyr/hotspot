@@ -9,45 +9,45 @@
 // - actions
 // - XState (all XState exports)
 
-const { assign } = require("xstate/lib/actionTypes");
-const { Machine } = require("xstate");
+const { assign } = require('xstate/lib/actionTypes');
+const { Machine } = require('xstate');
 
 const changeDay = () => true;
 const canReturn = (context, event, condMeta) => {
-  console.log("state", context);
+  console.log('state', context);
   return context.canReturn;
 };
 
 const HotSpotMachine = Machine({
   context: {
-    booking: "",
+    booking: '',
     canReturn: true,
   },
-  id: "hotspot",
-  initial: "init",
+  id: 'hotspot',
+  initial: 'init',
   states: {
     init: {
       on: {
-        BOOKING: "booking",
+        BOOKING: 'booking',
       },
     },
     booking: {
-      id: "booking",
-      initial: "active",
+      id: 'booking',
+      initial: 'active',
       context: {
         canReturn: true,
       },
       states: {
         active: {
           on: {
-            CHANGE: "changing",
+            CHANGE: 'changing',
             actions: assign({ canReturn: () => false }),
           },
         },
         changing: {
           invoke: {
             src: changeDay,
-            onDone: "active",
+            onDone: 'active',
           },
         },
         adding: {},
@@ -57,7 +57,7 @@ const HotSpotMachine = Machine({
   },
   on: {
     RETURN: {
-      target: "init",
+      target: 'init',
       cond: canReturn,
     },
   },

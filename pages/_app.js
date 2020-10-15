@@ -1,15 +1,15 @@
-import { ApolloProvider } from "@apollo/client"
-import Head from "next/head"
-import PropTypes from "prop-types"
-import React from "react"
-import { ThemeProvider } from "theme-ui"
-import { useApollo } from "../apollo/apolloClient"
-import { Layout } from "../components/Layout"
-import theme from "../theme"
+import { ApolloProvider } from '@apollo/client';
+import Head from 'next/head';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { ThemeProvider } from 'theme-ui';
+import { useApollo } from '../apollo/apolloClient.ts';
+import { Layout } from '../components/Layout';
+import theme from '../theme';
 
 export default function MyApp(props) {
-  const { pageProps } = props
-  const client = useApollo(pageProps.initializeApolloState)
+  const { pageProps } = props;
+  const client = useApollo(pageProps.initializeApolloState);
 
   // console.log("theme", theme)
 
@@ -28,13 +28,13 @@ export default function MyApp(props) {
         </ApolloProvider>
       </ThemeProvider>
     </React.Fragment>
-  )
+  );
 }
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
-}
+};
 
 // const { pathname } = useRouter()
 

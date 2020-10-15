@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client"
-import { assign, Machine } from "xstate"
-import { initializeApollo } from "../apollo/apolloClient"
+import { gql } from '@apollo/client';
+import { assign, Machine } from 'xstate';
+import { initializeApollo } from '../apollo/apolloClient.ts';
 
-const client = initializeApollo()
+const client = initializeApollo();
 
 export const WORKOUTS = gql`
   query {
@@ -19,14 +19,12 @@ export const WORKOUTS = gql`
       }
     }
   }
-`
+`;
+// TODO add "@apollo/link-error": "^2.0.0-beta.3",nexusu/schema
 
 const BOOK_WORKOUT = gql`
   mutation bookWorkout($traineeId: Int!, $workoutId: Int!) {
-    updateOneWorkout(
-      data: { trainees: { connect: { id: $traineeId } } }
-      where: { id: $workoutId }
-    ) {
+    bookWorkout(traineeId: $traineeId, workoutId: $workoutId) {
       __typename
       id
       status
@@ -40,54 +38,40 @@ const BOOK_WORKOUT = gql`
       }
     }
   }
-`
+`;
 
 const getWorkouts = () =>
-  client.query({ query: WORKOUTS, fetchPolicy: "network-only" }).then((res) => {
+  client.query({ query: WORKOUTS, fetchPolicy: 'network-only' }).then((res) => {
     if (res.errors) {
-      throw res.errors
+      throw res.errors;
     } else {
-      return res.data
+      return res.data;
     }
-  })
+  });
 
-//TODO complete: after booking a workout need to update the UI by apollo cache or xstate context
 const bookWorkout = (context, event) => {
-  const { workoutId } = event
-  const { user } = context
-  console.log("user", user)
+  const { workoutId } = event;
+  const { user } = context;
+
   return client.mutate({
     mutation: BOOK_WORKOUT,
     variables: { traineeId: user.id, workoutId: workoutId },
-  })
-}
-
-const addTrineeToWorkout = (context) => {
-  const { user, weeklyWorkouts, workoutId } = context
-  const workouts = JSON.parse(JSON.stringify(weeklyWorkouts))
-  const returnWorkouts = workouts.map((w) => {
-    if (w.id === workoutId) w.trainees = [...w.trainees, user]
-    return w
-  })
-  return assign({
-    weeklyWorkouts: () => returnWorkouts,
-  })
-}
+  });
+};
 
 const assignWorkoutId = assign({
   workoutId: (context, event) => event.workoutId,
-})
+});
 export const scheduleMachine = Machine({
-  id: "schedule",
-  initial: "loading",
+  id: 'schedule',
+  initial: 'loading',
   context: {
     weeklyWorkouts: null,
     user: {
-      __typename: "User",
-      id: 2,
-      email: "bla@bla.com",
-      firstName: "לירון",
-      lastName: "בן שטרית",
+      id: 4,
+      email: 'bla@bla.com',
+      firstName: 'שרון',
+      lastName: 'גל',
     },
     workoutId: null,
   },
@@ -96,92 +80,103 @@ export const scheduleMachine = Machine({
       invoke: {
         src: getWorkouts,
         onDone: {
-          target: "workouts",
+          target: 'workouts',
           actions: assign({
             weeklyWorkouts: (_, event) => event.data.workoutsPerWeek,
           }),
         },
         onError: {
-          target: "failure",
+          target: 'failure',
         },
       },
     },
     workouts: {
       on: {
         LOADING: {},
-        BOOK: { target: "booking", actions: assignWorkoutId },
-        CANCEL: "cancelling",
-        DAY: "changingDay",
-        NEXT_WEEK: "changingWeek",
-        PERVIOUS_WEEK: "changingWeek",
+        BOOK: { target: 'booking', actions: assignWorkoutId },
+        CANCEL: 'cancelling',
+        DAY: 'changingDay',
+        NEXT_WEEK: 'changingWeek',
+        PERVIOUS_WEEK: 'changingWeek',
       },
     },
+
     booking: {
       invoke: {
-        id: "book_workout",
+        id: 'book_workout',
         src: (context, event) => bookWorkout(context, event),
         onDone: {
-          target: "booked",
-          actions: addTrineeToWorkout,
+          target: 'booked',
+          actions: assign({
+            weeklyWorkouts: (context) => {
+              const { user, weeklyWorkouts, workoutId } = context;
+              const workouts = JSON.parse(JSON.stringify(weeklyWorkouts));
+              const returnWorkouts = workouts.map((w) => {
+                if (w.id === workoutId) w.trainees = [...w.trainees, user];
+                return w;
+              });
+              return returnWorkouts;
+            },
+          }),
         },
         onError: {
-          target: "failure",
+          target: 'failure',
         },
       },
     },
     booked: {
       on: {
-        CLOSE: "workouts",
+        CLOSE: 'workouts',
       },
     },
     cancelling: {
       invoke: {
-        id: "cancel_workout",
-        src: "canceledWorkout",
+        id: 'cancel_workout',
+        src: 'canceledWorkout',
         onDone: {
-          target: "canceled",
+          target: 'canceled',
         },
         onError: {
-          target: "failure",
+          target: 'failure',
         },
       },
     },
     canceled: {
       on: {
-        CLOSE: "workouts",
+        CLOSE: 'workouts',
       },
     },
     changingDay: {
       invoke: {
-        id: "change_day",
-        src: "changeDay",
+        id: 'change_day',
+        src: 'changeDay',
         onDone: {
-          target: "workouts",
+          target: 'workouts',
         },
         onError: {
-          target: "failure",
+          target: 'failure',
         },
       },
     },
     changingWeek: {
-      type: "final",
+      type: 'final',
     },
     cancelBooking: {
       invoke: {
-        id: "cancel_workout",
-        src: "canceledWorkout",
+        id: 'cancel_workout',
+        src: 'canceledWorkout',
         onDone: {
-          target: "canceled",
+          target: 'canceled',
         },
         onError: {
-          target: "failure",
+          target: 'failure',
         },
       },
     },
     failure: {
       on: {
-        RETRY: "workouts",
+        RETRY: 'workouts',
       },
     },
   },
-})
+});

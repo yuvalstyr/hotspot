@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model User {
@@ -18,14 +18,14 @@ model User {
 }
 
 model Workout {
-  type     WorkoutType
-  status   WorkoutStatus
-  date     String
-  time     String
-  id       Int           @id @default(autoincrement())
-  trainees User[]
+  type   WorkoutType
+  status WorkoutStatus
+  date   String
+  time   String
+  id     Int           @id @default(autoincrement())
+  User   User[]
 
-  @@unique([date, time], name: "Workout_date_time_unique")
+  @@unique([date, time], name: "Workout.date_time_unique")
 }
 
 enum WorkoutStatus {
