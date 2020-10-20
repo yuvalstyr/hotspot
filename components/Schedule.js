@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { useMachine } from '@xstate/react';
 import { format, min } from 'date-fns';
 import React from 'react';
-import { Slider } from './Slider';
-import { Workouts } from './Workouts';
 import { scheduleMachine } from '../machine/scheduleMachine';
-import { useMachine } from '@xstate/react';
+import { Slider } from './Slider';
+import { Workout } from './Workout';
 
 const minDate = (workouts) => {
   const minDate = workouts?.reduce(
@@ -15,23 +16,27 @@ const minDate = (workouts) => {
 };
 
 const Schedule = () => {
-  const [current] = useMachine(scheduleMachine);
-  const { weeklyWorkouts } = current.context;
-  const datesSet = new Set(weeklyWorkouts?.map((workout) => workout.date));
+  const [current] = useMachine(scheduleMachine, { devTools: true });
+  const { workouts } = current.context;
+  const datesSet = new Set(workouts?.map((workout) => workout.date));
   const [activeDate, setActiveDate] = React.useState(null);
 
   React.useEffect(() => {
-    setActiveDate(minDate(weeklyWorkouts));
-  }, [weeklyWorkouts]);
-
+    workouts.length ? setActiveDate(minDate(workouts)) : null;
+  }, [workouts]);
+  if (current.matches('loading')) return <div>Loading...</div>;
+  console.log('workouts', workouts);
   return (
     <React.Fragment>
-      <Slider
+      <pre>{JSON.stringify(current.toStrings().join(' '), null, 2)}</pre>
+      {/* <Slider
         datesSet={datesSet}
         activeDate={activeDate}
         setActiveDate={setActiveDate}
-      />
-      <Workouts activeDate={activeDate} />
+      /> */}
+      {workouts.map((workout) => (
+        <Workout key={workout.id} workoutRef={workout.ref} />
+      ))}
     </React.Fragment>
   );
 };

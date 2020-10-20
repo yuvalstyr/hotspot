@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { gql } from '@apollo/client';
-import { assign, Machine } from 'xstate';
+import { assign, createMachine, spawn } from 'xstate';
 import { initializeApollo } from '../apollo/apolloClient.ts';
 
 const client = initializeApollo();
@@ -20,7 +21,6 @@ export const WORKOUTS = gql`
     }
   }
 `;
-// TODO add "@apollo/link-error": "^2.0.0-beta.3",nexusu/schema
 
 const BOOK_WORKOUT = gql`
   mutation bookWorkout($traineeId: Int!, $workoutId: Int!) {
@@ -40,7 +40,7 @@ const BOOK_WORKOUT = gql`
   }
 `;
 
-const getWorkouts = () =>
+export const getWorkouts = () =>
   client.query({ query: WORKOUTS, fetchPolicy: 'network-only' }).then((res) => {
     if (res.errors) {
       throw res.errors;
@@ -49,40 +49,92 @@ const getWorkouts = () =>
     }
   });
 
-const bookWorkout = (context, event) => {
+export const bookWorkout = (context, event) => {
   const { workoutId } = event;
   const { user } = context;
 
-  return client.mutate({
-    mutation: BOOK_WORKOUT,
-    variables: { traineeId: user.id, workoutId: workoutId },
-  });
+  return client
+    .mutate({
+      mutation: BOOK_WORKOUT,
+      variables: { traineeId: user.id, workoutId: workoutId },
+    })
+    .then((res) => {
+      if (res.errors) {
+        throw res.errors;
+      } else {
+        return res.data;
+      }
+    });
 };
 
-const assignWorkoutId = assign({
-  workoutId: (context, event) => event.workoutId,
-});
-export const scheduleMachine = Machine({
-  id: 'schedule',
-  initial: 'loading',
-  context: {
-    weeklyWorkouts: null,
-    user: {
-      id: 4,
-      email: 'bla@bla.com',
-      firstName: 'שרון',
-      lastName: 'גל',
+export const createWorkoutMachine = ({
+  id,
+  time,
+  hour,
+  trainees,
+  type: workoutType,
+}) =>
+  createMachine({
+    id: 'booking',
+    initial: 'active',
+    context: {
+      id,
+      time,
+      hour,
+      trainees,
+      workoutType,
     },
-    workoutId: null,
+    states: {
+      active: {
+        on: {
+          Book: 'booking',
+          Delete: {},
+        },
+      },
+      booking: {
+        invoke: {
+          src: (context, event) => bookWorkout(context, event),
+          onDone: {
+            target: 'active',
+            actions: [
+              // Todo add to actions array sendToParent event that will update paid workouts
+              assign({
+                trainees: ({ trainees }, event) => {
+                  return trainees.concat(event.trainee);
+                },
+              }),
+            ],
+          },
+          onError: {
+            target: 'failure',
+          },
+        },
+      },
+      failure: {},
+    },
+  });
+
+export const scheduleMachine = createMachine({
+  id: 'schedule',
+  context: {
+    workouts: [],
+    paidWorkout: 10,
   },
+  initial: 'loading',
   states: {
     loading: {
       invoke: {
         src: getWorkouts,
         onDone: {
-          target: 'workouts',
+          target: 'active',
           actions: assign({
-            weeklyWorkouts: (_, event) => event.data.workoutsPerWeek,
+            workouts: (_, event) =>
+              event.data.workoutsPerWeek.map((workout) => {
+                return {
+                  date: workout.date,
+                  ref: spawn(createWorkoutMachine(workout)),
+                };
+              }),
           }),
         },
         onError: {
@@ -90,93 +142,7 @@ export const scheduleMachine = Machine({
         },
       },
     },
-    workouts: {
-      on: {
-        LOADING: {},
-        BOOK: { target: 'booking', actions: assignWorkoutId },
-        CANCEL: 'cancelling',
-        DAY: 'changingDay',
-        NEXT_WEEK: 'changingWeek',
-        PERVIOUS_WEEK: 'changingWeek',
-      },
-    },
-
-    booking: {
-      invoke: {
-        id: 'book_workout',
-        src: (context, event) => bookWorkout(context, event),
-        onDone: {
-          target: 'booked',
-          actions: assign({
-            weeklyWorkouts: (context) => {
-              const { user, weeklyWorkouts, workoutId } = context;
-              const workouts = JSON.parse(JSON.stringify(weeklyWorkouts));
-              const returnWorkouts = workouts.map((w) => {
-                if (w.id === workoutId) w.trainees = [...w.trainees, user];
-                return w;
-              });
-              return returnWorkouts;
-            },
-          }),
-        },
-        onError: {
-          target: 'failure',
-        },
-      },
-    },
-    booked: {
-      on: {
-        CLOSE: 'workouts',
-      },
-    },
-    cancelling: {
-      invoke: {
-        id: 'cancel_workout',
-        src: 'canceledWorkout',
-        onDone: {
-          target: 'canceled',
-        },
-        onError: {
-          target: 'failure',
-        },
-      },
-    },
-    canceled: {
-      on: {
-        CLOSE: 'workouts',
-      },
-    },
-    changingDay: {
-      invoke: {
-        id: 'change_day',
-        src: 'changeDay',
-        onDone: {
-          target: 'workouts',
-        },
-        onError: {
-          target: 'failure',
-        },
-      },
-    },
-    changingWeek: {
-      type: 'final',
-    },
-    cancelBooking: {
-      invoke: {
-        id: 'cancel_workout',
-        src: 'canceledWorkout',
-        onDone: {
-          target: 'canceled',
-        },
-        onError: {
-          target: 'failure',
-        },
-      },
-    },
-    failure: {
-      on: {
-        RETRY: 'workouts',
-      },
-    },
+    active: {},
+    failure: {},
   },
 });

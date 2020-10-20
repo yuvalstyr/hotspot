@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { mdiArrowLeftBoldCircle, mdiArrowRightBoldCircle } from '@mdi/js';
 import Icon from '@mdi/react';

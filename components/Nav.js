@@ -19,7 +19,7 @@ export const Nav = () => {
         }}
         sx={{ variant: 'links' }}
       >
-        הזנת אימון
+        הזמנת אימון
       </NavLink>
       <NavLink p={2} sx={{ variant: 'links' }}>
         תשלומים

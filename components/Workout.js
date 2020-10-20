@@ -1,18 +1,21 @@
-import { useMachine } from '@xstate/react';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { useActor } from '@xstate/react';
 import React from 'react';
 import { Collapse } from 'react-collapse';
 import { Box, Button, Divider, Grid, Text, jsx } from 'theme-ui';
 import HebrewConversion from '../lib/translate';
-import { scheduleMachine } from '../machine/scheduleMachine';
 import { TrainersList } from './TrainersList';
 
 /** @jsx jsx */
 
-export const Workout = ({ workout }) => {
+export const Workout = ({ workoutRef }) => {
   const [isOpened, setIsOpened] = React.useState(false);
-  const [current, send] = useMachine(scheduleMachine);
+  const [state, send] = useActor(workoutRef);
+  if (!state) return <div>Loading</div>;
+  console.log('state', state);
 
-  const { time, type, id } = workout;
+  const { time, workType, trainees, id } = state.context;
+
   return (
     <React.Fragment>
       <Box p={2} color="white">
@@ -31,7 +34,7 @@ export const Workout = ({ workout }) => {
               textAlign: 'center',
             }}
           >
-            <Text>{HebrewConversion[type]}</Text>
+            <Text>{HebrewConversion[workType]}</Text>
           </Box>
           <Box>
             <Button onClick={() => setIsOpened(!isOpened)}>מי בא?</Button>
@@ -47,13 +50,7 @@ export const Workout = ({ workout }) => {
             }}
           >
             <Collapse isOpened={isOpened}>
-              <TrainersList
-                trainees={
-                  current.context.weeklyWorkouts?.filter(
-                    (workout) => workout.id === id
-                  )[0]?.trainees
-                }
-              />
+              <TrainersList trainees={trainees} />
             </Collapse>
           </Box>
         </Grid>
