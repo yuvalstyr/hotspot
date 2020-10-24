@@ -11,12 +11,12 @@ function createIsomorphicLink() {
   if (typeof window === 'undefined') {
     // server
     const { SchemaLink } = require('@apollo/client/link/schema');
-    const { schema } = require('nexus/schema');
+    const { schema } = require('@nexus/schema');
     return new SchemaLink({ schema });
   } else {
     // client
     const { HttpLink } = require('@apollo/client/link/http');
-    return new HttpLink({ uri: '/api/graphql' });
+    return new HttpLink({ uri: '/api' });
   }
 }
 
