@@ -17,26 +17,31 @@ const minDate = (workouts) => {
 
 const Schedule = () => {
   const [current] = useMachine(scheduleMachine, { devTools: true });
-  const { workouts } = current.context;
-  const datesSet = new Set(workouts?.map((workout) => workout.date));
   const [activeDate, setActiveDate] = React.useState(null);
+
+  const { workouts } = current.context;
 
   React.useEffect(() => {
     workouts.length ? setActiveDate(minDate(workouts)) : null;
   }, [workouts]);
+
+  const datesSet = new Set(workouts?.map((workout) => workout.date));
+
   if (current.matches('loading')) return <div>Loading...</div>;
-  console.log('workouts', workouts);
+
   return (
     <React.Fragment>
       <pre>{JSON.stringify(current.toStrings().join(' '), null, 2)}</pre>
-      {/* <Slider
+      <Slider
         datesSet={datesSet}
         activeDate={activeDate}
         setActiveDate={setActiveDate}
-      /> */}
-      {workouts.map((workout) => (
-        <Workout key={workout.id} workoutRef={workout.ref} />
-      ))}
+      />
+      {workouts
+        .filter((workout) => workout.date === activeDate)
+        .map((workout) => {
+          return <Workout key={workout.ref.id} workoutRef={workout.ref} />;
+        })}
     </React.Fragment>
   );
 };

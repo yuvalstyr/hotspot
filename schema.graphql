@@ -39,9 +39,10 @@ input IntFilter {
 }
 
 type Mutation {
-  bookWorkout(traineeId: Int!, workoutId: Int!): Workout
+  bookWorkout(traineeId: Int!, workoutId: Int!): User
   createOneUser(data: UserCreateInput!): User!
   createOneWorkout(data: WorkoutCreateInput!): Workout!
+  deleteBookedWorkout(traineeId: Int!, workoutId: Int!): User
   updateManyUser(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyWorkout(data: WorkoutUpdateManyMutationInput!, where: WorkoutWhereInput): BatchPayload!
   updateOneUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User

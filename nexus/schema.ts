@@ -1,7 +1,7 @@
-import { intArg, makeSchema, mutationType } from '@nexus/schema';
+import { makeSchema } from '@nexus/schema';
 import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema';
+import { Mutation, Query, User, Workout } from './types';
 import path from 'path';
-import { Query, User, Workout, Mutation } from './types';
 
 const types = { Query, User, Workout, Mutation };
 

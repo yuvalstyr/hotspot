@@ -401,9 +401,10 @@ export interface NexusGenFieldTypes {
     count: number; // Int!
   }
   Mutation: { // field return type
-    bookWorkout: NexusGenRootTypes['Workout'] | null; // Workout
+    bookWorkout: NexusGenRootTypes['User'] | null; // User
     createOneUser: NexusGenRootTypes['User']; // User!
     createOneWorkout: NexusGenRootTypes['Workout']; // Workout!
+    deleteBookedWorkout: NexusGenRootTypes['User'] | null; // User
     updateManyUser: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyWorkout: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateOneUser: NexusGenRootTypes['User'] | null; // User
@@ -445,6 +446,10 @@ export interface NexusGenArgTypes {
     }
     createOneWorkout: { // args
       data: NexusGenInputs['WorkoutCreateInput']; // WorkoutCreateInput!
+    }
+    deleteBookedWorkout: { // args
+      traineeId: number; // Int!
+      workoutId: number; // Int!
     }
     updateManyUser: { // args
       data: NexusGenInputs['UserUpdateManyMutationInput']; // UserUpdateManyMutationInput!

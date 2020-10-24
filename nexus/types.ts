@@ -68,7 +68,7 @@ export const Mutation = mutationType({
     t.crud.updateManyWorkout();
     t.crud.updateManyUser();
     t.field('bookWorkout', {
-      type: 'Workout',
+      type: 'User',
       args: {
         traineeId: intArg({ required: true }),
         workoutId: intArg({ required: true }),
@@ -78,7 +78,7 @@ export const Mutation = mutationType({
         const user = await ctx.prisma.user.findOne({
           where: { id: traineeId },
         });
-        if (!user) throw new Error('User not logged');
+        if (!user) throw new Error('User not Signup');
         const { trainees } = await ctx.prisma.workout.findOne({
           where: { id: workoutId },
           select: { trainees: { select: { id: true } } },
@@ -86,12 +86,40 @@ export const Mutation = mutationType({
         if (trainees.some((user) => user.id === traineeId)) {
           throw new Error('already booked');
         }
-        const workout = await ctx.prisma.workout.update({
+        await ctx.prisma.workout.update({
           data: { trainees: { connect: { id: traineeId } } },
           where: { id: workoutId },
         });
-        return workout;
+        return user;
       },
-    });
+    }),
+      t.field('deleteBookedWorkout', {
+        type: 'User',
+        args: {
+          traineeId: intArg({ required: true }),
+          workoutId: intArg({ required: true }),
+        },
+        resolve: async (_, args, ctx) => {
+          const { traineeId, workoutId } = args;
+          const user = await ctx.prisma.user.findOne({
+            where: { id: traineeId },
+          });
+          if (!user) throw new Error('User not Signup');
+          const workout = await ctx.prisma.workout.findOne({
+            where: { id: workoutId },
+            select: { trainees: { select: { id: true } } },
+          });
+          if (!workout) throw new Error('Workout Does not exists!!!');
+          const { trainees } = workout;
+          const newTraineesArray = trainees.filter(
+            (user) => user.id !== traineeId
+          );
+          await ctx.prisma.workout.update({
+            data: { trainees: { set: newTraineesArray } },
+            where: { id: workoutId },
+          });
+          return user;
+        },
+      });
   },
 });

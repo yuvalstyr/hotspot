@@ -27,6 +27,20 @@ const theme = {
       color: '#a40606',
     },
   },
+  alerts: {
+    primary: {
+      color: 'background',
+      bg: 'primary',
+    },
+    error: {
+      color: 'text',
+      bg: '#fc4e03',
+    },
+    muted: {
+      color: 'text',
+      bg: 'muted',
+    },
+  },
   containers: {
     card: {
       boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',

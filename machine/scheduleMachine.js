@@ -27,15 +27,21 @@ const BOOK_WORKOUT = gql`
     bookWorkout(traineeId: $traineeId, workoutId: $workoutId) {
       __typename
       id
-      status
-      type
-      trainees {
-        __typename
-        id
-        firstName
-        lastName
-        email
-      }
+      firstName
+      lastName
+      email
+    }
+  }
+`;
+
+const UNBOOK_WORKOUT = gql`
+  mutation deleteBookedWorkout($traineeId: Int!, $workoutId: Int!) {
+    deleteBookedWorkout(traineeId: $traineeId, workoutId: $workoutId) {
+      __typename
+      id
+      firstName
+      lastName
+      email
     }
   }
 `;
@@ -52,10 +58,26 @@ export const getWorkouts = () =>
 export const bookWorkout = (context, event) => {
   const { workoutId } = event;
   const { user } = context;
-
   return client
     .mutate({
       mutation: BOOK_WORKOUT,
+      variables: { traineeId: user.id, workoutId: workoutId },
+    })
+    .then((res) => {
+      if (res.errors) {
+        throw res.errors;
+      } else {
+        return res.data;
+      }
+    });
+};
+
+export const unbookWorkout = (context, event) => {
+  const { workoutId } = event;
+  const { user } = context;
+  return client
+    .mutate({
+      mutation: UNBOOK_WORKOUT,
       variables: { traineeId: user.id, workoutId: workoutId },
     })
     .then((res) => {
@@ -73,8 +95,9 @@ export const createWorkoutMachine = ({
   hour,
   trainees,
   type: workoutType,
-}) =>
-  createMachine({
+  user,
+}) => {
+  return createMachine({
     id: 'booking',
     initial: 'active',
     context: {
@@ -83,12 +106,13 @@ export const createWorkoutMachine = ({
       hour,
       trainees,
       workoutType,
+      user,
     },
     states: {
       active: {
         on: {
-          Book: 'booking',
-          Delete: {},
+          BOOK: 'booking',
+          DELETE: 'unbooking',
         },
       },
       booking: {
@@ -99,26 +123,71 @@ export const createWorkoutMachine = ({
             actions: [
               // Todo add to actions array sendToParent event that will update paid workouts
               assign({
-                trainees: ({ trainees }, event) => {
-                  return trainees.concat(event.trainee);
+                trainees: ({ trainees }, { data }) => {
+                  return trainees.concat(data.bookWorkout);
                 },
               }),
             ],
           },
           onError: {
             target: 'failure',
+            actions: assign({
+              error: (_, event) => {
+                console.log('event', event);
+                return event.data.message;
+              },
+            }),
           },
         },
       },
-      failure: {},
+      unbooking: {
+        invoke: {
+          src: (context, event) => unbookWorkout(context, event),
+          onDone: {
+            target: 'active',
+            actions: [
+              // Todo add to actions array sendToParent event that will update paid workouts
+              assign({
+                trainees: (context, event) => {
+                  const {
+                    data: { deleteBookedWorkout: user },
+                  } = event;
+
+                  return trainees.filter((trainee) => trainee.id !== user.id);
+                },
+              }),
+            ],
+          },
+          onError: {
+            target: 'failure',
+            actions: assign({
+              error: (_, event) => {
+                console.log('event', event);
+                return event.data.message;
+              },
+            }),
+          },
+        },
+      },
+      failure: {
+        on: {
+          CLOSE: 'active',
+        },
+      },
     },
   });
-
+};
 export const scheduleMachine = createMachine({
   id: 'schedule',
   context: {
     workouts: [],
     paidWorkout: 10,
+    user: {
+      id: 5,
+      email: 'bla@bla.com',
+      firstName: 'אלי',
+      lastName: 'בן',
+    },
   },
   initial: 'loading',
   states: {
@@ -128,13 +197,16 @@ export const scheduleMachine = createMachine({
         onDone: {
           target: 'active',
           actions: assign({
-            workouts: (_, event) =>
-              event.data.workoutsPerWeek.map((workout) => {
+            workouts: (context, event) => {
+              return event.data.workoutsPerWeek.map((workout) => {
                 return {
                   date: workout.date,
-                  ref: spawn(createWorkoutMachine(workout)),
+                  ref: spawn(
+                    createWorkoutMachine({ ...workout, user: context.user })
+                  ),
                 };
-              }),
+              });
+            },
           }),
         },
         onError: {

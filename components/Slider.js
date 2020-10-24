@@ -4,7 +4,10 @@ import { mdiArrowLeftBoldCircle, mdiArrowRightBoldCircle } from '@mdi/js';
 import Icon from '@mdi/react';
 import { Flex, jsx } from 'theme-ui';
 import { DayAvatar } from './DayAvatar';
+import propTypes from 'prop-types';
+
 /** @jsx jsx */
+
 export const Slider = ({ datesSet, activeDate, setActiveDate }) => {
   return (
     <Flex
@@ -36,4 +39,10 @@ export const Slider = ({ datesSet, activeDate, setActiveDate }) => {
       />
     </Flex>
   );
+};
+
+Slider.propTypes = {
+  datesSet: propTypes.instanceOf(Set),
+  activeDate: propTypes.string,
+  setActiveDate: propTypes.func,
 };
