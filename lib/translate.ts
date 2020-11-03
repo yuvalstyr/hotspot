@@ -10,6 +10,6 @@ const HebrewConversion = {
   wednesday: { full: 'רביעי', firstLetter: 'ד' },
   thursday: { full: 'חמישי', firstLetter: 'ה' },
   friday: { full: 'שישי', firstLetter: 'ו' },
-};
+}
 
-export default HebrewConversion;
+export default HebrewConversion

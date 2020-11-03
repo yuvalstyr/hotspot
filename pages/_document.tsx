@@ -1,11 +1,16 @@
-import Document, { Head, Html, Main, NextScript } from 'next/document';
-import React from 'react';
+import Document, { Head, Html, Main, NextScript } from 'next/document'
+import React from 'react'
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="he">
         <Head>
+          <title>My page</title>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width"
+          />
           <link rel="icon" type="image/png" href="/favicon.png" />
         </Head>
         <body dir="rtl">
@@ -13,6 +18,6 @@ export default class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }

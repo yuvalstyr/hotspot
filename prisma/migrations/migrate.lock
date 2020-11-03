@@ -1,4 +1,4 @@
 # Prisma Migrate lockfile v1
 
-20201014074726-init
-20201014124151-change-context-name
+20201101125920-init
+20201101170627-remove-time-field

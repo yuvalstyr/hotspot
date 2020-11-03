@@ -1,13 +1,19 @@
-import React from 'react';
-import { format } from 'date-fns';
-import heLocale from 'date-fns/locale/he';
-import { Button, jsx } from 'theme-ui';
+import React, { Dispatch, SetStateAction } from 'react'
+import { format } from 'date-fns'
+import heLocale from 'date-fns/locale/he'
+import { Button, jsx } from 'theme-ui'
 
 /** @jsx jsx */
 
-export const DayAvatar = ({ date, activeDate, setActiveDate }) => {
-  const firstLetter = format(new Date(date), 'EEEEE', { locale: heLocale });
-  const shortDate = format(new Date(date), 'dd/MM');
+interface props {
+  date: string
+  activeDate: string
+  setActiveDate: Dispatch<SetStateAction<string>>
+}
+
+const DayAvatar: React.FC<props> = ({ date, activeDate, setActiveDate }) => {
+  const firstLetter = format(new Date(date), 'EEEEE', { locale: heLocale })
+  const shortDate = format(new Date(date), 'dd/MM')
 
   return (
     <div
@@ -36,5 +42,7 @@ export const DayAvatar = ({ date, activeDate, setActiveDate }) => {
         {firstLetter}
       </Button>
     </div>
-  );
-};
+  )
+}
+
+export default DayAvatar

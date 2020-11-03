@@ -20,12 +20,10 @@ model User {
 model Workout {
   type     WorkoutType
   status   WorkoutStatus
-  date     String
+  date     DateTime      @default(now())
   time     String
   id       Int           @id @default(autoincrement())
   trainees User[]
-
-  @@unique([date, time], name: "Workout_date_time_unique")
 }
 
 enum WorkoutStatus {

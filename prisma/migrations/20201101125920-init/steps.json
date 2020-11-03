@@ -201,8 +201,33 @@
       "tag": "CreateField",
       "model": "Workout",
       "field": "date",
-      "type": "String",
+      "type": "DateTime",
       "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "date"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "date"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
     },
     {
       "tag": "CreateField",
@@ -257,29 +282,9 @@
     {
       "tag": "CreateField",
       "model": "Workout",
-      "field": "User",
+      "field": "trainees",
       "type": "User",
       "arity": "List"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Model",
-          "model": "Workout",
-          "arguments": [
-            {
-              "name": "",
-              "value": "[date, time]"
-            },
-            {
-              "name": "name",
-              "value": "\"Workout.date_time_unique\""
-            }
-          ]
-        },
-        "directive": "unique"
-      }
     }
   ]
 }

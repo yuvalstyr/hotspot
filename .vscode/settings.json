@@ -1,4 +1,8 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
   "peacock.color": "#47ada5",
   "debug.node.autoAttach": "off",
   "cSpell.words": ["entrypoint", "postgresql", "testid", "yuval"],
@@ -6,5 +10,6 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/.hg/store/**": true
-  }
+  },
+  "prisma.plugin.nextjs.hasPrompted": true
 }

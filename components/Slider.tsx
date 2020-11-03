@@ -1,14 +1,23 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React from 'react';
-import { mdiArrowLeftBoldCircle, mdiArrowRightBoldCircle } from '@mdi/js';
-import Icon from '@mdi/react';
-import { Flex, jsx } from 'theme-ui';
-import { DayAvatar } from './DayAvatar';
-import propTypes from 'prop-types';
+import React, { Dispatch, SetStateAction } from 'react'
+import { mdiArrowLeftBoldCircle, mdiArrowRightBoldCircle } from '@mdi/js'
+import Icon from '@mdi/react'
+import { Flex, jsx } from 'theme-ui'
+import DayAvatar from './DayAvatar'
 
 /** @jsx jsx */
 
-export const Slider = ({ datesSet, activeDate, setActiveDate }) => {
+interface props {
+  datesSet: string[]
+  activeDate: string
+  setActiveDate: Dispatch<SetStateAction<string>>
+}
+
+export const Slider: React.FC<props> = ({
+  datesSet,
+  activeDate,
+  setActiveDate,
+}) => {
   return (
     <Flex
       sx={{
@@ -38,11 +47,5 @@ export const Slider = ({ datesSet, activeDate, setActiveDate }) => {
         sx={{ color: 'secondary', alignSelf: 'center' }}
       />
     </Flex>
-  );
-};
-
-Slider.propTypes = {
-  datesSet: propTypes.instanceOf(Set),
-  activeDate: propTypes.string,
-  setActiveDate: propTypes.func,
-};
+  )
+}

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Flex, NavLink, jsx } from 'theme-ui';
-import { useRouter } from 'next/router';
+import React from 'react'
+import { Flex, NavLink, jsx } from 'theme-ui'
+import { useRouter } from 'next/router'
 
 /** @jsx jsx */
 
-export const Nav = () => {
-  const router = useRouter();
+const Nav: React.FC = () => {
+  const router = useRouter()
 
   return (
     <Flex as="nav" sx={{ backgroundColor: 'secondary' }}>
@@ -15,7 +15,7 @@ export const Nav = () => {
       <NavLink
         p={2}
         onClick={() => {
-          router.push('/schedule');
+          router.push('/schedule')
         }}
         sx={{ variant: 'links' }}
       >
@@ -25,5 +25,7 @@ export const Nav = () => {
         תשלומים
       </NavLink>
     </Flex>
-  );
-};
+  )
+}
+
+export default Nav

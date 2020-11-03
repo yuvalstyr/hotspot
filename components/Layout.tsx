@@ -1,12 +1,10 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react';
-import { jsx, Image, Flex } from 'theme-ui';
-import { Nav } from '../components/Nav';
+import React from 'react'
+import { jsx, Image, Flex } from 'theme-ui'
+import { Nav } from './Nav'
 
 /** @jsx jsx */
 
-export const Layout = ({ props }) => {
-  const { Component, pageProps } = props;
+const Layout: React.FC = ({ children }) => {
   return (
     <div
       sx={{
@@ -27,7 +25,7 @@ export const Layout = ({ props }) => {
           }}
         >
           <Nav />
-          <Image src={'/logo.jpg'} variant="logo" />
+          <Image src="/logo.jpg" variant="logo" />
         </Flex>
       </header>
       <main
@@ -38,13 +36,15 @@ export const Layout = ({ props }) => {
           justifyContent: 'center',
         }}
       >
-        <Component {...pageProps} />
+        {children}
       </main>
       <footer
         sx={{
           width: '100%',
         }}
-      ></footer>
+      />
     </div>
-  );
-};
+  )
+}
+
+export default Layout

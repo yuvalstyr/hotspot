@@ -18,14 +18,11 @@ model User {
 }
 
 model Workout {
-  type   WorkoutType
-  status WorkoutStatus
-  date   String
-  time   String
-  id     Int           @id @default(autoincrement())
-  User   User[]
-
-  @@unique([date, time], name: "Workout.date_time_unique")
+  type     WorkoutType
+  status   WorkoutStatus
+  date     DateTime      @default(now())
+  id       Int           @id @default(autoincrement())
+  trainees User[]
 }
 
 enum WorkoutStatus {

@@ -1,22 +1,18 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React from 'react';
+import * as React from 'react';
 import { useActor } from '@xstate/react';
-import { Interpreter } from 'xstate';
 import { Collapse } from 'react-collapse';
-import { Box, Button, Divider, Grid, Text, jsx, Close } from 'theme-ui';
+import { Box, Close, Divider, Button, Grid, Text, Alert } from 'theme-ui';
+import { EventObject, Interpreter } from 'xstate';
 import HebrewConversion from '../lib/translate';
-import { TrainersList } from './TrainersList';
-import propTypes from 'prop-types';
-import { Alert } from 'theme-ui';
 
 /** @jsx jsx */
 
-const WorkoutButton = ({ workoutRef }) => {
+const WorkoutButton: React.FunctionComponent<any> = ({ workoutRef }) => {
   const [state, send] = useActor(workoutRef);
   if (!state) return null;
   const { id: workoutId, user } = state.context;
   const isAlreadyBooked = state.context.trainees.some(
-    (trainee) => trainee.id === user.id
+    (trainee: any) => trainee.id === user.id
   );
   const typeObj = isAlreadyBooked
     ? { type: 'DELETE', text: 'בטל' }
@@ -33,9 +29,9 @@ const WorkoutButton = ({ workoutRef }) => {
   );
 };
 
-export const Workout = ({ workoutRef }) => {
+export const Workout: React.FunctionComponent<any> = ({ workoutRef }) => {
   const [isOpened, setIsOpened] = React.useState(false);
-  const [state, send] = useActor(workoutRef);
+  const [state, send] = useActor<Iworkout, EventObject>(workoutRef);
 
   if (!state) return null;
 
@@ -91,8 +87,4 @@ export const Workout = ({ workoutRef }) => {
       <Divider bg="secondary" />
     </React.Fragment>
   );
-};
-
-Workout.propTypes = {
-  workoutRef: propTypes.instanceOf(Interpreter),
 };

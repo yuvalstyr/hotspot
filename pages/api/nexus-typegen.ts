@@ -7,12 +7,12 @@
 import { core } from "@nexus/schema"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
-    date<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "Date";
+    date<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "DateTime";
   }
 }
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
-    date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Date";
+    date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
   }
 }
 
@@ -33,25 +33,24 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
-  Date: any
+  DateTime: any
 }
 
 export interface NexusGenRootTypes {
   Mutation: {};
   Query: {};
   User: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
     firstName?: string | null; // String
     id?: number | null; // Int
     lastName?: string | null; // String
     left?: number | null; // Int
-    name?: string | null; // String
   }
   Workout: { // root type
-    date?: string | null; // String
+    date?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: number | null; // Int
     status?: string | null; // String
-    time?: string | null; // String
     type?: string | null; // String
   }
 }
@@ -62,32 +61,34 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   Float: NexusGenScalars['Float'];
   Boolean: NexusGenScalars['Boolean'];
   ID: NexusGenScalars['ID'];
-  Date: NexusGenScalars['Date'];
+  DateTime: NexusGenScalars['DateTime'];
 }
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
+    addWeekToAllWorkouts: number | null; // Int
     bookWorkout: NexusGenRootTypes['User'] | null; // User
     deleteBookedWorkout: NexusGenRootTypes['User'] | null; // User
+    updateWorkoutDate: NexusGenRootTypes['Workout'] | null; // Workout
   }
   Query: { // field return type
     todayWorkouts: Array<NexusGenRootTypes['Workout'] | null> | null; // [Workout]
+    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     workouts: Array<NexusGenRootTypes['Workout'] | null> | null; // [Workout]
     workoutsPerWeek: Array<NexusGenRootTypes['Workout'] | null> | null; // [Workout]
   }
   User: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     email: string | null; // String
     firstName: string | null; // String
     id: number | null; // Int
     lastName: string | null; // String
     left: number | null; // Int
-    name: string | null; // String
   }
   Workout: { // field return type
-    date: string | null; // String
+    date: NexusGenScalars['DateTime'] | null; // DateTime
     id: number | null; // Int
     status: string | null; // String
-    time: string | null; // String
     trainees: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     type: string | null; // String
   }
@@ -102,6 +103,15 @@ export interface NexusGenArgTypes {
     deleteBookedWorkout: { // args
       traineeId: number; // Int!
       workoutId: number; // Int!
+    }
+    updateWorkoutDate: { // args
+      date?: NexusGenScalars['DateTime'] | null; // DateTime
+      workoutId: number; // Int!
+    }
+  }
+  Query: {
+    workouts: { // args
+      workoutId?: number | null; // Int
     }
   }
 }
@@ -119,7 +129,7 @@ export type NexusGenEnumNames = never;
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Date" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 

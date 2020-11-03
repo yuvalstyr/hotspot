@@ -2,21 +2,21 @@ import {
   ApolloClient,
   InMemoryCache,
   NormalizedCacheObject,
-} from '@apollo/client';
-import { useMemo } from 'react';
+} from '@apollo/client'
+import { useMemo } from 'react'
 
-let apolloClient: ApolloClient<NormalizedCacheObject>;
+let apolloClient: ApolloClient<NormalizedCacheObject>
 
 function createIsomorphicLink() {
   if (typeof window === 'undefined') {
     // server
-    const { SchemaLink } = require('@apollo/client/link/schema');
-    const { schema } = require('@nexus/schema');
-    return new SchemaLink({ schema });
+    const { SchemaLink } = require('@apollo/client/link/schema')
+    const { schema } = require('@nexus/schema')
+    return new SchemaLink({ schema })
   } else {
     // client
-    const { HttpLink } = require('@apollo/client/link/http');
-    return new HttpLink({ uri: '/api' });
+    const { HttpLink } = require('@apollo/client/link/http')
+    return new HttpLink({ uri: '/api' })
   }
 }
 
@@ -25,23 +25,23 @@ function createApolloClient() {
     ssrMode: typeof window === 'undefined',
     link: createIsomorphicLink(),
     cache: new InMemoryCache(),
-  });
+  })
 }
 
-export function initializeApollo(initialState = null) {
-  const _apolloClient = apolloClient ?? createApolloClient();
+export function initializeApollo(initialState: any = null) {
+  const _apolloClient = apolloClient ?? createApolloClient()
 
   if (initialState) {
-    _apolloClient.cache.restore(initialState);
+    _apolloClient.cache.restore(initialState)
   }
 
-  if (typeof window === 'undefined') return _apolloClient;
-  apolloClient = apolloClient ?? _apolloClient;
+  if (typeof window === 'undefined') return _apolloClient
+  apolloClient = apolloClient ?? _apolloClient
 
-  return apolloClient;
+  return apolloClient
 }
 
-export function useApollo(initialState) {
-  const store = useMemo(() => initializeApollo(initialState), [initialState]);
-  return store;
+export function useApollo(initialState: any) {
+  const store = useMemo(() => initializeApollo(initialState), [initialState])
+  return store
 }
