@@ -29,7 +29,9 @@ const Schedule: React.FC = () => {
     }
   }, [workouts])
 
-  const datesSet = new Set(workouts?.map((workout) => workout.date))
+  const datesSet = new Set(
+    workouts?.map((workout) => format(new Date(workout.date), 'MM/dd/yy')),
+  )
 
   if (current.matches('loading')) return <div>Loading...</div>
 
