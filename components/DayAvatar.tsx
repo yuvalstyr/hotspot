@@ -7,7 +7,7 @@ import { uuid } from 'uuidv4'
 /** @jsx jsx */
 
 interface props {
-  date: Date
+  date: string
   activeDate: string
   setActiveDate: Dispatch<SetStateAction<string>>
 }

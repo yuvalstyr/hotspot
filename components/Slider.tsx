@@ -8,7 +8,7 @@ import DayAvatar from './DayAvatar'
 /** @jsx jsx */
 
 interface props {
-  datesSet: Set<Date>
+  datesSet: Set<string>
   activeDate: string
   setActiveDate: Dispatch<SetStateAction<string>>
 }
