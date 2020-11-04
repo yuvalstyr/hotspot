@@ -3,7 +3,7 @@ import React from 'react'
 import { Box, Text } from 'theme-ui'
 
 const TrainersList: React.FunctionComponent<{
-  trainees: User[]
+  trainees: User[] | undefined
 }> = ({ trainees }) => {
   if (!trainees) throw new Error('no trainees')
   if (!trainees?.length) return <div />

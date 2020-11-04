@@ -14,7 +14,7 @@ if (
   })
 }
 
-const SchedulePage = (props) => {
+const SchedulePage = () => {
   return <Schedule />
 }
 

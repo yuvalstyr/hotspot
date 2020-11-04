@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import type { Workout as IWorkout } from '@prisma/client'
+
 import { useMachine } from '@xstate/react'
 import { format, min } from 'date-fns'
 import React from 'react'
 import { scheduleMachine } from '../machine/scheduleMachine'
+import { IWorkout } from '../machine/workoutMachine.types'
 import { Slider } from './Slider'
 import { Workout } from './Workout'
 
@@ -13,17 +14,19 @@ const getMinDate = (workouts: IWorkout[]) => {
     new Date(workouts[0]?.date),
   )
 
-  return minDate ? format(minDate, 'MM/dd/yy') : null
+  return minDate ? format(minDate, 'MM/dd/yy') : ''
 }
 
 const Schedule: React.FC = () => {
   const [current] = useMachine(scheduleMachine, { devTools: true })
-  const [activeDate, setActiveDate] = React.useState(null)
-
   const { workouts } = current.context
 
+  const [activeDate, setActiveDate] = React.useState('')
+
   React.useEffect(() => {
-    workouts.length ? setActiveDate(getMinDate(workouts)) : null
+    if (workouts) {
+      workouts.length ? setActiveDate(getMinDate(workouts)) : ''
+    }
   }, [workouts])
 
   const datesSet = new Set(workouts?.map((workout) => workout.date))
@@ -39,9 +42,13 @@ const Schedule: React.FC = () => {
         setActiveDate={setActiveDate}
       />
       {workouts
-        .filter((workout) => workout.date === activeDate)
+        .filter((workout) => {
+          return format(new Date(workout.date), 'MM/dd/yy') === activeDate
+        })
         .map((workout) => {
-          return <Workout key={workout.ref.id} workoutRef={workout.ref} />
+          if (workout.ref) {
+            return <Workout key={workout.id} workoutRef={workout.ref} />
+          }
         })}
     </React.Fragment>
   )

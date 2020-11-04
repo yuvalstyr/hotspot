@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
 export const WORKOUTS = gql`
   query {
@@ -7,7 +7,6 @@ export const WORKOUTS = gql`
       status
       type
       date
-      time
       trainees {
         id
         firstName
@@ -15,7 +14,7 @@ export const WORKOUTS = gql`
       }
     }
   }
-`;
+`
 
 export const BOOK_WORKOUT = gql`
   mutation bookWorkout($traineeId: Int!, $workoutId: Int!) {
@@ -27,7 +26,7 @@ export const BOOK_WORKOUT = gql`
       email
     }
   }
-`;
+`
 
 export const UNBOOK_WORKOUT = gql`
   mutation deleteBookedWorkout($traineeId: Int!, $workoutId: Int!) {
@@ -39,4 +38,4 @@ export const UNBOOK_WORKOUT = gql`
       email
     }
   }
-`;
+`

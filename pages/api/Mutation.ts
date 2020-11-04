@@ -1,4 +1,4 @@
-import { arg, core, intArg, mutationType } from '@nexus/schema'
+import { intArg, mutationType } from '@nexus/schema'
 import { addDays } from 'date-fns'
 import { prisma } from './index'
 
@@ -10,7 +10,7 @@ export const Mutation = mutationType({
         traineeId: intArg({ required: true }),
         workoutId: intArg({ required: true }),
       },
-      resolve: async (_, args, ctx) => {
+      resolve: async (_, args) => {
         const { traineeId, workoutId } = args
         const user = await prisma.user.findOne({
           where: { id: traineeId },
@@ -39,7 +39,7 @@ export const Mutation = mutationType({
         traineeId: intArg({ required: true }),
         workoutId: intArg({ required: true }),
       },
-      resolve: async (_, args, ctx) => {
+      resolve: async (_, args) => {
         const { traineeId, workoutId } = args
         const user = await prisma.user.findOne({
           where: { id: traineeId },
@@ -52,7 +52,7 @@ export const Mutation = mutationType({
         if (!workout) throw new Error('Workout Does not exists!!!')
         const { trainees } = workout
         const newTraineesArray = trainees.filter(
-          (user) => user.id !== traineeId
+          (user) => user.id !== traineeId,
         )
         await prisma.workout.update({
           data: { trainees: { set: newTraineesArray } },
@@ -67,7 +67,7 @@ export const Mutation = mutationType({
         workoutId: intArg({ required: true }),
         date: 'DateTime',
       },
-      resolve: async (_, args, ctx) => {
+      resolve: async (_, args) => {
         const workout = await prisma.workout.findOne({
           where: { id: args.workoutId },
         })
@@ -86,14 +86,14 @@ export const Mutation = mutationType({
         let count = 0
 
         await Promise.all(
-          workouts.map(async (w, index) => {
+          workouts.map(async (w) => {
             const workout = await prisma.workout.update({
               where: { id: w.id },
-              data: { date: addDays(w.date, 7) },
+              data: { date: addDays(w.date, 1) },
             })
             if (workout) count++
             prisma.$disconnect()
-          })
+          }),
         )
         return count
       },

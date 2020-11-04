@@ -1,41 +1,52 @@
-import * as React from 'react';
-import { useActor } from '@xstate/react';
-import { Collapse } from 'react-collapse';
-import { Box, Close, Divider, Button, Grid, Text, Alert } from 'theme-ui';
-import { EventObject, Interpreter } from 'xstate';
-import HebrewConversion from '../lib/translate';
+import * as React from 'react'
+import { useActor } from '@xstate/react'
+import { Collapse } from 'react-collapse'
+import { Alert, Box, Button, Close, Divider, Grid, Text, jsx } from 'theme-ui'
+import { translate } from '../lib/translate'
+import {
+  WorkoutActorType,
+  workoutsEvents,
+} from '../machine/workoutMachine.types'
+import TrainersList from './TrainersList'
+import { format } from 'date-fns'
 
 /** @jsx jsx */
 
-const WorkoutButton: React.FunctionComponent<any> = ({ workoutRef }) => {
-  const [state, send] = useActor(workoutRef);
-  if (!state) return null;
-  const { id: workoutId, user } = state.context;
-  const isAlreadyBooked = state.context.trainees.some(
-    (trainee: any) => trainee.id === user.id
-  );
-  const typeObj = isAlreadyBooked
-    ? { type: 'DELETE', text: 'בטל' }
-    : { type: 'BOOK', text: 'הזמן' };
+interface Prop {
+  workoutRef: WorkoutActorType
+}
+
+const WorkoutButton: React.FunctionComponent<Prop> = ({ workoutRef }) => {
+  const [state, send] = useActor(workoutRef)
+  if (!state) return null
+
+  const { id: workoutId, user } = state.context
+
+  const isAlreadyBooked = state.context.trainees?.some(
+    (trainee) => trainee.id === user.id,
+  )
+  const bookEvent = isAlreadyBooked ? 'DELETE' : 'BOOK'
 
   return (
     <Box>
       <Button
-        onClick={() => send({ type: typeObj.type, workoutId: workoutId })}
+        onClick={() =>
+          send({ type: workoutsEvents[bookEvent], workoutId: workoutId })
+        }
       >
-        {typeObj.text}
+        {translate(bookEvent)}
       </Button>
     </Box>
-  );
-};
+  )
+}
 
-export const Workout: React.FunctionComponent<any> = ({ workoutRef }) => {
-  const [isOpened, setIsOpened] = React.useState(false);
-  const [state, send] = useActor<Iworkout, EventObject>(workoutRef);
+export const Workout: React.FunctionComponent<Prop> = ({ workoutRef }) => {
+  const [isOpened, setIsOpened] = React.useState(false)
+  const [state, send] = useActor(workoutRef)
 
-  if (!state) return null;
-
-  const { time, workoutType, trainees, id } = state.context;
+  if (!state) return null
+  console.log('state', state)
+  const { date, workoutType, trainees } = state.context
 
   return (
     <React.Fragment>
@@ -45,7 +56,7 @@ export const Workout: React.FunctionComponent<any> = ({ workoutRef }) => {
           columns={['auto minmax(50px,1fr) auto  auto']}
           sx={{ justifyContent: 'space-between' }}
         >
-          <Box>{time}</Box>
+          <Box>{format(new Date(date), 'kk:kk')}</Box>
           <Box
             sx={{
               color: 'primary',
@@ -55,7 +66,7 @@ export const Workout: React.FunctionComponent<any> = ({ workoutRef }) => {
               textAlign: 'center',
             }}
           >
-            <Text>{HebrewConversion[workoutType]}</Text>
+            <Text>{translate(workoutType)}</Text>
           </Box>
           <Box>
             <Button onClick={() => setIsOpened(!isOpened)}>מי בא?</Button>
@@ -79,12 +90,16 @@ export const Workout: React.FunctionComponent<any> = ({ workoutRef }) => {
               }}
             >
               {state.context.error}
-              <Close ml="auto" mr={-2} onClick={() => send('CLOSE')} />
+              <Close
+                ml="auto"
+                mr={-2}
+                onClick={() => send({ type: workoutsEvents.CLOSE })}
+              />
             </Alert>
           )}
         </Grid>
       </Box>
       <Divider bg="secondary" />
     </React.Fragment>
-  );
-};
+  )
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { jsx, Image, Flex } from 'theme-ui'
-import { Nav } from './Nav'
+import Nav from './Nav'
 
 /** @jsx jsx */
 

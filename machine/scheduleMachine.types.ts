@@ -1,4 +1,5 @@
-import { User, Workout } from '@prisma/client'
+import { User } from '@prisma/client'
+import { IWorkout, WorkoutActorType } from './workoutMachine.types'
 
 export enum scheduleStates {
   loading = 'loading',
@@ -16,8 +17,14 @@ export interface ScheduleStateSchema {
 
 export type ScheduleMachineEvent = { type: 'CLOSE' }
 
+export interface workoutsActor {
+  date: Date
+  id: number
+  ref: WorkoutActorType
+}
+
 export interface ScheduleMachineContext {
-  workouts: (Workout[] & { trainees: User[] }) | null
+  workouts: IWorkout[]
   paidWorkout: number
   user: User
 }

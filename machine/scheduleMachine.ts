@@ -1,5 +1,4 @@
 import { ApolloQueryResult } from '@apollo/client'
-import { User, Workout } from '@prisma/client'
 import { assign, Machine, spawn } from 'xstate'
 import { initializeApollo } from '../apollo/apolloClient'
 import { WORKOUTS } from '../lib/gql'
@@ -10,6 +9,7 @@ import {
   ScheduleStateSchema,
 } from './scheduleMachine.types'
 import { createWorkoutMachine } from './workoutMachine'
+import { IWorkout } from './workoutMachine.types'
 
 export const client = initializeApollo()
 
@@ -29,7 +29,7 @@ export const scheduleMachine = Machine<
 >({
   id: 'schedule',
   context: {
-    workouts: null,
+    workouts: [],
     paidWorkout: 10,
     user: {
       id: 5,
@@ -50,17 +50,16 @@ export const scheduleMachine = Machine<
           actions: assign({
             workouts: (context, event) => {
               const { user } = context
-              return event.data.workoutsPerWeek.map(
-                (workout: Workout & { trainees: User[] }) => {
-                  const { id, date, trainees, type } = workout
-                  return {
-                    date: workout.date,
-                    ref: spawn(
-                      createWorkoutMachine({ id, date, trainees, type, user }),
-                    ),
-                  }
-                },
-              )
+              return event.data.workoutsPerWeek.map((workout: IWorkout) => {
+                const { id, date, trainees, type } = workout
+                return {
+                  id,
+                  date,
+                  ref: spawn(
+                    createWorkoutMachine({ id, date, trainees, type, user }),
+                  ),
+                }
+              })
             },
           }),
         },

@@ -5,6 +5,7 @@ import { ThemeProvider } from 'theme-ui'
 import { useApollo } from '../apollo/apolloClient'
 import Layout from '../components/Layout'
 import theme from '../theme'
+import { Head } from 'next/document'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function App(props: AppProps) {
