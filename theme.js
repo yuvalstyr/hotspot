@@ -1,4 +1,4 @@
-import { dark } from '@theme-ui/presets';
+import { dark } from '@theme-ui/presets'
 
 const theme = {
   ...dark,
@@ -63,6 +63,6 @@ const theme = {
     ...dark.styles,
     hr: { border: 0, borderBottom: '1px solid', borderColor: 'secondary' },
   },
-};
+}
 
-export default theme;
+export default theme

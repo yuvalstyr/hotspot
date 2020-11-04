@@ -2,11 +2,12 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { format } from 'date-fns'
 import heLocale from 'date-fns/locale/he'
 import { Button, jsx } from 'theme-ui'
+import { uuid } from 'uuidv4'
 
 /** @jsx jsx */
 
 interface props {
-  date: string
+  date: Date
   activeDate: string
   setActiveDate: Dispatch<SetStateAction<string>>
 }
@@ -14,10 +15,11 @@ interface props {
 const DayAvatar: React.FC<props> = ({ date, activeDate, setActiveDate }) => {
   const firstLetter = format(new Date(date), 'EEEEE', { locale: heLocale })
   const shortDate = format(new Date(date), 'dd/MM')
+  const fullDate = format(new Date(date), 'MM/dd/yy')
 
   return (
     <div
-      key={date}
+      key={uuid()}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -35,9 +37,9 @@ const DayAvatar: React.FC<props> = ({ date, activeDate, setActiveDate }) => {
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: '50%',
-          backgroundColor: date === activeDate ? 'highlight' : 'primary',
+          backgroundColor: fullDate === activeDate ? 'highlight' : 'primary',
         }}
-        onClick={() => setActiveDate(date)}
+        onClick={() => setActiveDate(fullDate)}
       >
         {firstLetter}
       </Button>

@@ -31,6 +31,6 @@
         "**/*.ts",
         "**/*.tsx",
         "next-env.d.ts",
-        "next.config.js"
+        "next.config.js", "theme.jse.ts"
     ]
 }
