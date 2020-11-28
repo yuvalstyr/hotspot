@@ -8,7 +8,7 @@ import { Query } from './Query'
 
 export const GQLDate = asNexusMethod(GraphQLDateTime, 'date')
 
-export const prisma = new PrismaClient({ log: ['info', 'warn', 'error'] })
+export const prisma = new PrismaClient({ log: ['info', 'error'] })
 
 export const User = objectType({
   name: 'User',

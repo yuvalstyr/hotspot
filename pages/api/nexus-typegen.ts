@@ -68,6 +68,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     addWeekToAllWorkouts: number | null; // Int
     bookWorkout: NexusGenRootTypes['User'] | null; // User
+    createUser: NexusGenRootTypes['User'] | null; // User
     deleteBookedWorkout: NexusGenRootTypes['User'] | null; // User
     updateWorkoutDate: NexusGenRootTypes['Workout'] | null; // Workout
   }
@@ -99,6 +100,12 @@ export interface NexusGenArgTypes {
     bookWorkout: { // args
       traineeId: number; // Int!
       workoutId: number; // Int!
+    }
+    createUser: { // args
+      email: string; // String!
+      firstName: string; // String!
+      lastName: string; // String!
+      left: number; // Int!
     }
     deleteBookedWorkout: { // args
       traineeId: number; // Int!

@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
+import React from 'react'
 import { useMachine } from '@xstate/react'
 import { format, min } from 'date-fns'
-import React from 'react'
 import { scheduleMachine } from '../machine/scheduleMachine'
 import { IWorkout } from '../machine/workoutMachine.types'
 import { Slider } from './Slider'

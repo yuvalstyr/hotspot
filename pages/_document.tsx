@@ -13,6 +13,10 @@ export default class MyDocument extends Document {
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
           <link rel="icon" type="image/png" href="/favicon.png" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Assistant&display=swap"
+            rel="stylesheet"
+          ></link>
         </Head>
         <body dir="rtl">
           <Main />

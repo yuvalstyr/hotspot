@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { format } from 'date-fns'
 import heLocale from 'date-fns/locale/he'
 import { Button, jsx } from 'theme-ui'
-import { uuid } from 'uuidv4'
+import { v4 as uuidv4 } from 'uuid'
 
 /** @jsx jsx */
 
@@ -19,7 +19,7 @@ const DayAvatar: React.FC<props> = ({ date, activeDate, setActiveDate }) => {
 
   return (
     <div
-      key={uuid()}
+      key={uuidv4()}
       sx={{
         display: 'flex',
         flexDirection: 'column',

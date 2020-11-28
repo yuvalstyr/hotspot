@@ -2,6 +2,9 @@ import { dark } from '@theme-ui/presets'
 
 const theme = {
   ...dark,
+  fonts: {
+    body: 'Assistant',
+  },
   colors: {
     ...dark.colors,
     primary: '#f7b42c',

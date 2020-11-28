@@ -1,4 +1,4 @@
-import { intArg, mutationType } from '@nexus/schema'
+import { intArg, mutationType, stringArg } from '@nexus/schema'
 import { addDays } from 'date-fns'
 import { prisma } from './index'
 
@@ -89,13 +89,33 @@ export const Mutation = mutationType({
           workouts.map(async (w) => {
             const workout = await prisma.workout.update({
               where: { id: w.id },
-              data: { date: addDays(w.date, 1) },
+              data: { date: addDays(w.date, 7) },
             })
             if (workout) count++
             prisma.$disconnect()
           }),
         )
         return count
+      },
+    })
+    t.field('createUser', {
+      type: 'User',
+      args: {
+        firstName: stringArg({ required: true }),
+        lastName: stringArg({ required: true }),
+        email: stringArg({ required: true }),
+        left: intArg({ required: true }),
+      },
+      async resolve(_root, args) {
+        const { firstName, lastName, email, left } = args
+        const user = {
+          firstName,
+          lastName,
+          email,
+          left,
+        }
+        console.log('user', user)
+        return prisma.user.create({ data: user })
       },
     })
   },
