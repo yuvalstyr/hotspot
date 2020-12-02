@@ -114,7 +114,6 @@ export const Mutation = mutationType({
           email,
           left,
         }
-        console.log('user', user)
         return prisma.user.create({ data: user })
       },
     })

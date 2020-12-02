@@ -1,8 +1,29 @@
+import { useSession } from 'next-auth/client'
 import React from 'react'
-import { jsx, Image, Flex } from 'theme-ui'
+import { jsx, Image, Flex, Label, Avatar, Box } from 'theme-ui'
 import Nav from './Nav'
 
 /** @jsx jsx */
+
+function Proflie() {
+  const [seasion] = useSession()
+  if (!seasion) return null
+  return (
+    <Flex>
+      <Avatar
+        src={seasion.user.image}
+        sx={{
+          width: 48,
+          height: 48,
+          maxWidth: 48,
+          minWidth: 48,
+          borderRadius: 99999,
+        }}
+      />
+      <Label>{seasion.user.name}</Label>
+    </Flex>
+  )
+}
 
 const Layout: React.FC = ({ children }) => {
   return (
@@ -24,6 +45,7 @@ const Layout: React.FC = ({ children }) => {
             backgroundColor: 'secondary',
           }}
         >
+          <Proflie />
           <Nav />
           <Image src="/logo.jpg" variant="logo" />
         </Flex>

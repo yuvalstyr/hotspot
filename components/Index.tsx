@@ -11,9 +11,7 @@ const Index: React.FC = () => {
   function signout() {
     signOut()
   }
-  React.useEffect(() => {
-    console.log('session', session)
-  }, [session])
+
   return (
     <React.Fragment>
       {/* <Gallery /> */}

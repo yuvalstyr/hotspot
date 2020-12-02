@@ -61,6 +61,10 @@ const theme = {
     image: {
       maxHeight: '400px',
     },
+    profile: {
+      maxHeight: '400px',
+      borderRadius: '10px',
+    },
   },
   styles: {
     ...dark.styles,

@@ -32,6 +32,7 @@
     "react-collapse": "^5.0.1",
     "react-dom": "^16.13.1",
     "react-swipeable-views": "^0.13.9",
+    "react-tooltip": "^4.2.11",
     "theme-ui": "^0.3.1",
     "uuid": "^8.3.1",
     "xstate": "^4.13.0"
