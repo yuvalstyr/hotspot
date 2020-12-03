@@ -2,9 +2,9 @@ import React from 'react'
 import { Flex, NavLink, jsx, IconButton } from 'theme-ui'
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/client'
-import { mdiCalendarPlus } from '@mdi/js'
 import Icon from '@mdi/react'
 import ReactTooltip from 'react-tooltip'
+import { BiCalendarPlus } from 'react-icons/bi'
 
 /** @jsx jsx */
 
@@ -12,6 +12,7 @@ const Nav: React.FC = () => {
   const router = useRouter()
   const isSSR = () => typeof window === 'undefined'
   React.useEffect(() => {
+    console.log('build')
     ReactTooltip.rebuild()
   }, [isSSR])
   return (
@@ -26,8 +27,8 @@ const Nav: React.FC = () => {
         }}
         sx={{ variant: 'links' }}
       >
-        <IconButton>
-          <Icon path={mdiCalendarPlus} data-for="happyFace" />
+        <IconButton data-tip="hello world" data-for="happyFace">
+          <BiCalendarPlus />
         </IconButton>
         {!isSSR && <ReactTooltip id="happyFace">בלה ובל</ReactTooltip>}
       </NavLink>
