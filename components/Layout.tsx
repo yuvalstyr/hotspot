@@ -8,10 +8,11 @@ import Nav from './Nav'
 function Proflie() {
   const [seasion] = useSession()
   if (!seasion) return null
+  const imagePath = seasion.user.image ?? ''
   return (
     <Flex>
       <Avatar
-        src={seasion.user.image}
+        src={imagePath}
         sx={{
           width: 48,
           height: 48,
@@ -45,7 +46,7 @@ const Layout: React.FC = ({ children }) => {
           zIndex: 1,
         }}
       >
-        dasd
+        <Proflie />
       </header>
 
       <main

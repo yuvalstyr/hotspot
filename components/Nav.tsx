@@ -1,17 +1,16 @@
-import { signOut } from 'next-auth/client'
-import { useRouter } from 'next/router'
+import { signIn, signOut, useSession } from 'next-auth/client'
 import React from 'react'
+import { MdFitnessCenter, MdPayment } from 'react-icons/md'
 import { BiCalendarPlus } from 'react-icons/bi'
-import { MdPayment, MdFitnessCenter } from 'react-icons/md'
-import { RiLogoutBoxLine } from 'react-icons/ri'
+import { RiLogoutBoxLine, RiLoginBoxLine } from 'react-icons/ri'
 import ReactTooltip from 'react-tooltip'
 import { Flex, NavLink, jsx } from 'theme-ui'
 import NavIcon from './NavIcon'
-
-/** @jsx jsx */
+import { NavSignButton } from './NavSignButton'
+import { NavLinkButton } from './NavLinkButton'
 
 const Nav: React.FC = () => {
-  const router = useRouter()
+  const [session] = useSession()
   const isSSR = () => typeof window === 'undefined'
   React.useEffect(() => {
     console.log('build')
@@ -31,27 +30,23 @@ const Nav: React.FC = () => {
           <MdFitnessCenter />
         </NavIcon>
       </NavLink>
-      <NavLink
-        p={2}
-        onClick={() => {
-          router.push('/schedule')
-        }}
-        sx={{ variant: 'links' }}
-      >
-        <NavIcon>
-          <BiCalendarPlus />
-        </NavIcon>
-      </NavLink>
+      <NavLinkButton url={'/schedule'}>
+        <BiCalendarPlus />
+      </NavLinkButton>
       <NavLink p={2} sx={{ variant: 'links' }}>
         <NavIcon>
           <MdPayment />
         </NavIcon>
       </NavLink>
-      <NavLink p={2} onClick={() => signOut()} sx={{ variant: 'links' }}>
-        <NavIcon>
+      {session ? (
+        <NavSignButton action={signOut}>
           <RiLogoutBoxLine />
-        </NavIcon>
-      </NavLink>
+        </NavSignButton>
+      ) : (
+        <NavSignButton action={signIn}>
+          <RiLoginBoxLine />
+        </NavSignButton>
+      )}
     </Flex>
   )
 }
