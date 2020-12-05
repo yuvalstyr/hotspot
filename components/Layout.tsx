@@ -29,42 +29,44 @@ const Layout: React.FC = ({ children }) => {
   return (
     <div
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
+        display: 'grid',
+        gridTemplateAreas: ` "header header"
+                             "main main"
+                             "buttom buttom"`,
+        gap: '5px',
+        height: '100vh',
       }}
     >
       <header
         sx={{
-          width: '100%',
+          gridArea: 'header',
+          backgroundColor: 'secondary',
+          padding: '0 20px',
+          zIndex: 1,
         }}
       >
-        <Flex
-          sx={{
-            justifyContent: 'space-between',
-            backgroundColor: 'secondary',
-          }}
-        >
-          <Proflie />
-          <Nav />
-          <Image src="/logo.jpg" variant="logo" />
-        </Flex>
+        dasd
       </header>
+
       <main
         sx={{
-          width: '100%',
-          paddingTop: '10px',
-          display: 'grid',
-          justifyContent: 'center',
+          gridArea: 'main',
+          minWidth: 320,
+          height: '80vh',
         }}
       >
         {children}
       </main>
       <footer
         sx={{
-          width: '100%',
+          flexBasis: 'sidebar',
+          backgroundColor: 'secondary',
+          gridArea: 'buttom',
+          zIndex: '200',
         }}
-      />
+      >
+        <Nav />
+      </footer>
     </div>
   )
 }

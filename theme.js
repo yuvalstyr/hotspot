@@ -7,10 +7,12 @@ const theme = {
   },
   colors: {
     ...dark.colors,
-    primary: '#f7b42c',
-    secondary: '#C1C9C3',
+    background: '#0A090B',
+    primary: '#DD6031',
+    secondary: '#1B1D22',
     highlight: '#c0f',
     error: '#e21616',
+    text: '#F5F1ED',
   },
   links: {
     ':hover': {
@@ -27,7 +29,7 @@ const theme = {
   },
   buttons: {
     icon: {
-      color: '#a40606',
+      color: '##000',
     },
   },
   alerts: {

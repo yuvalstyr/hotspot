@@ -1,10 +1,12 @@
-import React from 'react'
-import { Flex, NavLink, jsx, IconButton } from 'theme-ui'
-import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/client'
-import Icon from '@mdi/react'
-import ReactTooltip from 'react-tooltip'
+import { useRouter } from 'next/router'
+import React from 'react'
 import { BiCalendarPlus } from 'react-icons/bi'
+import { MdPayment, MdFitnessCenter } from 'react-icons/md'
+import { RiLogoutBoxLine } from 'react-icons/ri'
+import ReactTooltip from 'react-tooltip'
+import { Flex, NavLink, jsx } from 'theme-ui'
+import NavIcon from './NavIcon'
 
 /** @jsx jsx */
 
@@ -16,9 +18,18 @@ const Nav: React.FC = () => {
     ReactTooltip.rebuild()
   }, [isSSR])
   return (
-    <Flex as="nav" sx={{ backgroundColor: 'secondary' }}>
+    <Flex
+      as="nav"
+      sx={{
+        backgroundColor: 'secondary',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+      }}
+    >
       <NavLink p={2} sx={{ variant: 'links' }}>
-        אימונים
+        <NavIcon>
+          <MdFitnessCenter />
+        </NavIcon>
       </NavLink>
       <NavLink
         p={2}
@@ -27,16 +38,19 @@ const Nav: React.FC = () => {
         }}
         sx={{ variant: 'links' }}
       >
-        <IconButton data-tip="hello world" data-for="happyFace">
+        <NavIcon>
           <BiCalendarPlus />
-        </IconButton>
-        {!isSSR && <ReactTooltip id="happyFace">בלה ובל</ReactTooltip>}
+        </NavIcon>
       </NavLink>
       <NavLink p={2} sx={{ variant: 'links' }}>
-        תשלומים
+        <NavIcon>
+          <MdPayment />
+        </NavIcon>
       </NavLink>
       <NavLink p={2} onClick={() => signOut()} sx={{ variant: 'links' }}>
-        צא
+        <NavIcon>
+          <RiLogoutBoxLine />
+        </NavIcon>
       </NavLink>
     </Flex>
   )
