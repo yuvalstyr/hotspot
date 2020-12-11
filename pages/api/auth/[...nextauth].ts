@@ -6,36 +6,35 @@ import Adapters from 'next-auth/adapters'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-const options = {
-  session: {
-    // use JWTs instead
-    jwt: true,
-  },
-  jwt: {
-    secret: process.env.JWT_SECRET,
-  },
-  callbacks: {
-    jwt(tokenPayload, user, account, profile, isNewUser) {
-      console.log('isNewUser', isNewUser)
-      console.log('account', account)
-      console.log('user', user)
-      console.log('profile', profile)
-    },
-  },
-  providers: [
-    Providers.Google({
-      clientId: process.env.GOOGLE_ID ?? '',
-      clientSecret: process.env.GOOGLE_SECRET ?? '',
-    }),
-    Providers.Facebook({
-      clientId: process.env.NEXTAUTH_FACEBOOK_ID ?? '',
-      clientSecret: process.env.NEXTAUTH_FACEBOOK_SECRET ?? '',
-    }),
-  ],
-  debug: process.env.NODE_ENV === 'development',
-  adapter: Adapters.Prisma.Adapter({ prisma }),
-  secret: process.env.SECRET,
-}
-
 export default (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
-  NextAuth(req, res, options)
+  NextAuth(req, res, {
+    providers: [
+      Providers.Google({
+        clientId: process.env.GOOGLE_ID ?? '',
+        clientSecret: process.env.GOOGLE_SECRET ?? '',
+      }),
+      Providers.Facebook({
+        clientId: process.env.NEXTAUTH_FACEBOOK_ID ?? '',
+        clientSecret: process.env.NEXTAUTH_FACEBOOK_SECRET ?? '',
+      }),
+    ],
+    events: {
+      createUser: async (message) => {
+        console.log('message', message)
+      },
+      signIn: async (message) => {
+        console.log('message', message)
+      },
+    },
+    pages: {
+      newUser: '/signup',
+    },
+    debug: process.env.NODE_ENV === 'development',
+    adapter: Adapters.Prisma.Adapter({ prisma }),
+    secret: process.env.SECRET,
+    jwt: {
+      secret: process.env.JWT_SECRET,
+    },
+  })
+
+// todo Signup page
