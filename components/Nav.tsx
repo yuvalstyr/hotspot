@@ -11,6 +11,7 @@ import { NavLinkButton } from './NavLinkButton'
 
 const Nav: React.FC = () => {
   const [session] = useSession()
+  console.log('session', session)
   const isSSR = () => typeof window === 'undefined'
   React.useEffect(() => {
     console.log('build')

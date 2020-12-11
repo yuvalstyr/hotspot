@@ -7,9 +7,8 @@ const theme = {
   },
   colors: {
     ...dark.colors,
-    background: '#0A090B',
     primary: '#DD6031',
-    secondary: '#1B1D22',
+    secondary: '#24272D',
     highlight: '#c0f',
     error: '#e21616',
     text: '#F5F1ED',

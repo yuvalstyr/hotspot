@@ -80,6 +80,24 @@ export const Mutation = mutationType({
         return null
       },
     })
+    t.field('deleteworkoutIdTrainees', {
+      type: 'Workout',
+      args: {
+        workoutId: intArg({ required: true }),
+      },
+      resolve: async (_, args) => {
+        const workout = await prisma.workout.findOne({
+          where: { id: args.workoutId },
+        })
+        if (workout) {
+          return prisma.workout.update({
+            where: { id: args.workoutId },
+            data: { trainees: undefined },
+          })
+        }
+        return null
+      },
+    })
     t.int('addWeekToAllWorkouts', {
       resolve: async () => {
         const workouts = await prisma.workout.findMany({})

@@ -70,6 +70,7 @@ export interface NexusGenFieldTypes {
     bookWorkout: NexusGenRootTypes['User'] | null; // User
     createUser: NexusGenRootTypes['User'] | null; // User
     deleteBookedWorkout: NexusGenRootTypes['User'] | null; // User
+    deleteworkoutIdTrainees: NexusGenRootTypes['Workout'] | null; // Workout
     updateWorkoutDate: NexusGenRootTypes['Workout'] | null; // Workout
   }
   Query: { // field return type
@@ -109,6 +110,9 @@ export interface NexusGenArgTypes {
     }
     deleteBookedWorkout: { // args
       traineeId: number; // Int!
+      workoutId: number; // Int!
+    }
+    deleteworkoutIdTrainees: { // args
       workoutId: number; // Int!
     }
     updateWorkoutDate: { // args

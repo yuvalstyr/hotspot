@@ -12,6 +12,7 @@ type Mutation {
   bookWorkout(traineeId: Int!, workoutId: Int!): User
   createUser(email: String!, firstName: String!, lastName: String!, left: Int!): User
   deleteBookedWorkout(traineeId: Int!, workoutId: Int!): User
+  deleteworkoutIdTrainees(workoutId: Int!): Workout
   updateWorkoutDate(date: DateTime, workoutId: Int!): Workout
 }
 

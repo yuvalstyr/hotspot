@@ -12,7 +12,7 @@ export default function App(props: AppProps) {
   const { pageProps, Component } = props
   const client = useApollo(pageProps.initializeApolloState)
 
-  console.log('theme', theme)
+  // console.log('theme', theme)
 
   return (
     <ApolloProvider client={client}>

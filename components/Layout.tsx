@@ -36,6 +36,11 @@ const Layout: React.FC = ({ children }) => {
                              "buttom buttom"`,
         gap: '5px',
         height: '100vh',
+        // backgroundImage: 'linear-gradient(black 50%, #F42B03 , #FFD045)',
+        background: `linear-gradient(to bottom, rgb(13, 11, 10), rgb(20, 17, 15), rgb(26, 23, 21), 
+                     rgb(33, 30, 26), rgb(39, 36, 32), rgb(46, 42, 37), 
+                     rgb(52, 42, 38), rgb(59, 42, 38), rgb(65, 43, 39), 
+                     rgb(71, 43, 39), rgb(78, 43, 40), rgb(84, 43, 40));`,
       }}
     >
       <header
@@ -48,7 +53,6 @@ const Layout: React.FC = ({ children }) => {
       >
         <Proflie />
       </header>
-
       <main
         sx={{
           gridArea: 'main',
