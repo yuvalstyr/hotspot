@@ -10,7 +10,7 @@ function Proflie() {
   if (!seasion) return null
   const imagePath = seasion.user.image ?? ''
   return (
-    <Flex>
+    <Flex p={2} sx={{ alignItems: 'center' }}>
       <Avatar
         src={imagePath}
         sx={{
@@ -21,7 +21,23 @@ function Proflie() {
           borderRadius: 99999,
         }}
       />
-      <Label>{seasion.user.name}</Label>
+      <Label p={2}>{seasion.user.name}</Label>
+    </Flex>
+  )
+}
+
+function Logo() {
+  return (
+    <Flex p={2} sx={{ alignItems: 'center' }}>
+      <Image
+        src={'./favicon.png'}
+        sx={{
+          width: 48,
+          height: 48,
+          maxWidth: 48,
+          minWidth: 48,
+        }}
+      />
     </Flex>
   )
 }
@@ -45,6 +61,8 @@ const Layout: React.FC = ({ children }) => {
     >
       <header
         sx={{
+          display: 'flex',
+          justifyContent: 'center',
           gridArea: 'header',
           backgroundColor: 'secondary',
           padding: '0 20px',
@@ -52,6 +70,7 @@ const Layout: React.FC = ({ children }) => {
         }}
       >
         <Proflie />
+        <Logo />
       </header>
       <main
         sx={{
