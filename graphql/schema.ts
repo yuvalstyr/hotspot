@@ -1,6 +1,21 @@
-import { makeSchema, mutationType, objectType, queryType } from '@nexus/schema'
+import {
+  asNexusMethod,
+  enumType,
+  makeSchema,
+  mutationType,
+  objectType,
+  queryType,
+} from '@nexus/schema'
+import { GraphQLDateTime } from 'graphql-iso-date'
 import { nexusPrisma } from 'nexus-plugin-prisma'
 import path from 'path'
+
+export const GQLDate = asNexusMethod(GraphQLDateTime, 'date')
+
+const WorkoutStatus = enumType({
+  name: 'status',
+  members: ['Active', 'Cancelled', 'Over'],
+})
 
 const User = objectType({
   name: 'User',
@@ -16,7 +31,9 @@ const User = objectType({
 export const Workout = objectType({
   name: 'Workout',
   definition(t) {
-    t.model.id(), t.model.type(), t.model.status(), t.model.trainees()
+    t.model.id()
+    t.model.status()
+    t.model.trainees()
   },
 })
 
@@ -52,7 +69,7 @@ const Mutation = mutationType({
 })
 
 export const schema = makeSchema({
-  types: [User, Query, Workout, Mutation],
+  types: [User, Query, Workout, Mutation, GQLDate, WorkoutStatus],
   plugins: [nexusPrisma({ experimentalCRUD: true })],
   outputs: {
     typegen: path.join(process.cwd(), 'generated', 'nexus-typegen.ts'),

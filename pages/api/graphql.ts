@@ -1,12 +1,7 @@
-import { asNexusMethod } from '@nexus/schema'
-import { GraphQLDateTime } from 'graphql-iso-date'
-
 import { ApolloServer } from 'apollo-server-micro'
 import { schema } from '../../graphql/schema'
 import { createContext } from '../../graphql/context'
 // import { Query } from './Query'
-
-export const GQLDate = asNexusMethod(GraphQLDateTime, 'date')
 
 const apolloServer = new ApolloServer({
   context: createContext,

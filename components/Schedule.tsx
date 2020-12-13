@@ -1,12 +1,12 @@
 import React from 'react'
 import { useMachine } from '@xstate/react'
 import { format, min } from 'date-fns'
-import { scheduleMachine } from '../machine/scheduleMachine'
 import { IWorkout } from '../machine/workoutMachine.types'
 import { Slider } from './Slider'
 import { Workout } from './Workout'
+import { scheduleMachine } from '../machine/scheduleMachine'
 
-const getMinDate = (workouts: IWorkout[]) => {
+function getMinDate(workouts: IWorkout[]) {
   const minDate = workouts?.reduce(
     (result, current) => min([new Date(current.date), result]),
     new Date(workouts[0]?.date),

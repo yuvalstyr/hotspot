@@ -60,45 +60,45 @@ export const Mutation = mutationType({
         return user
       },
     })
-    t.field('updateWorkoutDate', {
-      type: 'Workout',
-      args: {
-        workoutId: intArg({ required: true }),
-        date: 'DateTime',
-      },
-      resolve: async (_, args, ctx) => {
-        const workout = await ctx.prisma.workout.findOne({
-          where: { id: args.workoutId },
-        })
-        if (workout) {
-          return ctx.prisma.workout.update({
-            where: { id: args.workoutId },
-            data: { date: args.date },
-          })
-        }
-        return null
-      },
-    })
-    t.field('deleteworkoutIdTrainees', {
-      type: 'Workout',
-      args: {
-        workoutId: intArg({ required: true }),
-      },
-      resolve: async (_, args, ctx) => {
-        const workout = await ctx.prisma.workout.findOne({
-          where: { id: args.workoutId },
-        })
-        if (workout) {
-          return ctx.prisma.workout.update({
-            where: { id: args.workoutId },
-            data: { trainees: undefined },
-          })
-        }
-        return null
-      },
-    })
+    // t.field('updateWorkoutDate', {
+    //   type: 'Workout',
+    //   args: {
+    //     workoutId: intArg({ required: true }),
+    //     date: '',
+    //   },
+    //   resolve: async (_, args, ctx) => {
+    //     const workout = await ctx.prisma.workout.findOne({
+    //       where: { id: args.workoutId },
+    //     })
+    //     if (workout) {
+    //       return ctx.prisma.workout.update({
+    //         where: { id: args.workoutId },
+    //         data: { date: args.date },
+    //       })
+    //     }
+    //     return null
+    //   },
+    // })
+    // t.field('deleteworkoutIdTrainees', {
+    //   type: 'Workout',
+    //   args: {
+    //     workoutId: intArg({ required: true }),
+    //   },
+    //   resolve: async (_, args, ctx) => {
+    //     const workout = await ctx.prisma.workout.findOne({
+    //       where: { id: args.workoutId },
+    //     })
+    //     if (workout) {
+    //       return ctx.prisma.workout.update({
+    //         where: { id: args.workoutId },
+    //         data: { trainees: undefined },
+    //       })
+    //     }
+    //     return null
+    //   },
+    // })
     t.int('addWeekToAllWorkouts', {
-      resolve: async () => {
+      resolve: async (_, _a, ctx) => {
         const workouts = await ctx.prisma.workout.findMany({})
         let count = 0
 
@@ -123,7 +123,7 @@ export const Mutation = mutationType({
         email: stringArg({ required: true }),
         left: intArg({ required: true }),
       },
-      async resolve(_root, args) {
+      async resolve(_root, args, ctx) {
         const { firstName, lastName, email, left } = args
         const user = {
           firstName,

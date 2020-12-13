@@ -1,16 +1,13 @@
 import { intArg, queryType } from '@nexus/schema'
 import { format } from 'date-fns'
 import heLocale from 'date-fns/locale/he'
-import { prisma } from './graphql'
-
-
 
 export const Query = queryType({
   definition(t) {
     t.list.field('todayWorkouts', {
       type: 'Workout',
       resolve(_parent, args, ctx) {
-        return prisma.workout.findMany()
+        return ctx.prisma.workout.findMany()
       },
     })
     t.list.field('workouts', {
@@ -18,19 +15,19 @@ export const Query = queryType({
       args: {
         workoutId: intArg(),
       },
-      resolve: (root, args, _ctx) => {
+      resolve: (root, args, ctx) => {
         if (args.workoutId) {
-          return prisma.workout.findMany({
+          return ctx.prisma.workout.findMany({
             where: { id: { equals: args.workoutId } },
           })
         }
-        return prisma.workout.findMany({})
+        return ctx.prisma.workout.findMany({})
       },
     })
     t.list.field('workoutsPerWeek', {
       type: 'Workout',
       resolve: async (_, args, ctx) => {
-        const workouts = await prisma.workout.findMany({
+        const workouts = await ctx.prisma.workout.findMany({
           where: { status: 'Active' },
           orderBy: { date: 'asc' },
         })
@@ -41,15 +38,10 @@ export const Query = queryType({
         return workouts.filter(
           (w) =>
             format(new Date(w.date), 'wo', { locale: heLocale }) ===
-            currentWeekNumber
+            currentWeekNumber,
         )
       },
     })
-    t.list.field('users', {
-      type: 'User',
-      resolve: async (_, args) => {
-        return prisma.user.findMany(args)
-      },
-    })
+    t.crud.users()
   },
 })

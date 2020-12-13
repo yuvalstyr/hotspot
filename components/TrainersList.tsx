@@ -8,11 +8,11 @@ const TrainersList: React.FunctionComponent<{
   if (!trainees) throw new Error('no trainees')
   if (!trainees?.length) return <div />
   const traineesList = trainees.map((trainee) => {
-    const { firstName, lastName, id } = trainee
+    const { name, id } = trainee
     return (
       <Box key={id}>
         <li>
-          <Text color="primary">{`${firstName} ${lastName}`}</Text>
+          <Text color="primary">{`name`}</Text>
         </li>
       </Box>
     )
