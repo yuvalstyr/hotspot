@@ -13,9 +13,12 @@
       "strictFunctionTypes": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "noUnusedParameters": false
+      "noUnusedParameters": false,
+        "rootDir": ".",
+        "typeRoots": ["node_modules/@types", "types"],
+        "plugins": [{ "name": "nexus/typescript-language-service" }]
     },
-    "include": ["./src"]
+    "include": ["**/*.ts", "**/*.tsx", ".", "types.d.ts"]
   }
 // {
 //     "compilerOptions": {
