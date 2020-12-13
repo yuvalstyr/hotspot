@@ -13,44 +13,7 @@
       "strictFunctionTypes": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "noUnusedParameters": false, 
-        
-        "plugins": [{ "name": "nexus/typescript-language-service" }]
+      "noUnusedParameters": false
     },
-    "include": ["**/*.ts", "**/*.tsx", ".", "types.d.ts"]
+    "include": ["./src"]
   }
-// {
-//     "compilerOptions": {
-//         "target": "es5",
-//         "lib": [
-//             "esnext",
-//             "dom",
-//             "dom.iterable",
-//         ],
-//         "allowJs": true,
-//         "skipLibCheck": true,
-//         // "strict": true,
-//         "forceConsistentCasingInFileNames": true,
-//         "noEmit": true,
-//         "rootDir": ".",
-//         "typeRoots": ["node_modules/@types", "types"],
-//         "plugins": [{ "name": "nexus/typescript-language-service" }],
-//         "esModuleInterop": true,
-//         "module": "esnext",
-//         "moduleResolution": "node",
-//         "resolveJsonModule": true,
-//         "isolatedModules": true,
-//         "jsx": "preserve",
-//         "baseUrl": ".",
-//         "paths": {
-//             "~/*": [
-//                 "./*"
-//             ]
-//         }
-//     },
-//     "exclude": [
-//         "node_modules"
-//     ],
-//     "include": ["**/*.ts", "**/*.tsx", ".", "types.d.ts"]
-// }
-
