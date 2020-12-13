@@ -11,6 +11,9 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
+        "rootDir": ".",
+        "typeRoots": ["node_modules/@types", "types"],
+        "plugins": [{ "name": "nexus/typescript-language-service" }],
         "esModuleInterop": true,
         "module": "esnext",
         "moduleResolution": "node",
@@ -27,10 +30,5 @@
     "exclude": [
         "node_modules"
     ],
-    "include": [
-        "**/*.ts",
-        "**/*.tsx",
-        "next-env.d.ts",
-        "next.config.js", "theme.jse.ts"
-    ]
+    "include": ["**/*.ts", "**/*.tsx", ".", "types.d.ts"]
 }

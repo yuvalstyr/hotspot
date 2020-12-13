@@ -1,7 +1,9 @@
 import { intArg, queryType } from '@nexus/schema'
 import { format } from 'date-fns'
 import heLocale from 'date-fns/locale/he'
-import { prisma } from './index'
+import { prisma } from './graphql'
+
+
 
 export const Query = queryType({
   definition(t) {

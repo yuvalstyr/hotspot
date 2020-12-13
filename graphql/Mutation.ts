@@ -1,6 +1,5 @@
 import { intArg, mutationType, stringArg } from '@nexus/schema'
 import { addDays } from 'date-fns'
-import { prisma } from './index'
 
 export const Mutation = mutationType({
   definition(t) {
@@ -10,13 +9,13 @@ export const Mutation = mutationType({
         traineeId: intArg({ required: true }),
         workoutId: intArg({ required: true }),
       },
-      resolve: async (_, args) => {
+      async resolve(_, args, ctx) {
         const { traineeId, workoutId } = args
-        const user = await prisma.user.findOne({
+        const user = await ctx.prisma.user.findOne({
           where: { id: traineeId },
         })
         if (!user) throw new Error('User not Signup')
-        const workout = await prisma.workout.findOne({
+        const workout = await ctx.prisma.workout.findOne({
           where: { id: workoutId },
           select: { trainees: { select: { id: true } } },
         })
@@ -26,7 +25,7 @@ export const Mutation = mutationType({
             throw new Error('already booked')
           }
         }
-        await prisma.workout.update({
+        await ctx.prisma.workout.update({
           data: { trainees: { connect: { id: traineeId } } },
           where: { id: workoutId },
         })
@@ -39,13 +38,13 @@ export const Mutation = mutationType({
         traineeId: intArg({ required: true }),
         workoutId: intArg({ required: true }),
       },
-      resolve: async (_, args) => {
+      resolve: async (_, args, ctx) => {
         const { traineeId, workoutId } = args
-        const user = await prisma.user.findOne({
+        const user = await ctx.prisma.user.findOne({
           where: { id: traineeId },
         })
         if (!user) throw new Error('User not Signup')
-        const workout = await prisma.workout.findOne({
+        const workout = await ctx.prisma.workout.findOne({
           where: { id: workoutId },
           select: { trainees: { select: { id: true } } },
         })
@@ -54,7 +53,7 @@ export const Mutation = mutationType({
         const newTraineesArray = trainees.filter(
           (user) => user.id !== traineeId,
         )
-        await prisma.workout.update({
+        await ctx.prisma.workout.update({
           data: { trainees: { set: newTraineesArray } },
           where: { id: workoutId },
         })
@@ -67,12 +66,12 @@ export const Mutation = mutationType({
         workoutId: intArg({ required: true }),
         date: 'DateTime',
       },
-      resolve: async (_, args) => {
-        const workout = await prisma.workout.findOne({
+      resolve: async (_, args, ctx) => {
+        const workout = await ctx.prisma.workout.findOne({
           where: { id: args.workoutId },
         })
         if (workout) {
-          return prisma.workout.update({
+          return ctx.prisma.workout.update({
             where: { id: args.workoutId },
             data: { date: args.date },
           })
@@ -85,12 +84,12 @@ export const Mutation = mutationType({
       args: {
         workoutId: intArg({ required: true }),
       },
-      resolve: async (_, args) => {
-        const workout = await prisma.workout.findOne({
+      resolve: async (_, args, ctx) => {
+        const workout = await ctx.prisma.workout.findOne({
           where: { id: args.workoutId },
         })
         if (workout) {
-          return prisma.workout.update({
+          return ctx.prisma.workout.update({
             where: { id: args.workoutId },
             data: { trainees: undefined },
           })
@@ -100,17 +99,17 @@ export const Mutation = mutationType({
     })
     t.int('addWeekToAllWorkouts', {
       resolve: async () => {
-        const workouts = await prisma.workout.findMany({})
+        const workouts = await ctx.prisma.workout.findMany({})
         let count = 0
 
         await Promise.all(
           workouts.map(async (w) => {
-            const workout = await prisma.workout.update({
+            const workout = await ctx.prisma.workout.update({
               where: { id: w.id },
               data: { date: addDays(w.date, 7) },
             })
             if (workout) count++
-            prisma.$disconnect()
+            ctx.prisma.$disconnect()
           }),
         )
         return count
@@ -132,7 +131,7 @@ export const Mutation = mutationType({
           email,
           left,
         }
-        return prisma.user.create({ data: user })
+        return ctx.prisma.user.create({ data: user })
       },
     })
   },
