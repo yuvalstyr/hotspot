@@ -2,13 +2,13 @@
     "compilerOptions": {
         "target": "es5",
         "lib": [
+            "esnext",
             "dom",
             "dom.iterable",
-            "esnext"
         ],
         "allowJs": true,
         "skipLibCheck": true,
-        "strict": true,
+        // "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
         "rootDir": ".",
@@ -32,3 +32,4 @@
     ],
     "include": ["**/*.ts", "**/*.tsx", ".", "types.d.ts"]
 }
+
