@@ -5,7 +5,8 @@ import { ThemeProvider } from 'theme-ui'
 import { useApollo } from '../apollo/apolloClient'
 import Layout from '../components/Layout'
 import theme from '../theme'
-import { Provider } from 'next-auth/client'
+import auth0 from '../lib/auth0'
+import { prisma } from '../graphql/context'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function App(props: AppProps) {
@@ -17,11 +18,9 @@ export default function App(props: AppProps) {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <Provider session={pageProps.session}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </Provider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </ApolloProvider>
   )

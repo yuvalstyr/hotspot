@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
-import { NavLink } from 'theme-ui'
+import { NavLink, jsx } from 'theme-ui'
 import NavIcon from './NavIcon'
+/** @jsx jsx */
 
 export const NavLinkButton: FC<IButtonLinkProps> = ({ children, url }) => {
   const router = useRouter()

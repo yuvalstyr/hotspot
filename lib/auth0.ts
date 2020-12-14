@@ -12,7 +12,7 @@ export default initAuth0({
     process.env.NODE_ENV == 'development'
       ? 'http://localhost:3000/'
       : process.env.NEXTAUTH_URL,
-  scope: 'openid profile email gender',
+  scope: 'openid profile email',
   session: {
     // The secret used to encrypt the cookie.
     cookieSecret: process.env.COOKIE_SECRET ?? '',

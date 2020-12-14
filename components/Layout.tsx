@@ -1,27 +1,27 @@
-import { useSession } from 'next-auth/client'
 import React from 'react'
-import { jsx, Image, Flex, Label, Avatar, Box } from 'theme-ui'
+import { jsx, Image, Flex, Label, Avatar } from 'theme-ui'
+import { useFetchUser } from '../lib/user'
 import Nav from './Nav'
 
 /** @jsx jsx */
 
 function Proflie() {
-  const [seasion] = useSession()
-  if (!seasion) return null
-  const imagePath = seasion.user.image ?? ''
+  const { user } = useFetchUser()
   return (
     <Flex p={2} sx={{ alignItems: 'center' }}>
-      <Avatar
-        src={imagePath}
-        sx={{
-          width: 48,
-          height: 48,
-          maxWidth: 48,
-          minWidth: 48,
-          borderRadius: 99999,
-        }}
-      />
-      <Label p={2}>{seasion.user.name}</Label>
+      {user && (
+        <Avatar
+          src={user?.picture}
+          sx={{
+            width: 48,
+            height: 48,
+            maxWidth: 48,
+            minWidth: 48,
+            borderRadius: 99999,
+          }}
+        />
+      )}
+      <Label p={2}>{}</Label>
     </Flex>
   )
 }
@@ -62,7 +62,7 @@ const Layout: React.FC = ({ children }) => {
       <header
         sx={{
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           gridArea: 'header',
           backgroundColor: 'secondary',
           padding: '0 20px',

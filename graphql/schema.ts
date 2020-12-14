@@ -75,6 +75,7 @@ export const schema = makeSchema({
       outputs: {
         typegen: process.cwd() + '/generated/typegen-nexus-plugin-prisma.d.ts',
       },
+      experimentalCRUD: true,
     }),
   ],
 

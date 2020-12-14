@@ -1,4 +1,3 @@
-import { signIn, signOut, useSession } from 'next-auth/client'
 import React from 'react'
 import { MdFitnessCenter, MdPayment } from 'react-icons/md'
 import { BiCalendarPlus } from 'react-icons/bi'
@@ -8,9 +7,13 @@ import { Flex, NavLink, jsx } from 'theme-ui'
 import NavIcon from './NavIcon'
 import { NavSignButton } from './NavSignButton'
 import { NavLinkButton } from './NavLinkButton'
+import { useFetchUser } from '../lib/user'
+
+/** @jsx jsx */
 
 const Nav: React.FC = () => {
   const isSSR = () => typeof window === 'undefined'
+  const { loading, user } = useFetchUser()
   React.useEffect(() => {
     console.log('build')
     ReactTooltip.rebuild()
@@ -37,7 +40,7 @@ const Nav: React.FC = () => {
           <MdPayment />
         </NavIcon>
       </NavLink>
-      {false ? (
+      {user ? (
         <NavSignButton url={'api/logout'}>
           <RiLogoutBoxLine />
         </NavSignButton>
