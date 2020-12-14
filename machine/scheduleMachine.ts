@@ -1,5 +1,5 @@
 import { ApolloQueryResult } from '@apollo/client'
-import { assign, createMachine, Machine, spawn } from 'xstate'
+import { assign, Machine, spawn } from 'xstate'
 import { initializeApollo } from '../apollo/apolloClient'
 import { WORKOUTS } from '../lib/gql'
 import {

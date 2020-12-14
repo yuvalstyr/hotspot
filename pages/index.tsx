@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-aimport auth0 from '../lib/auth0'
+import auth0 from '../lib/auth0'
 import Gallery from '../components/Gallery'
 
 const index: React.FC = () => {

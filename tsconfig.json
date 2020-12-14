@@ -4,10 +4,7 @@
     "module": "commonjs",
     "target": "ES2018",
     "outDir": "dist",
-    "lib": [
-      "esnext",
-      "dom"
-    ],
+    "lib": ["esnext", "dom"],
     // "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -16,20 +13,7 @@
     "strictFunctionTypes": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "noUnusedParameters": false,
-    "allowJs": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve"
+    "noUnusedParameters": false
   },
-  "include": [
-    "./"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./"]
 }
