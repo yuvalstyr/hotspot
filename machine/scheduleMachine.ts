@@ -37,7 +37,6 @@ export const scheduleMachine = Machine<
       name: 'אלי',
       createdAt: new Date(),
       left: 10,
-      emailVerified: null,
       image: '',
       updatedAt: new Date(),
     },

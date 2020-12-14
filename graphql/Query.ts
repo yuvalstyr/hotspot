@@ -4,26 +4,7 @@ import heLocale from 'date-fns/locale/he'
 
 export const Query = queryType({
   definition(t) {
-    t.list.field('todayWorkouts', {
-      type: 'Workout',
-      resolve(_parent, args, ctx) {
-        return ctx.prisma.workout.findMany()
-      },
-    })
-    t.list.field('workouts', {
-      type: 'Workout',
-      args: {
-        workoutId: intArg(),
-      },
-      resolve: (root, args, ctx) => {
-        if (args.workoutId) {
-          return ctx.prisma.workout.findMany({
-            where: { id: { equals: args.workoutId } },
-          })
-        }
-        return ctx.prisma.workout.findMany({})
-      },
-    })
+    t.crud.workouts()
     t.list.field('workoutsPerWeek', {
       type: 'Workout',
       resolve: async (_, args, ctx) => {

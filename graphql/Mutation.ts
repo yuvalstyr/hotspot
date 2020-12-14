@@ -1,4 +1,4 @@
-import { intArg, mutationType, stringArg } from '@nexus/schema'
+import { intArg, mutationType } from '@nexus/schema'
 import { addDays } from 'date-fns'
 
 export const Mutation = mutationType({
@@ -115,24 +115,6 @@ export const Mutation = mutationType({
         return count
       },
     })
-    t.field('createUser', {
-      type: 'User',
-      args: {
-        firstName: stringArg({ required: true }),
-        lastName: stringArg({ required: true }),
-        email: stringArg({ required: true }),
-        left: intArg({ required: true }),
-      },
-      async resolve(_root, args, ctx) {
-        const { firstName, lastName, email, left } = args
-        const user = {
-          firstName,
-          lastName,
-          email,
-          left,
-        }
-        return ctx.prisma.user.create({ data: user })
-      },
-    })
+    t.crud.createOneUser()
   },
 })

@@ -1,16 +1,17 @@
 import React, { FC } from 'react'
 import { NavLink, jsx } from 'theme-ui'
 import NavIcon from './NavIcon'
+import { NavLinkButton } from './NavLinkButton'
 
 /** @jsx jsx */
 
 export interface IButtonSignProps {
-  action: () => void
+  url: string
 }
-export const NavSignButton: FC<IButtonSignProps> = ({ children, action }) => {
+export const NavSignButton: FC<IButtonSignProps> = ({ children, url }) => {
   return (
-    <NavLink p={2} onClick={() => action()} sx={{ variant: 'links' }}>
+    <NavLinkButton sx={{ variant: 'links' }} url={url}>
       <NavIcon>{children}</NavIcon>
-    </NavLink>
+    </NavLinkButton>
   )
 }

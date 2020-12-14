@@ -10,7 +10,6 @@ import { NavSignButton } from './NavSignButton'
 import { NavLinkButton } from './NavLinkButton'
 
 const Nav: React.FC = () => {
-  const [session] = useSession()
   const isSSR = () => typeof window === 'undefined'
   React.useEffect(() => {
     console.log('build')
@@ -38,12 +37,12 @@ const Nav: React.FC = () => {
           <MdPayment />
         </NavIcon>
       </NavLink>
-      {session ? (
-        <NavSignButton action={signOut}>
+      {false ? (
+        <NavSignButton url={'api/logout'}>
           <RiLogoutBoxLine />
         </NavSignButton>
       ) : (
-        <NavSignButton action={signIn}>
+        <NavSignButton url={'api/login'}>
           <RiLoginBoxLine />
         </NavSignButton>
       )}

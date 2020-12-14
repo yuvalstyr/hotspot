@@ -26,17 +26,6 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
-input DateTimeNullableFilter {
-  equals: DateTime
-  gt: DateTime
-  gte: DateTime
-  in: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  not: NestedDateTimeNullableFilter
-  notIn: [DateTime!]
-}
-
 input EnumWorkoutStatusFieldUpdateOperationsInput {
   set: WorkoutStatus
 }
@@ -101,17 +90,6 @@ input NestedDateTimeFilter {
   notIn: [DateTime!]
 }
 
-input NestedDateTimeNullableFilter {
-  equals: DateTime
-  gt: DateTime
-  gte: DateTime
-  in: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  not: NestedDateTimeNullableFilter
-  notIn: [DateTime!]
-}
-
 input NestedEnumWorkoutStatusFilter {
   equals: WorkoutStatus
   in: [WorkoutStatus!]
@@ -160,10 +138,6 @@ input NestedStringNullableFilter {
   not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
-}
-
-input NullableDateTimeFieldUpdateOperationsInput {
-  set: DateTime
 }
 
 input NullableIntFieldUpdateOperationsInput {
@@ -221,7 +195,6 @@ type User {
 input UserCreateInput {
   createdAt: DateTime
   email: String
-  emailVerified: DateTime
   image: String
   left: Int
   name: String
@@ -238,7 +211,6 @@ input UserListRelationFilter {
 input UserUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: NullableStringFieldUpdateOperationsInput
-  emailVerified: NullableDateTimeFieldUpdateOperationsInput
   image: NullableStringFieldUpdateOperationsInput
   left: NullableIntFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
@@ -249,7 +221,6 @@ input UserUpdateInput {
 input UserUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: NullableStringFieldUpdateOperationsInput
-  emailVerified: NullableDateTimeFieldUpdateOperationsInput
   image: NullableStringFieldUpdateOperationsInput
   left: NullableIntFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
@@ -260,7 +231,6 @@ input UserWhereInput {
   AND: [UserWhereInput!]
   createdAt: DateTimeFilter
   email: StringNullableFilter
-  emailVerified: DateTimeNullableFilter
   id: IntFilter
   image: StringNullableFilter
   left: IntNullableFilter
