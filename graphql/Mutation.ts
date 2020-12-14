@@ -11,11 +11,11 @@ export const Mutation = mutationType({
       },
       async resolve(_, args, ctx) {
         const { traineeId, workoutId } = args
-        const user = await ctx.prisma.user.findOne({
+        const user = await ctx.prisma.user.findUnique({
           where: { id: traineeId },
         })
         if (!user) throw new Error('User not Signup')
-        const workout = await ctx.prisma.workout.findOne({
+        const workout = await ctx.prisma.workout.findUnique({
           where: { id: workoutId },
           select: { trainees: { select: { id: true } } },
         })
@@ -40,11 +40,11 @@ export const Mutation = mutationType({
       },
       resolve: async (_, args, ctx) => {
         const { traineeId, workoutId } = args
-        const user = await ctx.prisma.user.findOne({
+        const user = await ctx.prisma.user.findUnique({
           where: { id: traineeId },
         })
         if (!user) throw new Error('User not Signup')
-        const workout = await ctx.prisma.workout.findOne({
+        const workout = await ctx.prisma.workout.findUnique({
           where: { id: workoutId },
           select: { trainees: { select: { id: true } } },
         })
