@@ -29,8 +29,8 @@ declare global {
 }
 declare global {
   interface NexusGenCustomOutputProperties<TypeName extends string> {
-    crud: NexusPrisma<TypeName, 'crud'>
     model: NexusPrisma<TypeName, 'model'>
+    crud: any
   }
 }
 
@@ -39,316 +39,15 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  DateTimeFieldUpdateOperationsInput: {
-    // input type
-    set?: NexusGenScalars['DateTime'] | null // DateTime
-  }
-  DateTimeFilter: {
-    // input type
-    equals?: NexusGenScalars['DateTime'] | null // DateTime
-    gt?: NexusGenScalars['DateTime'] | null // DateTime
-    gte?: NexusGenScalars['DateTime'] | null // DateTime
-    in?: NexusGenScalars['DateTime'][] | null // [DateTime!]
-    lt?: NexusGenScalars['DateTime'] | null // DateTime
-    lte?: NexusGenScalars['DateTime'] | null // DateTime
-    not?: NexusGenInputs['NestedDateTimeFilter'] | null // NestedDateTimeFilter
-    notIn?: NexusGenScalars['DateTime'][] | null // [DateTime!]
-  }
-  EnumWorkoutStatusFieldUpdateOperationsInput: {
-    // input type
-    set?: NexusGenEnums['WorkoutStatus'] | null // WorkoutStatus
-  }
-  EnumWorkoutStatusFilter: {
-    // input type
-    equals?: NexusGenEnums['WorkoutStatus'] | null // WorkoutStatus
-    in?: NexusGenEnums['WorkoutStatus'][] | null // [WorkoutStatus!]
-    not?: NexusGenInputs['NestedEnumWorkoutStatusFilter'] | null // NestedEnumWorkoutStatusFilter
-    notIn?: NexusGenEnums['WorkoutStatus'][] | null // [WorkoutStatus!]
-  }
-  EnumWorkoutTypeFieldUpdateOperationsInput: {
-    // input type
-    set?: NexusGenEnums['WorkoutType'] | null // WorkoutType
-  }
-  EnumWorkoutTypeFilter: {
-    // input type
-    equals?: NexusGenEnums['WorkoutType'] | null // WorkoutType
-    in?: NexusGenEnums['WorkoutType'][] | null // [WorkoutType!]
-    not?: NexusGenInputs['NestedEnumWorkoutTypeFilter'] | null // NestedEnumWorkoutTypeFilter
-    notIn?: NexusGenEnums['WorkoutType'][] | null // [WorkoutType!]
-  }
-  IntFilter: {
-    // input type
-    equals?: number | null // Int
-    gt?: number | null // Int
-    gte?: number | null // Int
-    in?: number[] | null // [Int!]
-    lt?: number | null // Int
-    lte?: number | null // Int
-    not?: NexusGenInputs['NestedIntFilter'] | null // NestedIntFilter
-    notIn?: number[] | null // [Int!]
-  }
-  IntNullableFilter: {
-    // input type
-    equals?: number | null // Int
-    gt?: number | null // Int
-    gte?: number | null // Int
-    in?: number[] | null // [Int!]
-    lt?: number | null // Int
-    lte?: number | null // Int
-    not?: NexusGenInputs['NestedIntNullableFilter'] | null // NestedIntNullableFilter
-    notIn?: number[] | null // [Int!]
-  }
-  NestedDateTimeFilter: {
-    // input type
-    equals?: NexusGenScalars['DateTime'] | null // DateTime
-    gt?: NexusGenScalars['DateTime'] | null // DateTime
-    gte?: NexusGenScalars['DateTime'] | null // DateTime
-    in?: NexusGenScalars['DateTime'][] | null // [DateTime!]
-    lt?: NexusGenScalars['DateTime'] | null // DateTime
-    lte?: NexusGenScalars['DateTime'] | null // DateTime
-    not?: NexusGenInputs['NestedDateTimeFilter'] | null // NestedDateTimeFilter
-    notIn?: NexusGenScalars['DateTime'][] | null // [DateTime!]
-  }
-  NestedEnumWorkoutStatusFilter: {
-    // input type
-    equals?: NexusGenEnums['WorkoutStatus'] | null // WorkoutStatus
-    in?: NexusGenEnums['WorkoutStatus'][] | null // [WorkoutStatus!]
-    not?: NexusGenInputs['NestedEnumWorkoutStatusFilter'] | null // NestedEnumWorkoutStatusFilter
-    notIn?: NexusGenEnums['WorkoutStatus'][] | null // [WorkoutStatus!]
-  }
-  NestedEnumWorkoutTypeFilter: {
-    // input type
-    equals?: NexusGenEnums['WorkoutType'] | null // WorkoutType
-    in?: NexusGenEnums['WorkoutType'][] | null // [WorkoutType!]
-    not?: NexusGenInputs['NestedEnumWorkoutTypeFilter'] | null // NestedEnumWorkoutTypeFilter
-    notIn?: NexusGenEnums['WorkoutType'][] | null // [WorkoutType!]
-  }
-  NestedIntFilter: {
-    // input type
-    equals?: number | null // Int
-    gt?: number | null // Int
-    gte?: number | null // Int
-    in?: number[] | null // [Int!]
-    lt?: number | null // Int
-    lte?: number | null // Int
-    not?: NexusGenInputs['NestedIntFilter'] | null // NestedIntFilter
-    notIn?: number[] | null // [Int!]
-  }
-  NestedIntNullableFilter: {
-    // input type
-    equals?: number | null // Int
-    gt?: number | null // Int
-    gte?: number | null // Int
-    in?: number[] | null // [Int!]
-    lt?: number | null // Int
-    lte?: number | null // Int
-    not?: NexusGenInputs['NestedIntNullableFilter'] | null // NestedIntNullableFilter
-    notIn?: number[] | null // [Int!]
-  }
-  NestedStringNullableFilter: {
-    // input type
-    contains?: string | null // String
-    endsWith?: string | null // String
-    equals?: string | null // String
-    gt?: string | null // String
-    gte?: string | null // String
-    in?: string[] | null // [String!]
-    lt?: string | null // String
-    lte?: string | null // String
-    not?: NexusGenInputs['NestedStringNullableFilter'] | null // NestedStringNullableFilter
-    notIn?: string[] | null // [String!]
-    startsWith?: string | null // String
-  }
-  NullableIntFieldUpdateOperationsInput: {
-    // input type
-    decrement?: number | null // Int
-    divide?: number | null // Int
-    increment?: number | null // Int
-    multiply?: number | null // Int
-    set?: number | null // Int
-  }
-  NullableStringFieldUpdateOperationsInput: {
-    // input type
-    set?: string | null // String
-  }
-  StringNullableFilter: {
-    // input type
-    contains?: string | null // String
-    endsWith?: string | null // String
-    equals?: string | null // String
-    gt?: string | null // String
-    gte?: string | null // String
-    in?: string[] | null // [String!]
-    lt?: string | null // String
-    lte?: string | null // String
-    mode?: NexusGenEnums['QueryMode'] | null // QueryMode
-    not?: NexusGenInputs['NestedStringNullableFilter'] | null // NestedStringNullableFilter
-    notIn?: string[] | null // [String!]
-    startsWith?: string | null // String
-  }
-  UserCreateInput: {
-    // input type
-    createdAt?: NexusGenScalars['DateTime'] | null // DateTime
-    email?: string | null // String
-    image?: string | null // String
-    left?: number | null // Int
-    name?: string | null // String
-    updatedAt?: NexusGenScalars['DateTime'] | null // DateTime
-    Workout?: NexusGenInputs['WorkoutCreateManyWithoutTraineesInput'] | null // WorkoutCreateManyWithoutTraineesInput
-  }
-  UserListRelationFilter: {
-    // input type
-    every?: NexusGenInputs['UserWhereInput'] | null // UserWhereInput
-    none?: NexusGenInputs['UserWhereInput'] | null // UserWhereInput
-    some?: NexusGenInputs['UserWhereInput'] | null // UserWhereInput
-  }
-  UserUpdateInput: {
-    // input type
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null // DateTimeFieldUpdateOperationsInput
-    email?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null // NullableStringFieldUpdateOperationsInput
-    image?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null // NullableStringFieldUpdateOperationsInput
-    left?: NexusGenInputs['NullableIntFieldUpdateOperationsInput'] | null // NullableIntFieldUpdateOperationsInput
-    name?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null // NullableStringFieldUpdateOperationsInput
-    updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null // DateTimeFieldUpdateOperationsInput
-    Workout?: NexusGenInputs['WorkoutUpdateManyWithoutTraineesInput'] | null // WorkoutUpdateManyWithoutTraineesInput
-  }
-  UserUpdateManyMutationInput: {
-    // input type
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null // DateTimeFieldUpdateOperationsInput
-    email?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null // NullableStringFieldUpdateOperationsInput
-    image?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null // NullableStringFieldUpdateOperationsInput
-    left?: NexusGenInputs['NullableIntFieldUpdateOperationsInput'] | null // NullableIntFieldUpdateOperationsInput
-    name?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null // NullableStringFieldUpdateOperationsInput
-    updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null // DateTimeFieldUpdateOperationsInput
-  }
-  UserWhereInput: {
-    // input type
-    AND?: NexusGenInputs['UserWhereInput'][] | null // [UserWhereInput!]
-    createdAt?: NexusGenInputs['DateTimeFilter'] | null // DateTimeFilter
-    email?: NexusGenInputs['StringNullableFilter'] | null // StringNullableFilter
-    id?: NexusGenInputs['IntFilter'] | null // IntFilter
-    image?: NexusGenInputs['StringNullableFilter'] | null // StringNullableFilter
-    left?: NexusGenInputs['IntNullableFilter'] | null // IntNullableFilter
-    name?: NexusGenInputs['StringNullableFilter'] | null // StringNullableFilter
-    NOT?: NexusGenInputs['UserWhereInput'][] | null // [UserWhereInput!]
-    OR?: NexusGenInputs['UserWhereInput'][] | null // [UserWhereInput!]
-    updatedAt?: NexusGenInputs['DateTimeFilter'] | null // DateTimeFilter
-    Workout?: NexusGenInputs['WorkoutListRelationFilter'] | null // WorkoutListRelationFilter
-  }
   UserWhereUniqueInput: {
     // input type
     email?: string | null // String
     id?: number | null // Int
   }
-  WorkoutCreateManyWithoutTraineesInput: {
-    // input type
-    connect?: NexusGenInputs['WorkoutWhereUniqueInput'][] | null // [WorkoutWhereUniqueInput!]
-    connectOrCreate?:
-      | NexusGenInputs['WorkoutCreateOrConnectWithouttraineesInput'][]
-      | null // [WorkoutCreateOrConnectWithouttraineesInput!]
-    create?: NexusGenInputs['WorkoutCreateWithoutTraineesInput'][] | null // [WorkoutCreateWithoutTraineesInput!]
-  }
-  WorkoutCreateOrConnectWithouttraineesInput: {
-    // input type
-    create: NexusGenInputs['WorkoutCreateWithoutTraineesInput'] // WorkoutCreateWithoutTraineesInput!
-    where: NexusGenInputs['WorkoutWhereUniqueInput'] // WorkoutWhereUniqueInput!
-  }
-  WorkoutCreateWithoutTraineesInput: {
-    // input type
-    date?: NexusGenScalars['DateTime'] | null // DateTime
-    status: NexusGenEnums['WorkoutStatus'] // WorkoutStatus!
-    type: NexusGenEnums['WorkoutType'] // WorkoutType!
-  }
-  WorkoutListRelationFilter: {
-    // input type
-    every?: NexusGenInputs['WorkoutWhereInput'] | null // WorkoutWhereInput
-    none?: NexusGenInputs['WorkoutWhereInput'] | null // WorkoutWhereInput
-    some?: NexusGenInputs['WorkoutWhereInput'] | null // WorkoutWhereInput
-  }
-  WorkoutScalarWhereInput: {
-    // input type
-    AND?: NexusGenInputs['WorkoutScalarWhereInput'][] | null // [WorkoutScalarWhereInput!]
-    date?: NexusGenInputs['DateTimeFilter'] | null // DateTimeFilter
-    id?: NexusGenInputs['IntFilter'] | null // IntFilter
-    NOT?: NexusGenInputs['WorkoutScalarWhereInput'][] | null // [WorkoutScalarWhereInput!]
-    OR?: NexusGenInputs['WorkoutScalarWhereInput'][] | null // [WorkoutScalarWhereInput!]
-    status?: NexusGenInputs['EnumWorkoutStatusFilter'] | null // EnumWorkoutStatusFilter
-    type?: NexusGenInputs['EnumWorkoutTypeFilter'] | null // EnumWorkoutTypeFilter
-  }
-  WorkoutUpdateManyMutationInput: {
-    // input type
-    date?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null // DateTimeFieldUpdateOperationsInput
-    status?:
-      | NexusGenInputs['EnumWorkoutStatusFieldUpdateOperationsInput']
-      | null // EnumWorkoutStatusFieldUpdateOperationsInput
-    type?: NexusGenInputs['EnumWorkoutTypeFieldUpdateOperationsInput'] | null // EnumWorkoutTypeFieldUpdateOperationsInput
-  }
-  WorkoutUpdateManyWithWhereWithoutTraineesInput: {
-    // input type
-    data: NexusGenInputs['WorkoutUpdateManyMutationInput'] // WorkoutUpdateManyMutationInput!
-    where: NexusGenInputs['WorkoutScalarWhereInput'] // WorkoutScalarWhereInput!
-  }
-  WorkoutUpdateManyWithoutTraineesInput: {
-    // input type
-    connect?: NexusGenInputs['WorkoutWhereUniqueInput'][] | null // [WorkoutWhereUniqueInput!]
-    connectOrCreate?:
-      | NexusGenInputs['WorkoutCreateOrConnectWithouttraineesInput'][]
-      | null // [WorkoutCreateOrConnectWithouttraineesInput!]
-    create?: NexusGenInputs['WorkoutCreateWithoutTraineesInput'][] | null // [WorkoutCreateWithoutTraineesInput!]
-    delete?: NexusGenInputs['WorkoutWhereUniqueInput'][] | null // [WorkoutWhereUniqueInput!]
-    deleteMany?: NexusGenInputs['WorkoutScalarWhereInput'][] | null // [WorkoutScalarWhereInput!]
-    disconnect?: NexusGenInputs['WorkoutWhereUniqueInput'][] | null // [WorkoutWhereUniqueInput!]
-    set?: NexusGenInputs['WorkoutWhereUniqueInput'][] | null // [WorkoutWhereUniqueInput!]
-    update?:
-      | NexusGenInputs['WorkoutUpdateWithWhereUniqueWithoutTraineesInput'][]
-      | null // [WorkoutUpdateWithWhereUniqueWithoutTraineesInput!]
-    updateMany?:
-      | NexusGenInputs['WorkoutUpdateManyWithWhereWithoutTraineesInput'][]
-      | null // [WorkoutUpdateManyWithWhereWithoutTraineesInput!]
-    upsert?:
-      | NexusGenInputs['WorkoutUpsertWithWhereUniqueWithoutTraineesInput'][]
-      | null // [WorkoutUpsertWithWhereUniqueWithoutTraineesInput!]
-  }
-  WorkoutUpdateWithWhereUniqueWithoutTraineesInput: {
-    // input type
-    data: NexusGenInputs['WorkoutUpdateWithoutTraineesInput'] // WorkoutUpdateWithoutTraineesInput!
-    where: NexusGenInputs['WorkoutWhereUniqueInput'] // WorkoutWhereUniqueInput!
-  }
-  WorkoutUpdateWithoutTraineesInput: {
-    // input type
-    date?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null // DateTimeFieldUpdateOperationsInput
-    status?:
-      | NexusGenInputs['EnumWorkoutStatusFieldUpdateOperationsInput']
-      | null // EnumWorkoutStatusFieldUpdateOperationsInput
-    type?: NexusGenInputs['EnumWorkoutTypeFieldUpdateOperationsInput'] | null // EnumWorkoutTypeFieldUpdateOperationsInput
-  }
-  WorkoutUpsertWithWhereUniqueWithoutTraineesInput: {
-    // input type
-    create: NexusGenInputs['WorkoutCreateWithoutTraineesInput'] // WorkoutCreateWithoutTraineesInput!
-    update: NexusGenInputs['WorkoutUpdateWithoutTraineesInput'] // WorkoutUpdateWithoutTraineesInput!
-    where: NexusGenInputs['WorkoutWhereUniqueInput'] // WorkoutWhereUniqueInput!
-  }
-  WorkoutWhereInput: {
-    // input type
-    AND?: NexusGenInputs['WorkoutWhereInput'][] | null // [WorkoutWhereInput!]
-    date?: NexusGenInputs['DateTimeFilter'] | null // DateTimeFilter
-    id?: NexusGenInputs['IntFilter'] | null // IntFilter
-    NOT?: NexusGenInputs['WorkoutWhereInput'][] | null // [WorkoutWhereInput!]
-    OR?: NexusGenInputs['WorkoutWhereInput'][] | null // [WorkoutWhereInput!]
-    status?: NexusGenInputs['EnumWorkoutStatusFilter'] | null // EnumWorkoutStatusFilter
-    trainees?: NexusGenInputs['UserListRelationFilter'] | null // UserListRelationFilter
-    type?: NexusGenInputs['EnumWorkoutTypeFilter'] | null // EnumWorkoutTypeFilter
-  }
-  WorkoutWhereUniqueInput: {
-    // input type
-    id?: number | null // Int
-  }
 }
 
 export interface NexusGenEnums {
-  QueryMode: 'default' | 'insensitive'
   WorkoutStatus: 'Active' | 'Cancelled' | 'Over'
-  WorkoutType: 'PERSONAL' | 'TEAM'
   status: 'Active' | 'Cancelled' | 'Over'
 }
 
@@ -362,10 +61,6 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  BatchPayload: {
-    // root type
-    count: number // Int!
-  }
   Mutation: {}
   Query: {}
   User: {
@@ -394,24 +89,13 @@ export type NexusGenAllTypes = NexusGenRootTypes &
   NexusGenEnums
 
 export interface NexusGenFieldTypes {
-  BatchPayload: {
-    // field return type
-    count: number // Int!
-  }
   Mutation: {
     // field return type
-    createOneUser: NexusGenRootTypes['User'] // User!
     deleteAllUsers: string | null // String
-    deleteManyUser: NexusGenRootTypes['BatchPayload'] // BatchPayload!
-    deleteOneUser: NexusGenRootTypes['User'] | null // User
-    updateManyUser: NexusGenRootTypes['BatchPayload'] // BatchPayload!
-    updateOneUser: NexusGenRootTypes['User'] | null // User
   }
   Query: {
     // field return type
     allUsers: Array<NexusGenRootTypes['User'] | null> | null // [User]
-    user: NexusGenRootTypes['User'] | null // User
-    users: NexusGenRootTypes['User'][] // [User!]!
   }
   User: {
     // field return type
@@ -430,24 +114,13 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
-  BatchPayload: {
-    // field return type name
-    count: 'Int'
-  }
   Mutation: {
     // field return type name
-    createOneUser: 'User'
     deleteAllUsers: 'String'
-    deleteManyUser: 'BatchPayload'
-    deleteOneUser: 'User'
-    updateManyUser: 'BatchPayload'
-    updateOneUser: 'User'
   }
   Query: {
     // field return type name
     allUsers: 'User'
-    user: 'User'
-    users: 'User'
   }
   User: {
     // field return type name
@@ -466,43 +139,6 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
-  Mutation: {
-    createOneUser: {
-      // args
-      data: NexusGenInputs['UserCreateInput'] // UserCreateInput!
-    }
-    deleteManyUser: {
-      // args
-      where?: NexusGenInputs['UserWhereInput'] | null // UserWhereInput
-    }
-    deleteOneUser: {
-      // args
-      where: NexusGenInputs['UserWhereUniqueInput'] // UserWhereUniqueInput!
-    }
-    updateManyUser: {
-      // args
-      data: NexusGenInputs['UserUpdateManyMutationInput'] // UserUpdateManyMutationInput!
-      where?: NexusGenInputs['UserWhereInput'] | null // UserWhereInput
-    }
-    updateOneUser: {
-      // args
-      data: NexusGenInputs['UserUpdateInput'] // UserUpdateInput!
-      where: NexusGenInputs['UserWhereUniqueInput'] // UserWhereUniqueInput!
-    }
-  }
-  Query: {
-    user: {
-      // args
-      where: NexusGenInputs['UserWhereUniqueInput'] // UserWhereUniqueInput!
-    }
-    users: {
-      // args
-      after?: NexusGenInputs['UserWhereUniqueInput'] | null // UserWhereUniqueInput
-      before?: NexusGenInputs['UserWhereUniqueInput'] | null // UserWhereUniqueInput
-      first?: number | null // Int
-      last?: number | null // Int
-    }
-  }
   Workout: {
     trainees: {
       // args

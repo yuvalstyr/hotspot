@@ -1,4 +1,4 @@
-import { intArg, queryType } from '@nexus/schema'
+import { queryType } from '@nexus/schema'
 import { format } from 'date-fns'
 import heLocale from 'date-fns/locale/he'
 
