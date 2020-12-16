@@ -13,10 +13,10 @@ function Proflie() {
         <Avatar
           src={user?.picture}
           sx={{
-            width: 48,
-            height: 48,
-            maxWidth: 48,
-            minWidth: 48,
+            width: 96,
+            height: 96,
+            maxWidth: 96,
+            minWidth: 96,
             borderRadius: 99999,
           }}
         />
@@ -32,10 +32,10 @@ function Logo() {
       <Image
         src={'./favicon.png'}
         sx={{
-          width: 48,
-          height: 48,
-          maxWidth: 48,
-          minWidth: 48,
+          width: 96,
+          height: 96,
+          maxWidth: 96,
+          minWidth: 96,
         }}
       />
     </Flex>
@@ -46,12 +46,9 @@ const Layout: React.FC = ({ children }) => {
   return (
     <div
       sx={{
-        display: 'grid',
-        gridTemplateAreas: ` "header header"
-                             "main main"
-                             "buttom buttom"`,
-        gap: '5px',
-        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
         // backgroundImage: 'linear-gradient(black 50%, #F42B03 , #FFD045)',
         background: `linear-gradient(to bottom, rgb(13, 11, 10), rgb(20, 17, 15), rgb(26, 23, 21), 
                      rgb(33, 30, 26), rgb(39, 36, 32), rgb(46, 42, 37), 
@@ -62,8 +59,8 @@ const Layout: React.FC = ({ children }) => {
       <header
         sx={{
           display: 'flex',
+          width: '100%',
           justifyContent: 'space-between',
-          gridArea: 'header',
           backgroundColor: 'secondary',
           padding: '0 20px',
           zIndex: 1,
@@ -74,18 +71,19 @@ const Layout: React.FC = ({ children }) => {
       </header>
       <main
         sx={{
-          gridArea: 'main',
-          minWidth: 320,
-          height: '80vh',
+          display: 'grid',
+          width: '100%',
+          flex: '1 1 auto',
+          justifyContent: 'center',
+          alignContent: 'center',
         }}
       >
         {children}
       </main>
       <footer
         sx={{
-          flexBasis: 'sidebar',
           backgroundColor: 'secondary',
-          gridArea: 'buttom',
+          width: '100%',
           zIndex: '200',
         }}
       >

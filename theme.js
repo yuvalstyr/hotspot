@@ -12,6 +12,7 @@ const theme = {
     highlight: '#c0f',
     error: '#e21616',
     text: '#F5F1ED',
+    title: '#3F4650',
   },
   links: {
     ':hover': {
@@ -24,6 +25,29 @@ const theme = {
     logo: {
       width: 70,
       height: 48,
+    },
+  },
+  form: {
+    boxShadow: (t) => `0 0 5px 3px ${t.colors.secondary}`,
+    h2: {
+      padding: '10px',
+      margin: '10px',
+    },
+    label: {
+      fontSize: 2,
+      fontWeight: 'bold',
+    },
+    button: {
+      padding: '10px',
+      margin: '10px 5px 10px 5px',
+    },
+    input: {
+      borderColor: 'gray',
+      '&:focus': {
+        borderColor: 'primary',
+        boxShadow: (t) => `0 0 0 2px ${t.colors.primary}`,
+        outline: 'none',
+      },
     },
   },
   buttons: {

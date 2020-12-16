@@ -5,6 +5,7 @@ import Gallery from '../components/Gallery'
 import { prisma } from '../graphql/context'
 import { User } from '@prisma/client'
 import { Label } from 'theme-ui'
+import SignUp from '../components/SignUp'
 
 interface sessionProps {
   user: User
@@ -12,9 +13,8 @@ interface sessionProps {
 }
 
 const index: React.FC<sessionProps> = ({ user, sessionStatus }) => {
-  console.log(user, sessionStatus)
   //  todo add signup page - after login if the user is not in db
-  if (sessionStatus === 'signup') return <Label>Signup</Label>
+  if (sessionStatus === 'signup') return <SignUp />
   if (sessionStatus === 'signin') return <Label>Please login</Label>
   if (sessionStatus === 'logged') return <Label>` Hello ${user.name}`</Label>
 }

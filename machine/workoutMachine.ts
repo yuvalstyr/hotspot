@@ -101,7 +101,6 @@ export const createWorkoutMachine = ({
             target: 'failure',
             actions: assign({
               error: (_, event) => {
-                console.log('event', event)
                 return event.data.message
               },
             }),
@@ -133,7 +132,6 @@ export const createWorkoutMachine = ({
             target: 'failure',
             actions: assign({
               error: (_, event) => {
-                console.log('event', event)
                 return event.data.message
               },
             }),

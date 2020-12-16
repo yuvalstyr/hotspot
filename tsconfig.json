@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "module": "commonjs",
-    "target": "ES2018",
+    "module": "ES2020",
     "outDir": "dist",
-    "lib": [
-      "esnext",
-      "dom"
-    ],
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
     // "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -26,8 +23,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
   },
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+  },
   "include": [
     "next-env.d.ts",
+    "**/*.ts",
     "./src"
   ],
   "exclude": [

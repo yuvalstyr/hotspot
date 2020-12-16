@@ -45,7 +45,6 @@ export const Workout: React.FunctionComponent<Prop> = ({ workoutRef }) => {
   const [state, send] = useActor(workoutRef)
 
   if (!state) return null
-  console.log('state', state)
   const { date, workoutType, trainees } = state.context
 
   return (

@@ -15,7 +15,6 @@ const Nav: React.FC = () => {
   const isSSR = () => typeof window === 'undefined'
   const { loading, user } = useFetchUser()
   React.useEffect(() => {
-    console.log('build')
     ReactTooltip.rebuild()
   }, [isSSR])
   return (
