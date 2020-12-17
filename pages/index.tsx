@@ -2,19 +2,21 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import auth0 from '../lib/auth0'
 import Gallery from '../components/Gallery'
-import { prisma } from '../graphql/context'
+import prisma from '../lib/prisma'
 import { User } from '@prisma/client'
 import { Label } from 'theme-ui'
 import SignUp from '../components/SignUp'
 
 interface sessionProps {
   user: User
-  sessionStatus: string
+  initailSessionStatus: string
 }
 
-const index: React.FC<sessionProps> = ({ user, sessionStatus }) => {
+const index: React.FC<sessionProps> = ({ user, initailSessionStatus }) => {
   //  todo add signup page - after login if the user is not in db
-  if (sessionStatus === 'signup') return <SignUp />
+  const [sessionStatus, setSessionStatus] = React.useState(initailSessionStatus)
+  if (sessionStatus === 'signup')
+    return <SignUp user={user} handleSignup={setSessionStatus} />
   if (sessionStatus === 'signin') return <Label>Please login</Label>
   if (sessionStatus === 'logged') return <Label>` Hello ${user.name}`</Label>
 }
@@ -36,7 +38,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       user: session?.user || null,
-      sessionStatus: dbUser ? 'logged' : 'signup',
+      initailSessionStatus: dbUser ? 'logged' : 'signup',
     },
   }
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import { MdFitnessCenter, MdPayment } from 'react-icons/md'
 import { BiCalendarPlus } from 'react-icons/bi'
 import { RiLogoutBoxLine, RiLoginBoxLine } from 'react-icons/ri'
-import ReactTooltip from 'react-tooltip'
 import { Flex, NavLink, jsx } from 'theme-ui'
 import NavIcon from './NavIcon'
 import { NavSignButton } from './NavSignButton'
@@ -14,9 +13,7 @@ import { useFetchUser } from '../lib/user'
 const Nav: React.FC = () => {
   const isSSR = () => typeof window === 'undefined'
   const { loading, user } = useFetchUser()
-  React.useEffect(() => {
-    ReactTooltip.rebuild()
-  }, [isSSR])
+
   return (
     <Flex
       as="nav"

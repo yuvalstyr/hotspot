@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import {
   ApolloClient,
   InMemoryCache,
@@ -11,7 +14,7 @@ function createIsomorphicLink() {
   if (typeof window === 'undefined') {
     // server
     const { SchemaLink } = require('@apollo/client/link/schema')
-    const { schema } = require('@nexus/schema')
+    const { schema } = require('nexus')
     return new SchemaLink({ schema })
   } else {
     // client

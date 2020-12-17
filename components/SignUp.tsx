@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { validate } from 'graphql'
 import React from 'react'
 import { BiFemale, BiMale } from 'react-icons/bi'
 import {
@@ -14,6 +12,8 @@ import {
   Text,
 } from 'theme-ui'
 import { useForm } from 'react-hook-form'
+import gql from 'graphql-tag'
+import { useMutation } from '@apollo/client'
 /** @jsx jsx */
 
 type Inputs = {
@@ -22,10 +22,31 @@ type Inputs = {
   gender: string
 }
 
+export const SIGNUP = gql`
+  mutation signup(
+    $name: String!
+    $phone: String!
+    $gender: String!
+    $email: String!
+  ) {
+    signup(name: $name, phone: $phone, gender: $gender, email: $email) {
+      __typename
+      id
+    }
+  }
+`
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function SignUp() {
+function SignUp({ user, handleSignup }) {
   const { register, handleSubmit, errors } = useForm<Inputs>()
-  const onSubmit = (data) => console.log(data)
+  const [signup, { loading }] = useMutation(SIGNUP)
+  if (loading) return <h1>Loading...</h1>
+  const onSubmit = (data) => {
+    console.log('user.email', user.email)
+    const { name, phone, gender } = data
+    signup({ variables: { name, phone, gender, email: user.email } })
+    handleSignup('logged')
+  }
   return (
     <Grid
       backgroundColor="muted"
