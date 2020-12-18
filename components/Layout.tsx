@@ -48,8 +48,7 @@ const Layout: React.FC = ({ children }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '90vh',
-        // backgroundImage: 'linear-gradient(black 50%, #F42B03 , #FFD045)',
+        minHeight: '95vh',
         background: `linear-gradient(to bottom, rgb(13, 11, 10), rgb(20, 17, 15), rgb(26, 23, 21), 
                      rgb(33, 30, 26), rgb(39, 36, 32), rgb(46, 42, 37), 
                      rgb(52, 42, 38), rgb(59, 42, 38), rgb(65, 43, 39), 
@@ -73,7 +72,7 @@ const Layout: React.FC = ({ children }) => {
         sx={{
           display: 'grid',
           width: '100%',
-          flex: '1 1 auto',
+          flex: '1 0 auto',
           justifyContent: 'center',
           alignContent: 'center',
         }}
