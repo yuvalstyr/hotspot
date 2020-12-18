@@ -3,7 +3,7 @@
 import { User } from '@prisma/client'
 import { assign, DoneInvokeEvent, Machine } from 'xstate'
 import { BOOK_WORKOUT, UNBOOK_WORKOUT } from '../lib/gql'
-import { client } from './scheduleMachine'
+
 import {
   ICreateWorkout,
   WorkoutMachineContext,
@@ -12,43 +12,43 @@ import {
   WorkoutStateSchema,
 } from './workoutMachine.types'
 
-export const bookWorkout: (
-  userId: number,
-  workoutId: number,
-) => Promise<User> = (userId, workoutId) => {
-  return client
-    .mutate({
-      mutation: BOOK_WORKOUT,
-      variables: { traineeId: userId, workoutId },
-    })
-    .then((res) => {
-      if (res.errors) {
-        throw res.errors
-      } else {
-        return res.data.bookWorkout
-      }
-    })
-}
+// export const bookWorkout: (
+//   userId: number,
+//   workoutId: number,
+// ) => Promise<User> = (userId, workoutId) => {
+//   return client
+//     .mutate({
+//       mutation: BOOK_WORKOUT,
+//       variables: { traineeId: userId, workoutId },
+//     })
+//     .then((res) => {
+//       if (res.errors) {
+//         throw res.errors
+//       } else {
+//         return res.data.bookWorkout
+//       }
+//     })
+// }
 
-export const unbookWorkout = (
-  context: WorkoutMachineContext,
-  event: { [key: string]: any },
-): any => {
-  const { workoutId } = event
-  const { user } = context
-  return client
-    .mutate({
-      mutation: UNBOOK_WORKOUT,
-      variables: { traineeId: user.id, workoutId },
-    })
-    .then((res) => {
-      if (res.errors) {
-        throw res.errors
-      } else {
-        return res.data
-      }
-    })
-}
+// export const unbookWorkout = (
+//   context: WorkoutMachineContext,
+//   event: { [key: string]: any },
+// ): any => {
+//   const { workoutId } = event
+//   const { user } = context
+//   return client
+//     .mutate({
+//       mutation: UNBOOK_WORKOUT,
+//       variables: { traineeId: user.id, workoutId },
+//     })
+//     .then((res) => {
+//       if (res.errors) {
+//         throw res.errors
+//       } else {
+//         return res.data
+//       }
+//     })
+// }
 
 export const createWorkoutMachine = ({
   id,
@@ -83,9 +83,11 @@ export const createWorkoutMachine = ({
           id: 'bookWorkout',
           src: (context, event) => {
             if (event.type === 'BOOK') {
-              return bookWorkout(context.user.id, event.workoutId)
+              // return bookWorkout(context.user.id, event.workoutId)
+              return null
             }
-            return bookWorkout(context.user.id, 100000)
+            // return bookWorkout(context.user.id, 100000)
+            return null
           },
           onDone: {
             target: 'active',
@@ -109,8 +111,9 @@ export const createWorkoutMachine = ({
       },
       [workoutsStates.unbooking]: {
         invoke: {
-          src: (context, event: WorkoutMachineEvent) =>
-            unbookWorkout(context, event),
+          src: (context, event: WorkoutMachineEvent) => null,
+
+          // unbookWorkout(context, event),
           onDone: {
             target: 'active',
             actions: [

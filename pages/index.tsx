@@ -6,6 +6,7 @@ import prisma from '../lib/prisma'
 import { User } from '@prisma/client'
 import { Label } from 'theme-ui'
 import SignUp from '../components/SignUp'
+import Home from '../components/Home'
 
 interface sessionProps {
   user: User
@@ -18,7 +19,13 @@ const index: React.FC<sessionProps> = ({ user, initailSessionStatus }) => {
   if (sessionStatus === 'signup')
     return <SignUp user={user} handleSignup={setSessionStatus} />
   if (sessionStatus === 'signin') return <Label>Please login</Label>
-  if (sessionStatus === 'logged') return <Label>` Hello ${user.name}`</Label>
+  if (sessionStatus === 'logged')
+    return (
+      <React.Fragment>
+        <Label>` Hello ${user.name}`</Label>
+        <Home />
+      </React.Fragment>
+    )
   return null
 }
 

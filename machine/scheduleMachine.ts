@@ -1,6 +1,5 @@
-import { ApolloQueryResult } from '@apollo/client'
+import request from 'graphql-request'
 import { assign, Machine, spawn } from 'xstate'
-import { initializeApollo } from '../apollo/apolloClient'
 import { WORKOUTS } from '../lib/gql'
 import {
   ScheduleMachineContext,
@@ -11,17 +10,15 @@ import {
 import { createWorkoutMachine } from './workoutMachine'
 import { IWorkout } from './workoutMachine.types'
 
-export const client = initializeApollo()
-
-export const getWorkouts = (): Promise<ApolloQueryResult<unknown>> =>
-  client.query({ query: WORKOUTS, fetchPolicy: 'network-only' }).then((res) => {
+export const getWorkouts = (): Promise<any> => {
+  return request('http://localhost:3000/api', WORKOUTS).then((res) => {
     if (res.errors) {
       throw res.errors
     } else {
       return res.data
     }
   })
-
+}
 export const scheduleMachine = Machine<
   ScheduleMachineContext,
   ScheduleStateSchema,

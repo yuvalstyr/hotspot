@@ -5,7 +5,7 @@ import Nav from './Nav'
 
 /** @jsx jsx */
 
-function Proflie() {
+function ProflieAvatar() {
   const { user } = useFetchUser()
   return (
     <Flex p={2} sx={{ alignItems: 'center' }}>
@@ -65,7 +65,7 @@ const Layout: React.FC = ({ children }) => {
           zIndex: 1,
         }}
       >
-        <Proflie />
+        <ProflieAvatar />
         <Logo />
       </header>
       <main

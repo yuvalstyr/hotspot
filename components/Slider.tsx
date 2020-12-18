@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Dispatch, SetStateAction } from 'react'
-import { mdiArrowLeftBoldCircle, mdiArrowRightBoldCircle } from '@mdi/js'
-import Icon from '@mdi/react'
+import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 import { Flex, jsx } from 'theme-ui'
 import DayAvatar from './DayAvatar'
+import NavIcon from './NavIcon'
 
 /** @jsx jsx */
 
@@ -26,11 +26,9 @@ export const Slider: React.FC<props> = ({
         width: '100%',
       }}
     >
-      <Icon
-        path={mdiArrowRightBoldCircle}
-        size={1.5}
-        sx={{ color: 'secondary', alignSelf: 'center' }}
-      />
+      <NavIcon sx={{ color: 'secondary', alignSelf: 'center' }}>
+        <FaArrowCircleRight />
+      </NavIcon>
 
       {Array.from(datesSet).map((date, index) => (
         <DayAvatar
@@ -41,11 +39,9 @@ export const Slider: React.FC<props> = ({
         />
       ))}
 
-      <Icon
-        path={mdiArrowLeftBoldCircle}
-        size={1.5}
-        sx={{ color: 'secondary', alignSelf: 'center' }}
-      />
+      <NavIcon sx={{ color: 'secondary', alignSelf: 'center' }}>
+        <FaArrowCircleLeft />
+      </NavIcon>
     </Flex>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { SetStateAction } from 'react'
 import { BiFemale, BiMale } from 'react-icons/bi'
 import {
   Button,
@@ -13,7 +13,9 @@ import {
 } from 'theme-ui'
 import { useForm } from 'react-hook-form'
 import gql from 'graphql-tag'
-import { useMutation } from '@apollo/client'
+
+import { request } from 'graphql-request'
+import { User } from '@prisma/client'
 /** @jsx jsx */
 
 type Inputs = {
@@ -36,15 +38,22 @@ export const SIGNUP = gql`
   }
 `
 
+function signup(variables) {
+  return request('http://localhost:3000/api', SIGNUP, variables)
+}
+interface signupProps {
+  user: User
+  handleSignup: React.Dispatch<React.SetStateAction<string>>
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function SignUp({ user, handleSignup }) {
+const SignUp: React.FC<signupProps> = ({ user, handleSignup }) => {
   const { register, handleSubmit, errors } = useForm<Inputs>()
-  const [signup, { loading }] = useMutation(SIGNUP)
-  if (loading) return <h1>Loading...</h1>
-  const onSubmit = (data) => {
-    console.log('user.email', user.email)
+
+  const onSubmit = async (data) => {
     const { name, phone, gender } = data
-    signup({ variables: { name, phone, gender, email: user.email } })
+    const { email } = user
+    await signup({ name, phone, gender, email })
     handleSignup('logged')
   }
   return (
