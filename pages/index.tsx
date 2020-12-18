@@ -19,6 +19,7 @@ const index: React.FC<sessionProps> = ({ user, initailSessionStatus }) => {
     return <SignUp user={user} handleSignup={setSessionStatus} />
   if (sessionStatus === 'signin') return <Label>Please login</Label>
   if (sessionStatus === 'logged') return <Label>` Hello ${user.name}`</Label>
+  return null
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
