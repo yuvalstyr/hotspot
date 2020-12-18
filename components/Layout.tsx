@@ -13,10 +13,10 @@ function Proflie() {
         <Avatar
           src={user?.picture}
           sx={{
-            width: 96,
-            height: 96,
-            maxWidth: 96,
-            minWidth: 96,
+            width: 72,
+            height: 72,
+            maxWidth: 72,
+            minWidth: 72,
             borderRadius: 99999,
           }}
         />
@@ -32,10 +32,10 @@ function Logo() {
       <Image
         src={'./favicon.png'}
         sx={{
-          width: 96,
-          height: 96,
-          maxWidth: 96,
-          minWidth: 96,
+          width: 72,
+          height: 72,
+          maxWidth: 72,
+          minWidth: 72,
         }}
       />
     </Flex>
@@ -48,7 +48,7 @@ const Layout: React.FC = ({ children }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '100vh',
+        minHeight: '90vh',
         // backgroundImage: 'linear-gradient(black 50%, #F42B03 , #FFD045)',
         background: `linear-gradient(to bottom, rgb(13, 11, 10), rgb(20, 17, 15), rgb(26, 23, 21), 
                      rgb(33, 30, 26), rgb(39, 36, 32), rgb(46, 42, 37), 
