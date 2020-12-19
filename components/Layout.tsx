@@ -1,12 +1,14 @@
 import React from 'react'
 import { jsx, Image, Flex, Label, Avatar } from 'theme-ui'
 import { useFetchUser } from '../lib/user'
+import useWindowSize from '../lib/useWindowsHook'
 import Nav from './Nav'
 
 /** @jsx jsx */
 
 function ProflieAvatar() {
   const { user } = useFetchUser()
+
   return (
     <Flex p={2} sx={{ alignItems: 'center' }}>
       {user && (
@@ -43,13 +45,13 @@ function Logo() {
 }
 
 const Layout: React.FC = ({ children }) => {
+  const { height } = useWindowSize()
   return (
     <div
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        height: ['100vh', '97vh'],
-        minHeight: ['100vh', '97vh'],
+        height: height,
         background: `linear-gradient(to bottom, rgb(13, 11, 10), rgb(20, 17, 15), rgb(26, 23, 21), 
                      rgb(33, 30, 26), rgb(39, 36, 32), rgb(46, 42, 37), 
                      rgb(52, 42, 38), rgb(59, 42, 38), rgb(65, 43, 39), 
