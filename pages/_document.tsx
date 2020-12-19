@@ -22,7 +22,7 @@ export default class MyDocument extends Document {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   render() {
     return (
-      <Html lang="he" style={{ height: 'height: -webkit-fill-available' }}>
+      <Html lang="he">
         <body dir="rtl">
           <Meta />
           <Main />
