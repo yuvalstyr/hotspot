@@ -39,6 +39,7 @@ export const SIGNUP = gql`
 `
 
 function signup(variables) {
+  console.log('process.env.API_URL', process.env.API_URL)
   return request(process.env.API_URL, SIGNUP, variables)
 }
 interface signupProps {
