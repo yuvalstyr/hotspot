@@ -11,7 +11,7 @@ import { createWorkoutMachine } from './workoutMachine'
 import { IWorkout } from './workoutMachine.types'
 
 export const getWorkouts = (): Promise<any> => {
-  return request('http://localhost:3000/api', WORKOUTS).then((res) => {
+  return request(process.env.API_URL, WORKOUTS).then((res) => {
     if (res.errors) {
       throw res.errors
     } else {

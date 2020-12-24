@@ -52,10 +52,7 @@ const Layout: React.FC = ({ children }) => {
         display: 'flex',
         flexDirection: 'column',
         height: height,
-        background: `linear-gradient(to bottom, rgb(13, 11, 10), rgb(20, 17, 15), rgb(26, 23, 21), 
-                     rgb(33, 30, 26), rgb(39, 36, 32), rgb(46, 42, 37), 
-                     rgb(52, 42, 38), rgb(59, 42, 38), rgb(65, 43, 39), 
-                     rgb(71, 43, 39), rgb(78, 43, 40), rgb(84, 43, 40));`,
+        backgroundImage: `linear-gradient(to top, rgb(6, 7, 8), rgba(17, 6, 8, 0.91), rgba(27, 5, 8, 0.81), rgba(38, 3, 8, 0.72), rgba(48, 2, 8, 0.62), rgba(59, 1, 8, 0.53), rgba(75, 18, 8, 0.53), rgba(90, 35, 7, 0.52), rgba(106, 52, 7, 0.52), rgba(122, 68, 7, 0.52), rgba(137, 85, 6, 0.51), rgba(153, 102, 6, 0.51));`,
       }}
     >
       <header

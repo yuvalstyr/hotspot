@@ -13,7 +13,7 @@ const userQuery = gql`
 
 function Home() {
   const { data, error } = useSWR(userQuery, (query) =>
-    request('http://localhost:3000/api', query),
+    request(process.env.API_URL, query),
   )
   console.log('data', data)
   return <div></div>

@@ -39,7 +39,7 @@ export const SIGNUP = gql`
 `
 
 function signup(variables) {
-  return request('http://localhost:3000/api', SIGNUP, variables)
+  return request(process.env.API_URL, SIGNUP, variables)
 }
 interface signupProps {
   user: User
