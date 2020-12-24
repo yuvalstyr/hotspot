@@ -13,7 +13,7 @@ import {
 } from 'theme-ui'
 import { useForm } from 'react-hook-form'
 import gql from 'graphql-tag'
-
+import getConfig from 'next/config'
 import { request } from 'graphql-request'
 import { User } from '@prisma/client'
 /** @jsx jsx */
@@ -39,8 +39,8 @@ export const SIGNUP = gql`
 `
 
 function signup(variables) {
-  console.log('process.env.API_URL', process.env.API_URL)
-  return request(process.env.API_URL, SIGNUP, variables)
+  const { publicRuntimeConfig } = getConfig()
+  return request(publicRuntimeConfig.API_URL, SIGNUP, variables)
 }
 interface signupProps {
   user: User
