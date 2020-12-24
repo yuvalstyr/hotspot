@@ -1,4 +1,5 @@
 import React from 'react'
+import getConfig from 'next/config'
 import { request, gql } from 'graphql-request'
 import useSWR from 'swr'
 
@@ -12,8 +13,9 @@ const userQuery = gql`
 `
 
 function Home() {
+  const { publicRuntimeConfig } = getConfig()
   const { data, error } = useSWR(userQuery, (query) =>
-    request(process.env.API_URL, query),
+    request(publicRuntimeConfig.API_URL, query),
   )
   console.log('data', data)
   return <div></div>
