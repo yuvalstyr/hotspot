@@ -12,7 +12,7 @@ function useWindowSize(): IWindows {
     height: undefined,
   })
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     // Handler to call on window resize
     function handleResize() {
       // Set window width/height to state
