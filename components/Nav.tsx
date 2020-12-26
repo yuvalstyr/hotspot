@@ -2,9 +2,8 @@ import React from 'react'
 import { MdFitnessCenter, MdPayment } from 'react-icons/md'
 import { BiCalendarPlus } from 'react-icons/bi'
 import { RiLogoutBoxLine, RiLoginBoxLine } from 'react-icons/ri'
-import { Flex, NavLink, jsx } from 'theme-ui'
-import NavIcon from './NavIcon'
-import { NavSignButton } from './NavSignButton'
+import { Flex, NavLink, jsx, Label } from 'theme-ui'
+import NavIcon from './Icon'
 import { NavLinkButton } from './NavLinkButton'
 import { useFetchUser } from '../lib/user'
 
@@ -23,27 +22,28 @@ const Nav: React.FC = () => {
         justifyContent: 'space-around',
       }}
     >
-      <NavLink p={2} sx={{ variant: 'links' }}>
-        <NavIcon>
-          <MdFitnessCenter />
-        </NavIcon>
-      </NavLink>
       <NavLinkButton url={'/schedule'}>
         <BiCalendarPlus />
+        <Label>הזמנת אימון</Label>
       </NavLinkButton>
-      <NavLink p={2} sx={{ variant: 'links' }}>
-        <NavIcon>
-          <MdPayment />
-        </NavIcon>
-      </NavLink>
+      <NavLinkButton url={'/schedule'}>
+        <MdPayment />
+        <Label>תשלום</Label>
+      </NavLinkButton>
+      <NavLinkButton url={'/schedule'}>
+        <MdFitnessCenter />
+        <Label>היסטוריה</Label>
+      </NavLinkButton>
       {user ? (
-        <NavSignButton url={'api/logout'}>
+        <NavLinkButton url={'api/logout'}>
           <RiLogoutBoxLine />
-        </NavSignButton>
+          <Label>התנתק</Label>
+        </NavLinkButton>
       ) : (
-        <NavSignButton url={'api/login'}>
+        <NavLinkButton url={'api/login'}>
           <RiLoginBoxLine />
-        </NavSignButton>
+          <Label>התחבר</Label>
+        </NavLinkButton>
       )}
     </Flex>
   )

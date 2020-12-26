@@ -1,21 +1,11 @@
 import React from 'react'
-import { request, gql } from 'graphql-request'
 import { User } from '@prisma/client'
 import { Card, Flex, Grid, jsx, Label } from 'theme-ui'
 import { MdFitnessCenter, MdPermContactCalendar } from 'react-icons/md'
 import { BsCardChecklist } from 'react-icons/bs'
-import Icon from '../components/NavIcon'
+import Icon from './Icon'
 
 /** @jsx jsx */
-
-const userQuery = gql`
-  query users {
-    users {
-      id
-      name
-    }
-  }
-`
 
 interface IhomeProps {
   user: User
@@ -32,7 +22,7 @@ const Home: React.FC<IhomeProps> = ({ user }) => {
             justifyContent: 'space-between',
           }}
         >
-          <Icon>
+          <Icon size={3}>
             <MdFitnessCenter />
           </Icon>
           <Label p={2}>התאמנת החודש כבר 7 אימונים 🦾🦾</Label>
@@ -46,7 +36,7 @@ const Home: React.FC<IhomeProps> = ({ user }) => {
             justifyContent: 'space-between',
           }}
         >
-          <Icon>
+          <Icon size={3}>
             <MdPermContactCalendar />
           </Icon>
           <Label p={2}> באימון הבא ביום שני ה 13.6 ב- 17</Label>
@@ -60,10 +50,10 @@ const Home: React.FC<IhomeProps> = ({ user }) => {
             justifyContent: 'space-between',
           }}
         >
-          <Icon>
+          <Icon size={3}>
             <BsCardChecklist />
           </Icon>
-          <Label p={2}>נשאר עוד 6 אימונים בכרטיסיה</Label>
+          <Label p={2}>נשאר עוד {user.left} אימונים בכרטיסיה</Label>
         </Flex>
       </Card>
     </Grid>
