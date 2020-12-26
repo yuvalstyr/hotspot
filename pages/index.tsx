@@ -22,8 +22,7 @@ const index: React.FC<sessionProps> = ({ user, initailSessionStatus }) => {
   if (sessionStatus === 'logged')
     return (
       <React.Fragment>
-        <Label>` Hello ${user.name}`</Label>
-        <Home />
+        <Home user={user} />
       </React.Fragment>
     )
   return null
@@ -41,11 +40,13 @@ export async function getServerSideProps(context: any) {
     }
   }
   const { email } = session.user
-  const dbUser = await prisma.user.findUnique({ where: { email } })
-
+  const dbUser = await prisma.user.findUnique({
+    where: { email },
+  })
+  const { name, email: dbEmail, gender, left } = dbUser
   return {
     props: {
-      user: session?.user || null,
+      user: dbUser ? { name, dbEmail, gender, left } : null,
       initailSessionStatus: dbUser ? 'logged' : 'signup',
     },
   }

@@ -47,7 +47,6 @@ interface signupProps {
   handleSignup: React.Dispatch<React.SetStateAction<string>>
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const SignUp: React.FC<signupProps> = ({ user, handleSignup }) => {
   const { register, handleSubmit, errors } = useForm<Inputs>()
 

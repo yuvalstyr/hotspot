@@ -57,6 +57,15 @@ export const theme: Theme = merge(
         color: '##000',
       },
     },
+    cards: {
+      primary: {
+        padding: 2,
+        borderRadius: 4,
+        backgroundColor: 'secondary',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+        // border: '1px solid',
+      },
+    },
     alerts: {
       primary: {
         color: 'background',
@@ -78,6 +87,7 @@ export const theme: Theme = merge(
         borderColor: 'muted',
         borderRadius: '4px',
         p: 2,
+        backgroundColor: 'red',
       },
       page: {
         width: '100%',

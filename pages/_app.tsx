@@ -9,7 +9,7 @@ import '../styles.css'
 export default function App(props: AppProps) {
   const { pageProps, Component } = props
 
-  // console.log("theme", theme)
+  console.log('theme', theme)
 
   return (
     <ThemeProvider theme={theme}>
