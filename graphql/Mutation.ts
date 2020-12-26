@@ -1,6 +1,8 @@
 import { intArg, mutationType, nonNull, stringArg } from 'nexus'
 import { addDays } from 'date-fns'
 import prisma from '../lib/prisma'
+import { Workout } from '../components/Workout'
+import { WorkoutType } from '@prisma/client'
 
 export const Mutation = mutationType({
   definition(t) {
@@ -10,7 +12,7 @@ export const Mutation = mutationType({
         traineeId: nonNull(intArg()),
         workoutId: intArg(),
       },
-      async resolve(_, args, ctx) {
+      async resolve(_, args) {
         const { traineeId, workoutId } = args
         const user = await prisma.user.findUnique({
           where: { id: traineeId },
@@ -30,16 +32,17 @@ export const Mutation = mutationType({
           data: { trainees: { connect: { id: traineeId } } },
           where: { id: workoutId },
         })
+        prisma.$disconnect()
         return user
       },
     })
-    t.field('deleteBookedWorkout', {
+    t.field('unBookedWorkout', {
       type: 'User',
       args: {
         traineeId: intArg(),
         workoutId: intArg(),
       },
-      resolve: async (_, args, ctx) => {
+      resolve: async (_, args) => {
         const { traineeId, workoutId } = args
         const user = await prisma.user.findUnique({
           where: { id: traineeId },
@@ -58,6 +61,7 @@ export const Mutation = mutationType({
           data: { trainees: { set: newTraineesArray } },
           where: { id: workoutId },
         })
+        prisma.$disconnect()
         return user
       },
     })
@@ -71,6 +75,7 @@ export const Mutation = mutationType({
         const user = await prisma.user.delete({
           where: { id: userId },
         })
+        prisma.$disconnect()
         return user
       },
     })
@@ -80,16 +85,19 @@ export const Mutation = mutationType({
         workoutId: intArg(),
         date: stringArg(),
       },
-      resolve: async (_, args, ctx) => {
-        const workout = await prisma.workout.findOne({
+      resolve: async (_, args) => {
+        const workout = await prisma.workout.findUnique({
           where: { id: args.workoutId },
         })
         if (workout) {
-          return prisma.workout.update({
+          const updatedWorkout = prisma.workout.update({
             where: { id: args.workoutId },
             data: { date: args.date },
           })
+          prisma.$disconnect()
+          return updatedWorkout
         }
+        prisma.$disconnect()
         return null
       },
     })
@@ -103,9 +111,11 @@ export const Mutation = mutationType({
       },
       resolve: async (_, args) => {
         const { name, phone, gender, email } = args
-        return prisma.user.create({
+        const user = await prisma.user.create({
           data: { name, phone, gender, email },
         })
+        prisma.$disconnect()
+        return user
       },
     })
     t.field('deleteworkoutIdTrainees', {
@@ -113,8 +123,8 @@ export const Mutation = mutationType({
       args: {
         workoutId: intArg(),
       },
-      resolve: async (_, args, ctx) => {
-        const workout = await prisma.workout.findOne({
+      resolve: async (_, args) => {
+        const workout = await prisma.workout.findUnique({
           where: { id: args.workoutId },
         })
         if (workout) {
@@ -123,11 +133,13 @@ export const Mutation = mutationType({
             data: { trainees: undefined },
           })
         }
+        prisma.$disconnect()
         return null
       },
     })
     t.int('addWeekToAllWorkouts', {
-      resolve: async (_, _a, ctx) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      resolve: async (_, _a) => {
         const workouts = await prisma.workout.findMany({})
         let count = 0
 
@@ -142,6 +154,11 @@ export const Mutation = mutationType({
           }),
         )
         return count
+      },
+    })
+    t.field('createWorkout', {
+      args: {
+        ...WorkoutType,
       },
     })
   },

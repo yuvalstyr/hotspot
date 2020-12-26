@@ -1,7 +1,7 @@
 import React from 'react'
 import { jsx, Image, Flex, Label, Avatar } from 'theme-ui'
 import { useFetchUser } from '../lib/user'
-import useWindowSize from '../lib/useWindowsHook'
+import useWindowSize from '../lib/useWindows'
 import Nav from './Nav'
 
 /** @jsx jsx */
