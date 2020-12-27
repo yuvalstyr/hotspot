@@ -1,11 +1,13 @@
 import { ApolloServer } from 'apollo-server-micro'
-import { GraphQLDate } from 'graphql-iso-date'
+import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date'
 import { asNexusMethod, makeSchema, objectType } from 'nexus'
 import path from 'path'
 import { Mutation } from '../../graphql/Mutation'
 import { Query } from '../../graphql/Query'
 import prisma from '../../lib/prisma'
+import { Workout, WorkoutMutation } from '../../graphql/Workout'
 
+export const GQLDateTime = asNexusMethod(GraphQLDateTime, 'dateTime')
 export const GQLDate = asNexusMethod(GraphQLDate, 'date')
 
 const User = objectType({
@@ -28,29 +30,16 @@ const User = objectType({
   },
 })
 
-const Workout = objectType({
-  name: 'Workout',
-  definition(t) {
-    t.int('id')
-    t.string('type')
-    t.date('date')
-    t.list.field('trainees', {
-      type: 'User',
-      async resolve(parent) {
-        const trainees = await prisma.workout
-          .findUnique({
-            where: { id: Number(parent.id) },
-            select: { trainees: true },
-          })
-          .trainees()
-        return trainees
-      },
-    })
-  },
-})
-
 export const schema = makeSchema({
-  types: [User, Workout, GQLDate, Mutation, Query],
+  types: [
+    User,
+    Workout,
+    WorkoutMutation,
+    GQLDateTime,
+    GQLDate,
+    Mutation,
+    Query,
+  ],
   outputs: {
     typegen: path.join(process.cwd(), 'pages/api/nexus-typegen.ts'),
     schema: path.join(process.cwd(), 'pages/api/schema.graphql'),

@@ -8,11 +8,13 @@ datasource db {
 }
 
 model Workout {
-  type     WorkoutType
-  status   WorkoutStatus
-  date     DateTime      @default(now())
-  id       Int           @id @default(autoincrement())
-  trainees User[]
+  type          WorkoutType
+  status        WorkoutStatus
+  gender        Gender
+  isoDateTime   DateTime      @default(now())
+  localDateTime String        @default("n/a")
+  id            Int           @id @default(autoincrement())
+  trainees      User[]
 }
 
 enum WorkoutStatus {
@@ -24,6 +26,11 @@ enum WorkoutStatus {
 enum WorkoutType {
   PERSONAL
   TEAM
+}
+
+enum Gender {
+  MALE
+  FEMALE
 }
 
 model User {
