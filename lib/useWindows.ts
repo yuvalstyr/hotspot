@@ -4,6 +4,9 @@ interface IWindows {
   height: number
 }
 
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect
+
 function useWindowSize(): IWindows {
   // Initialize state with undefined width/height so server and client renders match
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
@@ -12,7 +15,7 @@ function useWindowSize(): IWindows {
     height: undefined,
   })
 
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Handler to call on window resize
     function handleResize() {
       // Set window width/height to state
