@@ -2,12 +2,37 @@ import he from 'date-fns/locale/he'
 import { NextPage } from 'next'
 import React from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
-import { Card, Grid, jsx } from 'theme-ui'
+import { Box, Button, Card, Grid, jsx, Label } from 'theme-ui'
+import { format } from 'date-fns'
+import { Collapse } from 'react-collapse'
+
+// todo move to lib folder
+const getDatesBetweenDates = (startDate, endDate) => {
+  let dates = []
+  //to avoid modifying the original date
+  const theDate = new Date(startDate)
+  while (theDate <= endDate) {
+    dates = [...dates, new Date(theDate)]
+    theDate.setDate(theDate.getDate() + 1)
+  }
+  return dates
+}
+function range(start, end) {
+  return Array(end - start + 1)
+    .fill()
+    .map((_, idx) => start + idx)
+}
+
+const Day: React.FC<{ date: string }> = ({ date }) => {
+  const hours = range(10, 21)
+  return hours.map((h) => <Label key={h}>{h}</Label>)
+}
 
 /** @jsx jsx */
 const Admin: NextPage = () => {
   const [startDate, setStartDate] = React.useState(new Date())
   const [endDate, setEndDate] = React.useState(null)
+  const [isOpened, setIsOpened] = React.useState(false)
   const onChange = (dates) => {
     const [start, end] = dates
     setStartDate(start)
@@ -15,8 +40,8 @@ const Admin: NextPage = () => {
   }
   registerLocale('he', he)
   return (
-    <Grid m={3}>
-      <Card p={5} sx={{ height: '50vh' }}>
+    <Card m={3} p={5} sx={{ overflow: 'hidden auto' }}>
+      <Grid>
         <DatePicker
           selected={startDate}
           onChange={onChange}
@@ -26,8 +51,21 @@ const Admin: NextPage = () => {
           selectsRange
           inline
         />
-      </Card>
-    </Grid>
+        {getDatesBetweenDates(startDate, endDate).map((day) => {
+          console.log('day', format(day, "yyyy-MM-dd'T'HH:mm"))
+          return (
+            <React.Fragment key={format(day, "yyyy-MM-dd'T'HH:mm")}>
+              <Box onClick={() => setIsOpened(!isOpened)}>
+                {format(day, 'eo', { locale: he })}
+              </Box>
+              <Collapse isOpened={isOpened}>
+                <Day date={format(day, "yyyy-MM-dd'T'HH:mm")} />
+              </Collapse>
+            </React.Fragment>
+          )
+        })}
+      </Grid>
+    </Card>
     // <Box as="form">
     //   <Checkbox defaultChecked={true} />
     // </Box>

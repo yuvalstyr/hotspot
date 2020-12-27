@@ -57,8 +57,9 @@ const Layout: React.FC = ({ children }) => {
     >
       <header
         sx={{
-          display: 'flex',
+          flexShrink: 0,
           width: '100%',
+          display: 'flex',
           justifyContent: 'space-between',
           backgroundColor: 'secondary',
           padding: '0 20px',
@@ -70,9 +71,10 @@ const Layout: React.FC = ({ children }) => {
       </header>
       <main
         sx={{
+          flexGrow: 1,
+          overflow: 'hidden auto',
           display: 'grid',
           width: '100%',
-          flex: '1 0 auto',
           justifyContent: 'center',
           // alignContent: 'center',
         }}
