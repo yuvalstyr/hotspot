@@ -1,19 +1,18 @@
-import { useRouter } from 'next/router'
-import React from 'react'
-import auth0 from '../lib/auth0'
-import Gallery from '../components/Gallery'
-import prisma from '../lib/prisma'
 import { User } from '@prisma/client'
+import { NextPage } from 'next'
+import React from 'react'
 import { Label } from 'theme-ui'
-import SignUp from '../components/SignUp'
 import Home from '../components/Home'
+import SignUp from '../components/SignUp'
+import auth0 from '../lib/auth0'
+import prisma from '../lib/prisma'
 
 interface sessionProps {
   user: User
   initailSessionStatus: string
 }
 
-const index: React.FC<sessionProps> = ({ user, initailSessionStatus }) => {
+const index: NextPage<sessionProps> = ({ user, initailSessionStatus }) => {
   //  todo add signup page - after login if the user is not in db
   const [sessionStatus, setSessionStatus] = React.useState(initailSessionStatus)
   if (sessionStatus === 'signup')

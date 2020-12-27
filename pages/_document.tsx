@@ -13,7 +13,8 @@ const Meta = () => {
       <link
         href="https://fonts.googleapis.com/css2?family=Assistant&display=swap"
         rel="stylesheet"
-      ></link>
+      />
+      <link href="/static/react-datepicker.css" rel="stylesheet" />
     </Head>
   )
 }

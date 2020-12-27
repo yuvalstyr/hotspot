@@ -2,6 +2,7 @@ import { inspect } from '@xstate/inspect'
 import React from 'react'
 import Schedule from '../components/Schedule'
 import getConfig from 'next/config'
+import { NextPage } from 'next'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -14,7 +15,7 @@ if (
   })
 }
 
-const SchedulePage = () => {
+const SchedulePage: NextPage = () => {
   return <Schedule />
 }
 
