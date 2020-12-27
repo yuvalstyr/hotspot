@@ -1,10 +1,8 @@
+import he from 'date-fns/locale/he'
 import { NextPage } from 'next'
 import React from 'react'
-import { Box, Card, Checkbox, Flex, Grid, jsx } from 'theme-ui'
 import DatePicker, { registerLocale } from 'react-datepicker'
-import { addMonths } from 'date-fns'
-
-import he from 'date-fns/locale/he'
+import { Card, Grid, jsx } from 'theme-ui'
 
 /** @jsx jsx */
 const Admin: NextPage = () => {

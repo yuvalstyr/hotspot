@@ -26,7 +26,7 @@ export const Slider: React.FC<props> = ({
         width: '100%',
       }}
     >
-      <NavIcon sx={{ color: 'secondary', alignSelf: 'center' }}>
+      <NavIcon size={3} sx={{ color: 'secondary', alignSelf: 'center' }}>
         <FaArrowCircleRight />
       </NavIcon>
 
@@ -39,7 +39,7 @@ export const Slider: React.FC<props> = ({
         />
       ))}
 
-      <NavIcon sx={{ color: 'secondary', alignSelf: 'center' }}>
+      <NavIcon size={3} sx={{ color: 'secondary', alignSelf: 'center' }}>
         <FaArrowCircleLeft />
       </NavIcon>
     </Flex>

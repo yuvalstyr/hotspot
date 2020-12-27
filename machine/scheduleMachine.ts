@@ -50,7 +50,7 @@ export const scheduleMachine = Machine<
             workouts: (context, event) => {
               const { user } = context
               return event.data.workoutsPerWeek.map((workout: IWorkout) => {
-                const { id, date, trainees, type } = workout
+                const { id, isoDateTime: date, trainees, type } = workout
                 return {
                   id,
                   date,

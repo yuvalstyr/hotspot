@@ -8,8 +8,8 @@ import { scheduleMachine } from '../machine/scheduleMachine'
 
 function getMinDate(workouts: IWorkout[]) {
   const minDate = workouts?.reduce(
-    (result, current) => min([new Date(current.date), result]),
-    new Date(workouts[0]?.date),
+    (result, current) => min([new Date(current.isoDateTime), result]),
+    new Date(workouts[0]?.isoDateTime),
   )
 
   return minDate ? format(minDate, 'MM/dd/yy') : ''
@@ -28,7 +28,9 @@ const Schedule: React.FC = () => {
   }, [workouts])
 
   const datesSet = new Set(
-    workouts?.map((workout) => format(new Date(workout.date), 'MM/dd/yy')),
+    workouts?.map((workout) =>
+      format(new Date(workout.isoDateTime), 'MM/dd/yy'),
+    ),
   )
 
   if (current.matches('loading')) return <div>Loading...</div>
@@ -43,7 +45,9 @@ const Schedule: React.FC = () => {
       />
       {workouts
         .filter((workout) => {
-          return format(new Date(workout.date), 'MM/dd/yy') === activeDate
+          return (
+            format(new Date(workout.isoDateTime), 'MM/dd/yy') === activeDate
+          )
         })
         .map((workout) => {
           if (workout.ref) {
