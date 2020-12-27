@@ -2,12 +2,13 @@ import he from 'date-fns/locale/he'
 import { NextPage } from 'next'
 import React from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
-import { Box, Button, Card, Grid, jsx, Label } from 'theme-ui'
+import { Box, Card, Grid, jsx } from 'theme-ui'
 import { format } from 'date-fns'
 import { Collapse } from 'react-collapse'
+import { WorkoutDay } from '../components/WorkoutDay'
 
 // todo move to lib folder
-const getDatesBetweenDates = (startDate, endDate) => {
+const getDatesBetweenDates = (startDate: Date, endDate: Date): Date[] => {
   let dates = []
   //to avoid modifying the original date
   const theDate = new Date(startDate)
@@ -17,15 +18,10 @@ const getDatesBetweenDates = (startDate, endDate) => {
   }
   return dates
 }
-function range(start, end) {
+export function range(start: number, end: number): number[] {
   return Array(end - start + 1)
-    .fill()
+    .fill(1)
     .map((_, idx) => start + idx)
-}
-
-const Day: React.FC<{ date: string }> = ({ date }) => {
-  const hours = range(10, 21)
-  return hours.map((h) => <Label key={h}>{h}</Label>)
 }
 
 /** @jsx jsx */
@@ -59,7 +55,7 @@ const Admin: NextPage = () => {
                 {format(day, 'eo', { locale: he })}
               </Box>
               <Collapse isOpened={isOpened}>
-                <Day date={format(day, "yyyy-MM-dd'T'HH:mm")} />
+                <WorkoutDay date={format(day, "yyyy-MM-dd'T'HH:mm")} />
               </Collapse>
             </React.Fragment>
           )
