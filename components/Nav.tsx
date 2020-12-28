@@ -17,7 +17,7 @@ const Nav: React.FC = () => {
     <Flex
       as="nav"
       sx={{
-        backgroundColor: 'secondary',
+        backgroundColor: 'primary',
         flexDirection: 'row',
         justifyContent: 'space-around',
       }}

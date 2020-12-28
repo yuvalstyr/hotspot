@@ -9,8 +9,8 @@ export const theme: Theme = merge(
     },
     colors: {
       ...dark.colors,
-      primary: '#DD6031',
-      secondary: '#24272D',
+      primary: '#24272D',
+      secondary: '#DD6031',
       highlight: '#c0f',
       error: '#e21616',
       text: '#F5F1ED',
@@ -30,7 +30,7 @@ export const theme: Theme = merge(
       },
     },
     form: {
-      boxShadow: (t) => `0 0 5px 3px ${t.colors.secondary}`,
+      boxShadow: (t) => `0 0 5px 3px ${t.colors.primary}`,
       h2: {
         padding: '10px',
         margin: '10px',
@@ -42,6 +42,7 @@ export const theme: Theme = merge(
       button: {
         padding: '10px',
         margin: '10px 5px 10px 5px',
+        backgroundColor: 'secondary',
       },
       input: {
         borderColor: 'gray',
@@ -50,6 +51,12 @@ export const theme: Theme = merge(
           boxShadow: (t) => `0 0 0 2px ${t.colors.primary}`,
           outline: 'none',
         },
+      },
+      select: {
+        padding: 1,
+      },
+      option: {
+        color: 'black',
       },
     },
     buttons: {
@@ -61,9 +68,8 @@ export const theme: Theme = merge(
       primary: {
         padding: 2,
         borderRadius: 4,
-        backgroundColor: 'secondary',
+        backgroundColor: 'primary',
         boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
-        // border: '1px solid',
       },
     },
     alerts: {
@@ -78,33 +84,6 @@ export const theme: Theme = merge(
       muted: {
         color: 'text',
         bg: 'muted',
-      },
-    },
-    containers: {
-      card: {
-        boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
-        border: '1px solid',
-        borderColor: 'muted',
-        borderRadius: '4px',
-        p: 2,
-        backgroundColor: 'red',
-      },
-      page: {
-        width: '100%',
-        maxWidth: '960px',
-        m: 0,
-        mx: 'auto',
-      },
-      image: {
-        maxHeight: '400px',
-      },
-      profile: {
-        maxHeight: '400px',
-        borderRadius: '10px',
-      },
-      styles: {
-        ...dark.styles,
-        hr: { border: 0, borderBottom: '1px solid', borderColor: 'secondary' },
       },
     },
   } as Partial<Theme>,

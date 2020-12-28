@@ -98,7 +98,7 @@ export const Workout: React.FunctionComponent<Prop> = ({ workoutRef }) => {
           )}
         </Grid>
       </Box>
-      <Divider bg="secondary" />
+      <Divider bg="primary" />
     </React.Fragment>
   )
 }

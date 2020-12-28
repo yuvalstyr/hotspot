@@ -61,7 +61,7 @@ const Layout: React.FC = ({ children }) => {
           width: '100%',
           display: 'flex',
           justifyContent: 'space-between',
-          backgroundColor: 'secondary',
+          backgroundColor: 'primary',
           padding: '0 20px',
           zIndex: 1,
         }}
@@ -83,7 +83,7 @@ const Layout: React.FC = ({ children }) => {
       </main>
       <footer
         sx={{
-          backgroundColor: 'secondary',
+          backgroundColor: 'primary',
           width: '100%',
           zIndex: '200',
         }}

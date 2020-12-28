@@ -42,10 +42,9 @@ export async function getServerSideProps(context: any) {
   const dbUser = await prisma.user.findUnique({
     where: { email },
   })
-  const { name, email: dbEmail, gender, left } = dbUser
   return {
     props: {
-      user: dbUser ? { name, dbEmail, gender, left } : null,
+      user: dbUser ? { ...dbUser } : null,
       initailSessionStatus: dbUser ? 'logged' : 'signup',
     },
   }
