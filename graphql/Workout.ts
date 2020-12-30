@@ -21,10 +21,10 @@ export const Gender = enumType({
 })
 
 export const InputCreateWorkout = inputObjectType({
-  name: 'InputCreateDay',
+  name: 'InputCreateWorkout',
   definition(t) {
     t.nonNull.string('time')
-    t.nonNull.date('date')
+    t.nonNull.string('date')
     t.nonNull.field('gender', { type: Gender })
     t.nonNull.field('type', { type: WorkoutType })
   },
@@ -35,7 +35,7 @@ export const Workout = objectType({
   definition(t) {
     t.int('id')
     t.string('type')
-    t.dateTime('date')
+    t.dateTime('isoDateTime')
     t.string('localDateTime')
     t.field('gender', { type: Gender })
     t.list.field('trainees', {
@@ -56,6 +56,12 @@ export const Workout = objectType({
 export const WorkoutMutation = extendType({
   type: 'Mutation',
   definition(t) {
+    t.int('deleteAllWorkout', {
+      async resolve() {
+        const { count } = await prisma.workout.deleteMany()
+        return count
+      },
+    })
     t.field('bookWorkout', {
       type: 'User',
       args: {
@@ -159,10 +165,10 @@ export const WorkoutMutation = extendType({
     t.field('createWorkout', {
       type: 'Workout',
       args: {
-        InputCreateWorkout,
+        data: 'InputCreateWorkout',
       },
-      async resolve(_, { InputCreateWorkout }) {
-        const { date, gender, time, type } = InputCreateWorkout
+      async resolve(_, { data }) {
+        const { date, gender, time, type } = data
         const isoDateTime = new Date(`${date}T${time}`)
         const workout = await prisma.workout.create({
           data: {
@@ -184,10 +190,10 @@ export const WorkoutMutation = extendType({
       async resolve(_, { data }) {
         let count = 0
         await Promise.all(
-          data.map((data) => {
+          data.map(async (data) => {
             const { date, gender, time, type } = data
             const isoDateTime = new Date(`${date}T${time}`)
-            const workout = prisma.workout.create({
+            const workout = await prisma.workout.create({
               data: {
                 status: 'Active',
                 type,
@@ -196,10 +202,11 @@ export const WorkoutMutation = extendType({
                 localDateTime: isoDateTime.toLocaleString(),
               },
             })
+            console.log('workout', workout)
             if (workout) count++
           }),
         )
-        return `good ${count} workouts craeted`
+        return `good ${count} workouts created`
       },
     })
   },

@@ -36,8 +36,8 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  InputCreateDay: { // input type
-    date: NexusGenScalars['Date']; // Date!
+  InputCreateWorkout: { // input type
+    date: string; // String!
     gender: NexusGenEnums['Gender']; // Gender!
     time: string; // String!
     type: NexusGenEnums['WorkoutType']; // WorkoutType!
@@ -70,9 +70,9 @@ export interface NexusGenObjects {
     phone?: string | null; // String
   }
   Workout: { // root type
-    date?: NexusGenScalars['DateTime'] | null; // DateTime
     gender?: NexusGenEnums['Gender'] | null; // Gender
     id?: number | null; // Int
+    isoDateTime?: NexusGenScalars['DateTime'] | null; // DateTime
     localDateTime?: string | null; // String
     type?: string | null; // String
   }
@@ -94,6 +94,7 @@ export interface NexusGenFieldTypes {
     bookWorkout: NexusGenRootTypes['User'] | null; // User
     createManyWorkouts: string | null; // String
     createWorkout: NexusGenRootTypes['Workout'] | null; // Workout
+    deleteAllWorkout: number | null; // Int
     deleteUser: NexusGenRootTypes['User'] | null; // User
     deleteworkoutIdTrainees: NexusGenRootTypes['Workout'] | null; // Workout
     signup: NexusGenRootTypes['User'] | null; // User
@@ -114,9 +115,9 @@ export interface NexusGenFieldTypes {
     workouts: Array<NexusGenRootTypes['Workout'] | null> | null; // [Workout]
   }
   Workout: { // field return type
-    date: NexusGenScalars['DateTime'] | null; // DateTime
     gender: NexusGenEnums['Gender'] | null; // Gender
     id: number | null; // Int
+    isoDateTime: NexusGenScalars['DateTime'] | null; // DateTime
     localDateTime: string | null; // String
     trainees: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     type: string | null; // String
@@ -129,6 +130,7 @@ export interface NexusGenFieldTypeNames {
     bookWorkout: 'User'
     createManyWorkouts: 'String'
     createWorkout: 'Workout'
+    deleteAllWorkout: 'Int'
     deleteUser: 'User'
     deleteworkoutIdTrainees: 'Workout'
     signup: 'User'
@@ -149,9 +151,9 @@ export interface NexusGenFieldTypeNames {
     workouts: 'Workout'
   }
   Workout: { // field return type name
-    date: 'DateTime'
     gender: 'Gender'
     id: 'Int'
+    isoDateTime: 'DateTime'
     localDateTime: 'String'
     trainees: 'User'
     type: 'String'
@@ -165,10 +167,10 @@ export interface NexusGenArgTypes {
       workoutId?: number | null; // Int
     }
     createManyWorkouts: { // args
-      data?: Array<NexusGenInputs['InputCreateDay'] | null> | null; // [InputCreateDay]
+      data?: Array<NexusGenInputs['InputCreateWorkout'] | null> | null; // [InputCreateWorkout]
     }
     createWorkout: { // args
-      InputCreateWorkout?: NexusGenInputs['InputCreateDay'] | null; // InputCreateDay
+      data?: NexusGenInputs['InputCreateWorkout'] | null; // InputCreateWorkout
     }
     deleteUser: { // args
       userId?: number | null; // Int

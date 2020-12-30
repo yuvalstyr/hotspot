@@ -2,7 +2,8 @@ import he from 'date-fns/locale/he'
 import { NextPage } from 'next'
 import React from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
-import { Card, jsx } from 'theme-ui'
+// import DatePicker from '@bit/nexxtway.react-rainbow.date-picker'
+import { Card, Flex, jsx } from 'theme-ui'
 import { getDatesBetweenDates } from '../lib/utils'
 import { ScheduleForm } from './ScheduleForm'
 
@@ -28,15 +29,17 @@ export const WeeklySchedule: NextPage = () => {
         gridTemplateRows: 'auto 1fr',
       }}
     >
-      <DatePicker
-        selected={startDate}
-        onChange={onChange}
-        startDate={startDate}
-        endDate={endDate}
-        locale="he"
-        selectsRange
-        inline
-      />
+      <Flex sx={{ justifyContent: 'center' }}>
+        <DatePicker
+          selected={startDate}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          locale="he"
+          selectsRange
+          inline
+        />
+      </Flex>
       {startDate && endDate && (
         <ScheduleForm dates={getDatesBetweenDates(startDate, endDate)} />
       )}

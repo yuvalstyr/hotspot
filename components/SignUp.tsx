@@ -1,4 +1,4 @@
-import React, { SetStateAction } from 'react'
+import * as React from 'react'
 import { BiFemale, BiMale } from 'react-icons/bi'
 import {
   Button,
@@ -13,7 +13,6 @@ import {
 } from 'theme-ui'
 import { useForm } from 'react-hook-form'
 import gql from 'graphql-tag'
-import getConfig from 'next/config'
 import { request } from 'graphql-request'
 import { User } from '@prisma/client'
 /** @jsx jsx */
@@ -39,9 +38,9 @@ export const SIGNUP = gql`
 `
 
 function signup(variables) {
-  const { publicRuntimeConfig } = getConfig()
-  return request(publicRuntimeConfig.API_URL, SIGNUP, variables)
+  return request(process.env.API_URL, SIGNUP, variables)
 }
+
 interface signupProps {
   user: User
   handleSignup: React.Dispatch<React.SetStateAction<string>>

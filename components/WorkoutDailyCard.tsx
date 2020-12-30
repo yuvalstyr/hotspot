@@ -1,28 +1,33 @@
-import { format } from 'date-fns'
+import { format, parse } from 'date-fns'
 import React from 'react'
-import { Label, Grid, Input } from 'theme-ui'
+import { Label, Grid, Input, Close } from 'theme-ui'
 import he from 'date-fns/locale/he'
 import { WorkoutHourInput } from './WorkoutHourInput'
-import { ArrayField, useFormContext } from 'react-hook-form'
-import { DailySchedule } from './ScheduleForm'
+import { DatesField } from './ScheduleForm'
+import { useFormContext } from 'react-hook-form'
 
 export const WorkoutDailyCard: React.FC<{
-  item: Partial<ArrayField<DailySchedule, 'id'>>
+  item: DatesField
   index: number
-}> = ({ item, index }) => {
+  remove: (index?: number | number[]) => void
+}> = ({ item, index, remove }) => {
   const [isOpened, setIsOpened] = React.useState(false)
   const { register } = useFormContext()
   return (
-    <Grid key={format(item.date, "yyyy-MM-dd'T'HH:mm")} backgroundColor="muted">
+    <Grid columns={['1fr 1fr']} backgroundColor="muted">
       <Input
         name={`weekly[${index}].date`}
         ref={register()}
-        defaultValue={item.date.toLocaleString()}
+        defaultValue={item.date}
         sx={{ display: 'none' }}
       />
       <Label onClick={() => setIsOpened(!isOpened)}>
-        {format(item.date, 'EEEE', { locale: he })}
+        {format(parse(item.date, 'yy-MM-dd', new Date()), 'EEEE', {
+          locale: he,
+        })}
       </Label>
+      <Label onClick={() => setIsOpened(!isOpened)}>{item.date}</Label>
+      <Close onClick={() => remove(index)} sx={{ justifySelf: 'end' }} />
       <WorkoutHourInput hourIndex={index} isOpened={isOpened} />
     </Grid>
   )

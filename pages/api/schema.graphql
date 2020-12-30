@@ -17,8 +17,8 @@ enum Gender {
   MALE
 }
 
-input InputCreateDay {
-  date: Date!
+input InputCreateWorkout {
+  date: String!
   gender: Gender!
   time: String!
   type: WorkoutType!
@@ -27,8 +27,9 @@ input InputCreateDay {
 type Mutation {
   addWeekToAllWorkouts: Int
   bookWorkout(traineeId: Int!, workoutId: Int): User
-  createManyWorkouts(data: [InputCreateDay]): String
-  createWorkout(InputCreateWorkout: InputCreateDay): Workout
+  createManyWorkouts(data: [InputCreateWorkout]): String
+  createWorkout(data: InputCreateWorkout): Workout
+  deleteAllWorkout: Int
   deleteUser(userId: Int): User
   deleteworkoutIdTrainees(workoutId: Int): Workout
   signup(email: String!, gender: String!, name: String!, phone: String!): User
@@ -52,9 +53,9 @@ type User {
 }
 
 type Workout {
-  date: DateTime
   gender: Gender
   id: Int
+  isoDateTime: DateTime
   localDateTime: String
   trainees: [User]
   type: String
