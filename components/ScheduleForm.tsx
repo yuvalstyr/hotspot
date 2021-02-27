@@ -31,7 +31,6 @@ export const CREATE_MANY_WORKOUTS = gql`
 `
 
 function createManyWorkouts(variables) {
-  console.log('variables', variables)
   return request(process.env.API_URL, CREATE_MANY_WORKOUTS, variables)
 }
 

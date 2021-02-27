@@ -6,12 +6,10 @@ import {
   UseFieldArrayMethods,
   useFormContext,
 } from 'react-hook-form'
-import { Box, Button, Flex, Input, jsx } from 'theme-ui'
+import { Box, Button, Flex, Input } from 'theme-ui'
 import { WorkoutDailyCard } from './WorkoutDailyCard'
 import { createDefaultValue } from './ScheduleForm'
 import { getIndexByDate } from '../lib/utils'
-
-/** @jsx jsx */
 
 const AddDay: React.FC<{
   insert: UseFieldArrayMethods['insert']
@@ -20,7 +18,6 @@ const AddDay: React.FC<{
   const [startDate, setStartDate] = React.useState(new Date())
 
   function handleAppending() {
-    console.log(fields)
     const defaultValue = createDefaultValue([startDate]).weekly[0]
     const index = getIndexByDate(fields, startDate)
     console.log('index', index)

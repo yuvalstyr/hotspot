@@ -1,10 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { format } from 'date-fns'
 import heLocale from 'date-fns/locale/he'
-import { Button, jsx } from 'theme-ui'
+import { Button } from 'theme-ui'
 import { v4 as uuidv4 } from 'uuid'
-
-/** @jsx jsx */
 
 interface props {
   date: string

@@ -1,28 +1,20 @@
-import { useRouter } from 'next/router'
 import React, { FC } from 'react'
-import { NavLink, jsx, Flex } from 'theme-ui'
-import NavIcon from './Icon'
-/** @jsx jsx */
+import { Icon, Text, VStack } from '@chakra-ui/react'
+import Link from 'next/link'
+import { IconType } from 'react-icons/lib'
 
-export const NavLinkButton: FC<IButtonLinkProps> = ({ children, url }) => {
-  const router = useRouter()
-
+export const NavLinkButton: FC<IButtonLinkProps> = ({ url, buttonIcon }) => {
   return (
-    <NavLink p={1} onClick={() => router.push(url)} sx={{ variant: 'links' }}>
-      <Flex
-        sx={{
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <NavIcon size={2} sx={{ width: '100%' }}>
-          {children}
-        </NavIcon>
-      </Flex>
-    </NavLink>
+    <Link href={url} passHref>
+      <VStack as="a" color="whiteAlpha.800">
+        <Icon as={buttonIcon} boxSize={8} />
+        <Text>הזמנת אימון</Text>
+      </VStack>
+    </Link>
   )
 }
 
 export interface IButtonLinkProps {
   url: string
+  buttonIcon: IconType
 }

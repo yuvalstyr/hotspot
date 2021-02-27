@@ -3,11 +3,10 @@ import { NextPage } from 'next'
 import React from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 // import DatePicker from '@bit/nexxtway.react-rainbow.date-picker'
-import { Card, Flex, jsx } from 'theme-ui'
+import { Card, Flex } from 'theme-ui'
 import { getDatesBetweenDates } from '../lib/utils'
 import { ScheduleForm } from './ScheduleForm'
 
-/** @jsx jsx */
 export const WeeklySchedule: NextPage = () => {
   const [startDate, setStartDate] = React.useState(new Date())
   const [endDate, setEndDate] = React.useState(null)

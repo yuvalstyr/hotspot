@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import * as React from 'react'
 import { IconContext } from 'react-icons/lib'
 
 interface IIconProps {

@@ -30,6 +30,7 @@ const index: NextPage<sessionProps> = ({ user, initailSessionStatus }) => {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getServerSideProps(context: any) {
   const session = await auth0.getSession(context.req)
+
   if (!session) {
     return {
       props: {
@@ -41,7 +42,9 @@ export async function getServerSideProps(context: any) {
   const { email } = session.user
   const dbUser = await prisma.user.findUnique({
     where: { email },
+    select: { email: true, left: true, name: true },
   })
+
   return {
     props: {
       user: dbUser ? { ...dbUser } : null,

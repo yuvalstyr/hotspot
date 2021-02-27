@@ -1,29 +1,17 @@
+import { Avatar, Flex, Image, Text, Box } from '@chakra-ui/react'
+import Head from 'next/head'
 import React from 'react'
-import { jsx, Image, Flex, Label, Avatar } from 'theme-ui'
 import { useFetchUser } from '../lib/user'
 import useWindowSize from '../lib/useWindows'
 import Nav from './Nav'
-
-/** @jsx jsx */
 
 function ProflieAvatar() {
   const { user } = useFetchUser()
 
   return (
     <Flex p={2} sx={{ alignItems: 'center' }}>
-      {user && (
-        <Avatar
-          src={user?.picture}
-          sx={{
-            width: 72,
-            height: 72,
-            maxWidth: 72,
-            minWidth: 72,
-            borderRadius: 99999,
-          }}
-        />
-      )}
-      <Label p={2}>{}</Label>
+      {user && <Avatar src={user?.picture} size="lg" />}
+      <Text p={2}>{}</Text>
     </Flex>
   )
 }
@@ -31,15 +19,7 @@ function ProflieAvatar() {
 function Logo() {
   return (
     <Flex p={2} sx={{ alignItems: 'center' }}>
-      <Image
-        src={'./favicon.png'}
-        sx={{
-          width: 72,
-          height: 72,
-          maxWidth: 72,
-          minWidth: 72,
-        }}
-      />
+      <Image boxSize="75px" src={'./favicon.png'} />
     </Flex>
   )
 }
@@ -47,15 +27,20 @@ function Logo() {
 const Layout: React.FC = ({ children }) => {
   const { height } = useWindowSize()
   return (
-    <div
+    <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         height: height,
         backgroundImage: `linear-gradient(to top, rgb(6, 7, 8), rgba(17, 6, 8, 0.91), rgba(27, 5, 8, 0.81), rgba(38, 3, 8, 0.72), rgba(48, 2, 8, 0.62), rgba(59, 1, 8, 0.53), rgba(75, 18, 8, 0.53), rgba(90, 35, 7, 0.52), rgba(106, 52, 7, 0.52), rgba(122, 68, 7, 0.52), rgba(137, 85, 6, 0.51), rgba(153, 102, 6, 0.51));`,
+        direction: 'rtl',
       }}
     >
-      <header
+      <Head>
+        <title>My page title</title>
+      </Head>
+      <Box
+        as="header"
         sx={{
           flexShrink: 0,
           width: '100%',
@@ -68,20 +53,21 @@ const Layout: React.FC = ({ children }) => {
       >
         <ProflieAvatar />
         <Logo />
-      </header>
-      <main
+      </Box>
+      <Box
+        as="main"
         sx={{
           flexGrow: 1,
           overflow: 'hidden auto',
           display: 'grid',
           width: '100%',
           justifyContent: 'center',
-          // alignContent: 'center',
         }}
       >
         {children}
-      </main>
-      <footer
+      </Box>
+      <Box
+        as="footer"
         sx={{
           backgroundColor: 'primary',
           width: '100%',
@@ -89,8 +75,8 @@ const Layout: React.FC = ({ children }) => {
         }}
       >
         <Nav />
-      </footer>
-    </div>
+      </Box>
+    </Box>
   )
 }
 

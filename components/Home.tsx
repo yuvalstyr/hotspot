@@ -1,62 +1,50 @@
 import React from 'react'
 import { User } from '@prisma/client'
-import { Card, Flex, Grid, jsx, Label } from 'theme-ui'
+import { Grid, Center, Text, Icon, BoxProps, VStack } from '@chakra-ui/react'
 import { MdFitnessCenter, MdPermContactCalendar } from 'react-icons/md'
 import { BsCardChecklist } from 'react-icons/bs'
-import Icon from './Icon'
-
-/** @jsx jsx */
+import { IconType } from 'react-icons/lib'
 
 interface IhomeProps {
   user: User
 }
 
+const Card: React.FC<{
+  ReactIcon: IconType
+  CardText: string
+  props?: BoxProps
+}> = ({ ReactIcon, CardText, ...props }) => {
+  console.log('props', props)
+  return (
+    <Center
+      {...props}
+      boxShadow="0 12px 24px 0 rgba(0,0,0,0.09)"
+      bg="whiteAlpha.600"
+      borderRadius="10px"
+      h="10%"
+    >
+      <Icon size={3} as={ReactIcon} />
+      <Text>{CardText}</Text>
+    </Center>
+  )
+}
+
 const Home: React.FC<IhomeProps> = ({ user }) => {
   return (
-    <Grid>
-      <Card>
-        <Flex
-          sx={{
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Icon size={3}>
-            <MdFitnessCenter />
-          </Icon>
-          <Label p={2}>התאמנת החודש כבר 7 אימונים 🦾🦾</Label>
-        </Flex>
-      </Card>
-      <Card>
-        <Flex
-          sx={{
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Icon size={3}>
-            <MdPermContactCalendar />
-          </Icon>
-          <Label p={2}> באימון הבא ביום שני ה 13.6 ב- 17</Label>
-        </Flex>
-      </Card>
-      <Card>
-        <Flex
-          sx={{
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Icon size={3}>
-            <BsCardChecklist />
-          </Icon>
-          <Label p={2}>נשאר עוד {user.left} אימונים בכרטיסיה</Label>
-        </Flex>
-      </Card>
-    </Grid>
+    <VStack align="stretch" pt="10px">
+      <Card
+        ReactIcon={MdFitnessCenter}
+        CardText={'התאמנת החודש כבר 7 אימונים 🦾🦾'}
+      />
+      <Card
+        ReactIcon={BsCardChecklist}
+        CardText={`נשאר עוד ${user.left} אימונים בכרטיסיה`}
+      />
+      <Card
+        ReactIcon={MdPermContactCalendar}
+        CardText={`באימון הבא ביום שני ה 13.6 ב- 17`}
+      />
+    </VStack>
   )
 }
 

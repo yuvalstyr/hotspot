@@ -1,7 +1,5 @@
 import React from 'react'
-import { Grid, Image, jsx } from 'theme-ui'
-
-/** @jsx jsx */
+import { Grid, Image } from 'theme-ui'
 
 const Gallery: React.FC = () => {
   return (

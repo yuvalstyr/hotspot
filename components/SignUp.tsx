@@ -6,7 +6,6 @@ import {
   Flex,
   Grid,
   Heading,
-  jsx,
   Label,
   Radio,
   Text,
@@ -15,7 +14,6 @@ import { useForm } from 'react-hook-form'
 import gql from 'graphql-tag'
 import { request } from 'graphql-request'
 import { User } from '@prisma/client'
-/** @jsx jsx */
 
 type Inputs = {
   name: string
@@ -51,7 +49,12 @@ const SignUp: React.FC<signupProps> = ({ user, handleSignup }) => {
 
   const onSubmit = async (data) => {
     const { name, phone, gender } = data
-    const { email } = user
+    let email
+    if (!user) {
+      email = 'yuvalstyr@gmail.com'
+    } else {
+      email = user.email
+    }
     await signup({ name, phone, gender, email })
     handleSignup('logged')
   }

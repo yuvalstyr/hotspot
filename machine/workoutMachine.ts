@@ -83,7 +83,7 @@ export const createWorkoutMachine = ({
           id: 'bookWorkout',
           src: (context, event) => {
             if (event.type === 'BOOK') {
-              // return bookWorkout(context.user.id, event.workoutId)
+              return bookWorkout(context.user.id, event.workoutId)
               return null
             }
             // return bookWorkout(context.user.id, 100000)

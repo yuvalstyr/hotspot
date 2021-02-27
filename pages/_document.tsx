@@ -4,17 +4,11 @@ import React from 'react'
 const Meta = () => {
   return (
     <Head>
-      <title>My page title</title>
-      <meta
-        name="viewport"
-        content="minimum-scale=1, initial-scale=1, width=device-width"
-      />
       <link rel="icon" type="image/png" href="/favicon.png" />
       <link
         href="https://fonts.googleapis.com/css2?family=Assistant&display=swap"
         rel="stylesheet"
       />
-      <link href="/static/react-datepicker.css" rel="stylesheet" />
     </Head>
   )
 }
@@ -24,7 +18,8 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="he">
-        <body dir="rtl">
+        <Head />
+        <body>
           <Meta />
           <Main />
           <NextScript />

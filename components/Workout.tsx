@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useActor } from '@xstate/react'
 import { Collapse } from 'react-collapse'
-import { Alert, Box, Button, Close, Divider, Grid, Text, jsx } from 'theme-ui'
+import { Alert, Box, Button, Close, Divider, Grid, Text } from 'theme-ui'
 import { translate } from '../lib/translate'
 import {
   WorkoutActorType,
@@ -9,8 +9,6 @@ import {
 } from '../machine/workoutMachine.types'
 import TrainersList from './TrainersList'
 import { format } from 'date-fns'
-
-/** @jsx jsx */
 
 interface Prop {
   workoutRef: WorkoutActorType
