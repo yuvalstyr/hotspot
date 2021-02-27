@@ -1,49 +1,23 @@
 import React from 'react'
-import { MdFitnessCenter, MdPayment } from 'react-icons/md'
+import { Flex } from '@chakra-ui/react'
 import { BiCalendarPlus } from 'react-icons/bi'
-import { RiLogoutBoxLine, RiLoginBoxLine } from 'react-icons/ri'
-import { Flex, NavLink, jsx, Label } from 'theme-ui'
-import NavIcon from './Icon'
-import { NavLinkButton } from './NavLinkButton'
+import { MdFitnessCenter, MdPayment } from 'react-icons/md'
+import { RiLoginBoxLine, RiLogoutBoxLine } from 'react-icons/ri'
 import { useFetchUser } from '../lib/user'
-
-/** @jsx jsx */
+import { NavLinkButton } from './NavLinkButton'
 
 const Nav: React.FC = () => {
-  const isSSR = () => typeof window === 'undefined'
   const { loading, user } = useFetchUser()
 
   return (
-    <Flex
-      as="nav"
-      sx={{
-        backgroundColor: 'primary',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-      }}
-    >
-      <NavLinkButton url={'/schedule'}>
-        <BiCalendarPlus />
-        <Label>הזמנת אימון</Label>
-      </NavLinkButton>
-      <NavLinkButton url={'/schedule'}>
-        <MdPayment />
-        <Label>תשלום</Label>
-      </NavLinkButton>
-      <NavLinkButton url={'/schedule'}>
-        <MdFitnessCenter />
-        <Label>היסטוריה</Label>
-      </NavLinkButton>
+    <Flex as="nav" bg="primary" direction="row" justifyContent="space-around">
+      <NavLinkButton buttonIcon={BiCalendarPlus} url={'/about'} />
+      <NavLinkButton buttonIcon={MdPayment} url={'/schedule'} />
+      <NavLinkButton buttonIcon={MdFitnessCenter} url={'/schedule'} />
       {user ? (
-        <NavLinkButton url={'api/logout'}>
-          <RiLogoutBoxLine />
-          <Label>התנתק</Label>
-        </NavLinkButton>
+        <NavLinkButton buttonIcon={RiLogoutBoxLine} url={'/schedule'} />
       ) : (
-        <NavLinkButton url={'api/login'}>
-          <RiLoginBoxLine />
-          <Label>התחבר</Label>
-        </NavLinkButton>
+        <NavLinkButton buttonIcon={RiLoginBoxLine} url={'/schedule'} />
       )}
     </Flex>
   )
