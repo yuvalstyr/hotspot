@@ -31,7 +31,8 @@ export const CREATE_MANY_WORKOUTS = gql`
 `
 
 function createManyWorkouts(variables) {
-  return request(process.env.API_URL, CREATE_MANY_WORKOUTS, variables)
+  const url = process.env.API_URL || 'http://localhost:5000'
+  return request(url, CREATE_MANY_WORKOUTS, variables)
 }
 
 export function createDefaultValue(dates: Date[]): WeeklySchedule {

@@ -1,19 +1,25 @@
-import * as React from 'react'
-import { BiFemale, BiMale } from 'react-icons/bi'
+import { ISession } from '@auth0/nextjs-auth0/dist/session/session'
 import {
   Button,
-  Field,
-  Flex,
-  Grid,
-  Heading,
-  Label,
+  Center,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Icon,
+  Input,
   Radio,
+  RadioGroup,
+  SimpleGrid,
+  Stack,
   Text,
-} from 'theme-ui'
-import { useForm } from 'react-hook-form'
-import gql from 'graphql-tag'
+  VStack,
+} from '@chakra-ui/react'
 import { request } from 'graphql-request'
-import { User } from '@prisma/client'
+import gql from 'graphql-tag'
+import * as React from 'react'
+import { useForm } from 'react-hook-form'
+import { BiFemale, BiMale } from 'react-icons/bi'
+import { UserCreateInput } from '../generates/graphql'
 
 type Inputs = {
   name: string
@@ -28,102 +34,83 @@ export const SIGNUP = gql`
     $gender: String!
     $email: String!
   ) {
-    signup(name: $name, phone: $phone, gender: $gender, email: $email) {
-      __typename
+    createUser(
+      data: { name: $name, phone: $phone, gender: $gender, email: $email }
+    ) {
       id
     }
   }
 `
 
-function signup(variables) {
-  return request(process.env.API_URL, SIGNUP, variables)
+function signup(variables: UserCreateInput) {
+  const url = process.env.API_URL || 'http://localhost:5000'
+  return request(url, SIGNUP, variables)
 }
 
 interface signupProps {
-  user: User
-  handleSignup: React.Dispatch<React.SetStateAction<string>>
+  user: ISession['user']
 }
 
-const SignUp: React.FC<signupProps> = ({ user, handleSignup }) => {
+const SignUp: React.FC<signupProps> = ({ user }) => {
   const { register, handleSubmit, errors } = useForm<Inputs>()
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: UserCreateInput) => {
     const { name, phone, gender } = data
-    let email
-    if (!user) {
-      email = 'yuvalstyr@gmail.com'
-    } else {
-      email = user.email
-    }
+    const email = user.email
     await signup({ name, phone, gender, email })
-    handleSignup('logged')
   }
   return (
-    <Grid
-      backgroundColor="muted"
-      as="form"
-      variant="form"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <Heading>חדש אצלנו, עוד כמה פרטים ומתחילים</Heading>
-      <Field
-        label="שם"
-        name="name"
-        defaultValue=""
-        ref={register({ required: true, pattern: /^[\u0590-\u05FF ,.'-]+$/ })}
-      />
-      {errors.name && (
-        <Text
-          sx={{
-            fontWeight: 'bold',
-            border: (t) => `solid 1px ${t.colors.primary}`,
-          }}
-        >
-          שם בעברית בבקשה
-        </Text>
-      )}
-      <Field
-        label="פלאפון"
-        name="phone"
-        defaultValue=""
-        ref={register({ required: true, pattern: /^05[2-7][0-9]{7}/i })}
-      />
-      {errors.phone && (
-        <Text
-          sx={{
-            fontWeight: 'bold',
-            border: (t) => `solid 1px ${t.colors.primary}`,
-          }}
-        >
-          המספר תקין? 🤔🤔
-        </Text>
-      )}
-
-      <Flex
-        sx={{
-          height: '5rem',
-        }}
+    <Center>
+      <SimpleGrid
+        bg="primary"
+        m="0.5rem 0.5rem"
+        as="form"
+        onSubmit={handleSubmit(onSubmit)}
+        h="50vh"
       >
-        <Label>
-          <Radio
-            name="gender"
-            value="male"
-            ref={register({ required: true })}
+        <Text color="white">חדש אצלנו, עוד כמה פרטים ומתחילים</Text>
+        <FormControl
+          label="שם"
+          defaultValue=""
+          isInvalid={Boolean(errors.name)}
+        >
+          <FormLabel>שם</FormLabel>
+          <Input
+            name="name"
+            ref={register({
+              required: true,
+              pattern: /^[\u0590-\u05FF ,.'-]+$/,
+            })}
           />
-          <BiMale sx={{ height: '100%', width: '100% ' }} />
-        </Label>
-        <Label>
-          <Radio
-            name="gender"
-            value="female"
-            ref={register({ required: true })}
+          <FormErrorMessage>שם בעברית בבקשה</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={Boolean(errors.phone)}>
+          <FormLabel>פלאפון</FormLabel>
+          <Input
+            name="phone"
+            defaultValue=""
+            ref={register({ required: true, pattern: /^05[2-7][0-9]{7}/i })}
           />
-          <BiFemale sx={{ height: '100%', width: '100%' }} />
-        </Label>
-      </Flex>
+          <FormErrorMessage> המספר תקין? 🤔🤔</FormErrorMessage>
+        </FormControl>
+        <RadioGroup name="gender" defaultValue="male">
+          <Stack direction="row" justify="space-around">
+            <VStack>
+              <Icon as={BiMale} boxSize={12} color="white" />
+              <Radio value="male" ref={register({ required: true })} />
+            </VStack>
+            <VStack>
+              <Icon as={BiFemale} boxSize={12} color="white" />
+              <Radio value="female" ref={register({ required: true })} />
+            </VStack>
+          </Stack>
+        </RadioGroup>
 
-      <Button type="submit">יאללה להתאמן</Button>
-    </Grid>
+        <Button type="submit" bg="secondary" color="white">
+          יאללה להתאמן
+        </Button>
+      </SimpleGrid>
+    </Center>
   )
 }
 

@@ -3,7 +3,7 @@ import React from 'react'
 import fetch from 'isomorphic-unfetch'
 
 // Use a global to save the user, so we don't have to fetch it again after page navigations
-let userState
+let userState: any
 
 const User = React.createContext({ user: null, loading: false })
 

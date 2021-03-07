@@ -1,30 +1,51 @@
-import { User } from '@prisma/client'
+import { ISession } from '@auth0/nextjs-auth0/dist/session/session'
+import { Text } from '@chakra-ui/react'
+import request, { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import React from 'react'
-import { Label } from 'theme-ui'
+import useSWR from 'swr'
 import Home from '../components/Home'
+import { Loading } from '../components/Loading'
 import SignUp from '../components/SignUp'
 import auth0 from '../lib/auth0'
-import prisma from '../lib/prisma'
 
-interface sessionProps {
-  user: User
-  initailSessionStatus: string
+const USER = gql`
+  query user($email: String) {
+    allUsers(where: { email: $email }) {
+      id
+      name
+      email
+      phone
+    }
+  }
+`
+
+const fetcher = (query: string, variables: string) => {
+  return request('http://localhost:5000/api/graphql', query, variables)
 }
 
-const index: NextPage<sessionProps> = ({ user, initailSessionStatus }) => {
+interface sessionProps {
+  user: ISession['user']
+}
+
+const index: NextPage<sessionProps> = ({ user }) => {
   //  todo add signup page - after login if the user is not in db
-  const [sessionStatus, setSessionStatus] = React.useState(initailSessionStatus)
-  if (sessionStatus === 'signup')
-    return <SignUp user={user} handleSignup={setSessionStatus} />
-  if (sessionStatus === 'signin') return <Label>Please login</Label>
-  if (sessionStatus === 'logged')
-    return (
-      <React.Fragment>
-        <Home user={user} />
-      </React.Fragment>
-    )
-  return null
+
+  if (!user) return <Text>בבקשה להתחבר</Text>
+  if (!user.email) return null
+
+  const variables = JSON.stringify({ email: user.email })
+
+  const { data, error } = useSWR(user.email ? [USER, variables] : null, fetcher)
+  if (error) return <Text>{error}</Text>
+  const loading = !data
+  if (loading) return <Loading />
+  const { allUsers } = data
+  if (allUsers.length) {
+    return <Home user={user} />
+  }
+
+  return <SignUp user={user} />
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -35,20 +56,13 @@ export async function getServerSideProps(context: any) {
     return {
       props: {
         user: null,
-        sessionStatus: 'signin',
       },
     }
   }
-  const { email } = session.user
-  const dbUser = await prisma.user.findUnique({
-    where: { email },
-    select: { email: true, left: true, name: true },
-  })
 
   return {
     props: {
-      user: dbUser ? { ...dbUser } : null,
-      initailSessionStatus: dbUser ? 'logged' : 'signup',
+      user: session.user,
     },
   }
 }

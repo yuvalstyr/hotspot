@@ -30,7 +30,7 @@ export const theme: Theme = merge(
       },
     },
     form: {
-      boxShadow: (t) => `0 0 5px 3px ${t.colors.primary}`,
+      boxShadow: (t: any) => `0 0 5px 3px ${t.colors.primary}`,
       h2: {
         padding: '10px',
         margin: '10px',
@@ -48,7 +48,7 @@ export const theme: Theme = merge(
         borderColor: 'gray',
         '&:focus': {
           borderColor: 'primary',
-          boxShadow: (t) => `0 0 0 2px ${t.colors.primary}`,
+          boxShadow: (t: any) => `0 0 0 2px ${t.colors.primary}`,
           outline: 'none',
         },
       },

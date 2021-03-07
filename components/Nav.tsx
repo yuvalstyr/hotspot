@@ -5,10 +5,11 @@ import { MdFitnessCenter, MdPayment } from 'react-icons/md'
 import { RiLoginBoxLine, RiLogoutBoxLine } from 'react-icons/ri'
 import { useFetchUser } from '../lib/user'
 import { NavLinkButton } from './NavLinkButton'
+import { Loading } from './Loading'
 
 const Nav: React.FC = () => {
   const { loading, user } = useFetchUser()
-
+  if (loading) return <Loading />
   return (
     <Flex as="nav" bg="primary" direction="row" justifyContent="space-around">
       <NavLinkButton buttonIcon={BiCalendarPlus} url={'/about'} />
@@ -17,7 +18,7 @@ const Nav: React.FC = () => {
       {user ? (
         <NavLinkButton buttonIcon={RiLogoutBoxLine} url={'/schedule'} />
       ) : (
-        <NavLinkButton buttonIcon={RiLoginBoxLine} url={'/schedule'} />
+        <NavLinkButton buttonIcon={RiLoginBoxLine} url="/api/login" />
       )}
     </Flex>
   )
