@@ -1,70 +1,91 @@
-import { ISession } from '@auth0/nextjs-auth0/dist/session/session'
+import * as React from 'react'
+import { Claims } from '@auth0/nextjs-auth0/dist/session/session'
 import { Text } from '@chakra-ui/react'
 import request, { gql } from 'graphql-request'
-import { NextPage } from 'next'
-import React from 'react'
-import useSWR from 'swr'
+import { NextPage, NextPageContext } from 'next'
 import Home from '../components/Home'
-import { Loading } from '../components/Loading'
 import SignUp from '../components/SignUp'
-import auth0 from '../lib/auth0'
+import {
+   getSession,
+   handleProfile,
+   useUser,
+   Session,
+   UserProfile
+} from '@auth0/nextjs-auth0'
+import { Query, User } from '../generates/graphql'
+import { fetcher } from '../machine/useScheduleMachine'
 
 const USER = gql`
-  query user($email: String) {
-    allUsers(where: { email: $email }) {
-      id
-      name
-      email
-      phone
-    }
-  }
+   query user($email: String) {
+      allUsers(where: { email: $email }) {
+         id
+         name
+         email
+         phone
+         remainsClasses
+      }
+   }
 `
 
-const fetcher = (query: string, variables: string) => {
-  return request('http://localhost:5000/api/graphql', query, variables)
+function instanceOfDb(data: any): data is User {
+   return 'phone' in data
 }
 
+enum Status {
+   logged = 'logged',
+   logout = 'logout',
+   signout = 'signout'
+}
 interface sessionProps {
-  user: ISession['user']
+   user: UserProfile | User
+   status: Status
 }
 
-const index: NextPage<sessionProps> = ({ user }) => {
-  //  todo add signup page - after login if the user is not in db
-
-  if (!user) return <Text>בבקשה להתחבר</Text>
-  if (!user.email) return null
-
-  const variables = JSON.stringify({ email: user.email })
-
-  const { data, error } = useSWR(user.email ? [USER, variables] : null, fetcher)
-  if (error) return <Text>{error}</Text>
-  const loading = !data
-  if (loading) return <Loading />
-  const { allUsers } = data
-  if (allUsers.length) {
-    return <Home user={user} />
-  }
-
-  return <SignUp user={user} />
+const Index: NextPage<sessionProps> = ({ status }) => {
+   const { user, error, isLoading } = useUser()
+   // if (status === Status.logout) return <Text>בבקשה להתחבר</Text>
+   // if (status === Status.logged) {
+   //    if (instanceOfDb(user)) return <Home user={user}></Home>
+   // }
+   // if (status === Status.signout) return <SignUp user={user} />
+   return <Text>Should not happens</Text>
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function getServerSideProps(context: any) {
-  const session = await auth0.getSession(context.req)
+function isUser(user: Claims): user is UserProfile {
+   return (user as UserProfile).email !== undefined
+}
 
-  if (!session) {
-    return {
+// // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export async function getServerSideProps(context: NextPageContext) {
+   const { req, res } = context
+   const session = req && res ? getSession(req, res) : ''
+
+   if (!session) {
+      return {
+         props: {
+            status: 'logout'
+         }
+      }
+   }
+
+   const email = isUser(session.user) ? session.user.email : ''
+   const variables = email ? JSON.stringify({ email }) : null
+   const data = (await fetcher(USER, variables ?? '')) as Query
+
+   if (!data?.allUsers?.length) {
+      return {
+         props: {
+            status: 'signout'
+         }
+      }
+   }
+
+   return {
       props: {
-        user: null,
-      },
-    }
-  }
-
-  return {
-    props: {
-      user: session.user,
-    },
-  }
+         // user: allUsers[0],
+         status: 'logged'
+      }
+   }
 }
 
-export default index
+export default Index

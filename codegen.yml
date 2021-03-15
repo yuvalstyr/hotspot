@@ -1,10 +1,10 @@
 overwrite: true
 schema: 'http://localhost:5000/api/graphql'
 generates:
-  generates/graphql.ts:
-    plugins:
-      - 'typescript'
-      - 'typescript-operations'
-  ./graphql.schema.json:
-    plugins:
-      - 'introspection'
+   generates/graphql.ts:
+      plugins:
+         - 'typescript'
+         - 'typescript-operations'
+   ./graphql.schema.json:
+      plugins:
+         - 'introspection'
